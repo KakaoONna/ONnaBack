@@ -1,0 +1,20 @@
+spring:
+
+
+
+  mvc:
+    path match:
+      matching-strategy: ant_path_matcher
+
+
+  jpa:
+
+    open-in-view: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      use-new-id-generator-mappings: false
+    database: mysql
+
+
