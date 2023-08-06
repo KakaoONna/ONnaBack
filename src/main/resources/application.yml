@@ -1,20 +1,25 @@
 spring:
-
-
+  config:
+    import:
+      application-aws.yml
 
   mvc:
     path match:
       matching-strategy: ant_path_matcher
 
-
   jpa:
-
+    properties:
+      hibernate:
+        show_sql: true
+        dialect : org.hibernate.dialect.PostgreSQLDialect
     open-in-view: true
     hibernate:
       ddl-auto: update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
       use-new-id-generator-mappings: false
-    database: mysql
+  sql:
+    init:
+      platform: postgres
 
 
