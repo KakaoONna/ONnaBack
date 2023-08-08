@@ -1,6 +1,7 @@
 package com.onna.onnaback.domain.place;
 
 import com.onna.onnaback.domain.spark.Spark;
+import com.onna.onnaback.global.utils.BaseEntity;
 import com.sun.xml.bind.v2.model.core.ID;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -13,7 +14,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Table(name = "Place")
-public class Place {
+public class Place extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "placeId")
@@ -42,11 +43,9 @@ public class Place {
     @Column(name="lat")
     private Double lat;
 
-    //[연관관계] 1(place) : N(spark)
+
     @OneToMany(mappedBy = "place")
     List<Spark> sparkList=new ArrayList<>();
 
-    private enum PlaceType{
-        LOCAL_STOP,TOUR
-    }
+
 }
