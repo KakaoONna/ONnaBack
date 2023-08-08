@@ -20,7 +20,9 @@ configurations {
 repositories {
     mavenCentral()
 }
-
+jar {
+    enabled = false
+}
 dependencies {
     //postgre
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.6.0'

@@ -3,7 +3,9 @@ package com.onna.onnaback.domain.spark;
 import com.onna.onnaback.domain.member.domain.Member;
 import com.onna.onnaback.domain.memberSparkMapping.MemberSparkMapping;
 import com.onna.onnaback.domain.place.Place;
+
 import com.onna.onnaback.global.utils.BaseEntity;
+
 import com.sun.xml.bind.v2.model.core.ID;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -13,12 +15,14 @@ import java.beans.JavaBean;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+
 
 @Entity
 @NoArgsConstructor
 @Table(name = "Spark")
+
 public class Spark extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "sparkId")
@@ -55,19 +59,20 @@ public class Spark extends BaseEntity {
     @Lob
     private String hostDetail;
 
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="memberId")
     private Member host;
+
+
 
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "placeId")
     private Place place;
 
+
     @OneToMany(mappedBy = "applySpark")
     List<MemberSparkMapping> memberSparkMappingList=new ArrayList<>();
-
 
 
 

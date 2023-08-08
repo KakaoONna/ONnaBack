@@ -1,10 +1,11 @@
 package com.onna.onnaback.domain.place;
 
 import com.onna.onnaback.domain.spark.Spark;
+
 import com.onna.onnaback.global.utils.BaseEntity;
-import com.sun.xml.bind.v2.model.core.ID;
+
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
+
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,7 +15,9 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Table(name = "Place")
+
 public class Place extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "placeId")

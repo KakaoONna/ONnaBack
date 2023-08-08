@@ -10,6 +10,10 @@ spring:
   jpa:
     properties:
       hibernate:
+<<<<<<< HEAD
+=======
+        show_sql: true
+>>>>>>> 53fa56a3b9b0c56d8df5ba5ec6beb7e7c10587ad
         dialect : org.hibernate.dialect.PostgreSQLDialect
     open-in-view: true
     hibernate:
