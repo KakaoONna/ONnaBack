@@ -23,16 +23,21 @@ public class Place extends BaseEntity {
     @Column(name = "placeId")
     private Long placeId;
 
+    @Column(name = "name")
+    private String name;
+    @Column(name = "img")
+    private String img;
+
     @Column(name="detailAddress")
     private String detailAddress;
     @Column(name="phoneNum")
     private String phoneNum;
     @Column(name="businessHour")
     private String businessHour;
-    @Lob
+
     @Column(name="description")
     private String description;
-    @Lob
+
     @Column(name="detailInfo")
     private String detailInfo;
 

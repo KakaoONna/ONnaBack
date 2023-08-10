@@ -1,0 +1,24 @@
+version: '3'
+services:
+    redis:
+      container_name: redis
+      image: redis:latest
+      ports:
+        - 6379:6379
+      networks:
+        - db_network
+      restart: always
+
+    spring:
+      container_name: spring
+      image: jungminleeee/onna
+      restart: always
+      expose:
+        - 8080
+      ports:
+        - 8080:8080
+      networks:
+        - db_network
+networks:
+    db_network:
+      driver : bridge
