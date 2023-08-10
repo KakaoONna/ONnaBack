@@ -10,8 +10,7 @@ spring:
   jpa:
     properties:
       hibernate:
-        show_sql: true
-        dialect : org.hibernate.dialect.PostgreSQLDialect
+          dialect : org.hibernate.dialect.PostgreSQLDialect
     open-in-view: true
     hibernate:
       ddl-auto: update

@@ -1,9 +1,11 @@
 package com.onna.onnaback.domain.place;
 
 import com.onna.onnaback.domain.spark.Spark;
-import com.sun.xml.bind.v2.model.core.ID;
+
+import com.onna.onnaback.global.utils.BaseEntity;
+
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
+
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,11 +15,18 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Table(name = "Place")
-public class Place {
+
+public class Place extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "placeId")
     private Long placeId;
+
+    @Column(name = "name")
+    private String name;
+    @Column(name = "img")
+    private String img;
 
     @Column(name="detailAddress")
     private String detailAddress;
@@ -25,10 +34,10 @@ public class Place {
     private String phoneNum;
     @Column(name="businessHour")
     private String businessHour;
-    @Lob
+
     @Column(name="description")
     private String description;
-    @Lob
+
     @Column(name="detailInfo")
     private String detailInfo;
 
@@ -42,11 +51,9 @@ public class Place {
     @Column(name="lat")
     private Double lat;
 
-    //[연관관계] 1(place) : N(spark)
+
     @OneToMany(mappedBy = "place")
     List<Spark> sparkList=new ArrayList<>();
 
-    private enum PlaceType{
-        LOCAL_STOP,TOUR
-    }
+
 }

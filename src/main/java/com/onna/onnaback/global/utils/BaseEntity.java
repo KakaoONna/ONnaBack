@@ -21,7 +21,6 @@ public class BaseEntity {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @Setter
     @Enumerated(value = EnumType.STRING)
     private Status status= Status.valueOf(Status.ACTIVE.toString());
 
