@@ -13,12 +13,11 @@ spring:
           dialect : org.hibernate.dialect.PostgreSQLDialect
     open-in-view: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
       use-new-id-generator-mappings: false
   sql:
     init:
       platform: postgres
-
 
