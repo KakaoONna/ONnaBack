@@ -43,7 +43,7 @@ public class KakaoOAuth2UserInfo extends OAuth2UserInfo {
     @Override
     public String getBirthDate() {
         Map<String, Object> account = (Map<String, Object>) attributes.get("kakao_account");
-        String birthDay= (String) account.get("birthday");
+        String birthDay = (String) account.get("birthday");
 
         return birthDay;
     }
@@ -51,7 +51,7 @@ public class KakaoOAuth2UserInfo extends OAuth2UserInfo {
     @Override
     public Age getAgeRange() {
         Map<String, Object> account = (Map<String, Object>) attributes.get("kakao_account");
-        String ageRange= (String) account.get("age_range");
+        String ageRange = (String) account.get("age_range");
         switch (ageRange) {
             case "15~19":
                 return Age.TEENS;
@@ -73,7 +73,7 @@ public class KakaoOAuth2UserInfo extends OAuth2UserInfo {
     @Override
     public Gender getGender() {
         Map<String, Object> account = (Map<String, Object>) attributes.get("kakao_account");
-        String gender= (String) account.get("gender");
+        String gender = (String) account.get("gender");
         if(gender.equals("female")){
             return Gender.WOMAN;
         }
@@ -86,14 +86,14 @@ public class KakaoOAuth2UserInfo extends OAuth2UserInfo {
 
         Map<String, Object> account = (Map<String, Object>) attributes.get("kakao_account");
         System.err.println(account);
-        String email= (String) account.get("email");
+        String email = (String) account.get("email");
         return  email;
     }
 
     @Override
     public String getPhoneNum() {
         Map<String, Object> account = (Map<String, Object>) attributes.get("kakao_account");
-        String phoneNumber= (String) account.get("phone_number");
+        String phoneNumber = (String) account.get("phone_number");
         return  phoneNumber;
     }
 }

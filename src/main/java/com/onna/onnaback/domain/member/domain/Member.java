@@ -1,7 +1,7 @@
 package com.onna.onnaback.domain.member.domain;
 
-import com.onna.onnaback.domain.memberSparkMapping.MemberSparkMapping;
-import com.onna.onnaback.domain.spark.Spark;
+import com.onna.onnaback.domain.memberSparkMapping.domain.MemberSparkMapping;
+import com.onna.onnaback.domain.spark.domain.Spark;
 
 import com.onna.onnaback.global.utils.BaseEntity;
 
@@ -14,11 +14,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
@@ -53,7 +50,7 @@ public class Member extends BaseEntity implements UserDetails {
     @Column(name = "role")
     private Role role;
 
-    @Column(name="refreshToken")
+    @Column(name ="refreshToken")
     private String refreshToken;
 
     //oauth2
@@ -91,7 +88,7 @@ public class Member extends BaseEntity implements UserDetails {
 
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public ArrayList<GrantedAuthority> getAuthorities() {
         ArrayList<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
         auth.add(new SimpleGrantedAuthority(Role.USER.toString()));
         return auth;

@@ -58,6 +58,7 @@ public class SecurityConfig {
                 // [PART 2]
                 //== URL별 권한 관리 옵션 ==//
                 .authorizeRequests()
+                .antMatchers("/swagger-ui/**","/v3/api-docs", "/swagger-resources/**").permitAll()
                 .antMatchers("/login/*","/login/oauth2/code/*").permitAll()
                 .antMatchers("/sign-up").permitAll() // 회원가입 접근 가능
                 .anyRequest().authenticated() // 위의 경로 이외에는 모두 인증된 사용자만 접근 가능

@@ -9,7 +9,7 @@ import static org.springframework.http.HttpStatus.METHOD_NOT_ALLOWED;
 @Getter
 public enum ErrorCode {
     SUCCESS(HttpStatus.OK,200,  "요청에 성공하였습니다."),
-    BAD_REQUEST( HttpStatus.BAD_REQUEST,400,  "입력값을 확인해주세요."),
+    BAD_REQUEST(HttpStatus.BAD_REQUEST,400,  "입력값을 확인해주세요."),
     FORBIDDEN(HttpStatus.FORBIDDEN,  403,"권한이 없습니다."),
     NOT_FOUND(HttpStatus.NOT_FOUND, 404,"대상을 찾을 수 없습니다."),
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED,403,"인가되지 않은 사용자입니다."),
