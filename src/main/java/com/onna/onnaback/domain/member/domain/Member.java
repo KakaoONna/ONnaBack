@@ -39,6 +39,8 @@ public class Member extends BaseEntity implements UserDetails {
     @Enumerated(value = EnumType.STRING)
     @Column(name="gender")
     private Gender gender;
+
+    //생일(월-일) MMDD
     @Column(name="birthDate")
     private String birthDay;
     @Enumerated(value = EnumType.STRING)
