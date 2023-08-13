@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.Map;
 
+import static com.onna.onnaback.domain.member.domain.SocialType.KAKAO;
 import static com.onna.onnaback.domain.member.domain.SocialType.NAVER;
 
 @Slf4j
@@ -26,6 +27,7 @@ import static com.onna.onnaback.domain.member.domain.SocialType.NAVER;
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
     private final MemberRepository memberRepository;
+    private final DefaultOAuth2UserService delegate;
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         log.info("CustomOAuth2UserService.loadUser() 실행 - OAuth2 로그인 요청 진입");
@@ -36,7 +38,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
          * 사용자 정보를 얻은 후, 이를 통해 DefaultOAuth2User 객체를 생성 후 반환한다.
          * 결과적으로, OAuth2User는 OAuth 서비스에서 가져온 유저 정보를 담고 있는 유저
          */
-        OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
         /**
@@ -69,7 +70,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         if(NAVER.equals(registrationId)) {
             return NAVER;
         }
-        if(SocialType.KAKAO.equals(registrationId)) {
+        else if(KAKAO.equals(registrationId)) {
             return SocialType.KAKAO;
         }
         return SocialType.GOOGLE;
