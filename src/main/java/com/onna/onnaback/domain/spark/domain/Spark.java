@@ -1,17 +1,14 @@
-package com.onna.onnaback.domain.spark;
+package com.onna.onnaback.domain.spark.domain;
 
 import com.onna.onnaback.domain.member.domain.Member;
-import com.onna.onnaback.domain.memberSparkMapping.MemberSparkMapping;
+import com.onna.onnaback.domain.memberSparkMapping.domain.MemberSparkMapping;
 import com.onna.onnaback.domain.place.Place;
 
 import com.onna.onnaback.global.utils.BaseEntity;
 
-import com.sun.xml.bind.v2.model.core.ID;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.beans.JavaBean;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

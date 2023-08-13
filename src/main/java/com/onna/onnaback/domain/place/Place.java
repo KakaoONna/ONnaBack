@@ -1,6 +1,6 @@
 package com.onna.onnaback.domain.place;
 
-import com.onna.onnaback.domain.spark.Spark;
+import com.onna.onnaback.domain.spark.domain.Spark;
 
 import com.onna.onnaback.global.utils.BaseEntity;
 
