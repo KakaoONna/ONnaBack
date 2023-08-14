@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.onna.onnaback.domain.member.domain.Member;
-import com.onna.onnaback.domain.spark.Spark;
+import com.onna.onnaback.domain.spark.domain.Spark;
 import com.onna.onnaback.global.utils.BaseEntity;
 
 import lombok.NoArgsConstructor;
