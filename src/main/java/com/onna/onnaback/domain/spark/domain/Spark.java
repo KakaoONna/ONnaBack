@@ -19,8 +19,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.onna.onnaback.domain.member.domain.Member;
-import com.onna.onnaback.domain.memberSparkMapping.MemberSparkMapping;
+import com.onna.onnaback.domain.memberSparkMapping.domain.MemberSparkMapping;
 import com.onna.onnaback.domain.place.domain.Place;
+import com.onna.onnaback.domain.spark.domain.DurationHour;
+import com.onna.onnaback.domain.spark.domain.SparkType;
 import com.onna.onnaback.global.utils.BaseEntity;
 
 import lombok.Getter;

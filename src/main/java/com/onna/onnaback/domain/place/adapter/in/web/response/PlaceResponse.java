@@ -6,9 +6,9 @@ import java.util.stream.Collectors;
 
 import com.onna.onnaback.domain.place.domain.Place;
 import com.onna.onnaback.domain.place.domain.PlaceType;
-import com.onna.onnaback.domain.spark.DurationHour;
 import com.onna.onnaback.domain.spark.Spark;
-import com.onna.onnaback.domain.spark.SparkType;
+import com.onna.onnaback.domain.spark.domain.DurationHour;
+import com.onna.onnaback.domain.spark.domain.SparkType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
