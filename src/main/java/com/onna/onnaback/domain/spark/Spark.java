@@ -23,12 +23,13 @@ import com.onna.onnaback.domain.memberSparkMapping.MemberSparkMapping;
 import com.onna.onnaback.domain.place.domain.Place;
 import com.onna.onnaback.global.utils.BaseEntity;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
 @Table(name = "Spark")
-
+@Getter
 public class Spark extends BaseEntity {
 
     @Id
@@ -43,6 +44,7 @@ public class Spark extends BaseEntity {
     @Lob
     private String description;
 
+    // 스파크 클래스, 스파크 미팅 구분
     @Column(name = "type")
     @Enumerated(value = EnumType.STRING)
     private SparkType type;
@@ -59,6 +61,7 @@ public class Spark extends BaseEntity {
     @Column(name = "capacity")
     private Long capacity;
 
+    // 스파크 지속시간
     @Column(name = "duration")
     @Enumerated(value = EnumType.STRING)
     private DurationHour duration;

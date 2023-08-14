@@ -1,9 +1,14 @@
 package com.onna.onnaback.domain.place.adapter.in.web.response;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import com.onna.onnaback.domain.place.domain.Place;
 import com.onna.onnaback.domain.place.domain.PlaceType;
+import com.onna.onnaback.domain.spark.DurationHour;
+import com.onna.onnaback.domain.spark.Spark;
+import com.onna.onnaback.domain.spark.SparkType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,6 +21,10 @@ public class PlaceResponse {
     Long id;
 
     String name;
+
+    List<SparkType> sparkType; // 스파크 클래스, 미팅이 있는지 판단
+
+    List<DurationHour> durationHour; // 진행 시간 판단
 
     String img;
 
@@ -43,6 +52,10 @@ public class PlaceResponse {
     public PlaceResponse(Place place) {
         this.id = place.getPlaceId();
         this.name = place.getName();
+        this.sparkType = place.getSparkList().stream().map(Spark::getType).distinct().collect(
+                Collectors.toList());
+        this.durationHour = place.getSparkList().stream().map(Spark::getDuration).distinct().collect(
+                Collectors.toList());
         this.img = place.getImg();
         this.detailAddress = place.getDetailAddress();
         this.phoneNum = place.getPhoneNum();
