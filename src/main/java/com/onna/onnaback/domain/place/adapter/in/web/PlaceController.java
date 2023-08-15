@@ -23,16 +23,16 @@ public class PlaceController {
     @GetMapping("/reload")
     public ResponseEntity<List<PlaceResponse>> reload(
             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-            @RequestParam(value = "southwestLatitude") Double southwestLatitude,
             @RequestParam(value = "southwestLongitude") Double southwestLongitude,
-            @RequestParam(value = "northeastLatitude") Double northeastLatitude,
-            @RequestParam(value = "northeastLongitude") Double northeastLongitude
+            @RequestParam(value = "northeastLongitude") Double northeastLongitude,
+            @RequestParam(value = "southwestLatitude") Double southwestLatitude,
+            @RequestParam(value = "northeastLatitude") Double northeastLatitude
     ) {
         return ResponseEntity.ok().body(
                 this.placeUseCase.reload(
                             page,
-                            southwestLatitude, southwestLongitude,
-                            northeastLatitude, northeastLongitude)
+                            southwestLongitude, northeastLongitude,
+                            southwestLatitude, northeastLatitude)
                                  .stream().map(PlaceResponse::new)
                                  .collect(Collectors.toList())
         );

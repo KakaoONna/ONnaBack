@@ -22,13 +22,13 @@ public class PlaceService implements PlaceUseCase {
     @Override
     public List<Place> reload(
             int page,
-            Double southwestLatitude, Double southwestLongitude,
-            Double northeastLatitude, Double northeastLongitude
+            Double southwestLongitude, Double northeastLongitude,
+            Double southwestLatitude, Double northeastLatitude
     ) {
         // todo: 부산 외곽의 경우 에러 처리
-        
+
         return loadPlacePort.getList(PageRequest.of(page - 1, PAGE_SIZE),
-                                     southwestLatitude, southwestLongitude,
-                                     northeastLatitude, northeastLongitude);
+                                     southwestLongitude, northeastLongitude,
+                                     southwestLatitude, northeastLatitude);
     }
 }
