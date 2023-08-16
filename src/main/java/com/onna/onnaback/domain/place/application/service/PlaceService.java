@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.onna.onnaback.domain.place.application.port.in.PlaceUseCase;
 import com.onna.onnaback.domain.place.application.port.out.LoadPlacePort;
 import com.onna.onnaback.domain.place.domain.Place;
+import com.onna.onnaback.domain.place.domain.PlaceType;
+import com.onna.onnaback.domain.spark.domain.DurationHour;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,12 +24,14 @@ public class PlaceService implements PlaceUseCase {
     @Override
     public List<Place> reload(
             int page,
+            DurationHour durationHour, PlaceType placeType,
             Double southwestLongitude, Double northeastLongitude,
             Double southwestLatitude, Double northeastLatitude
     ) {
         // todo: 부산 외곽의 경우 에러 처리
 
         return loadPlacePort.getList(PageRequest.of(page - 1, PAGE_SIZE),
+                                     durationHour, placeType,
                                      southwestLongitude, northeastLongitude,
                                      southwestLatitude, northeastLatitude);
     }

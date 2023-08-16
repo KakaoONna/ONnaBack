@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceResponse;
 import com.onna.onnaback.domain.place.application.port.in.PlaceUseCase;
+import com.onna.onnaback.domain.place.domain.PlaceType;
+import com.onna.onnaback.domain.spark.domain.DurationHour;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -20,9 +23,12 @@ import lombok.RequiredArgsConstructor;
 public class PlaceController {
     private final PlaceUseCase placeUseCase;
 
+    @Operation(description = "현 위치 주변 검색(재검색)")
     @GetMapping("/reload")
     public ResponseEntity<List<PlaceResponse>> reload(
             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+            @RequestParam(value = "durationHour", required = false) DurationHour durationHour,
+            @RequestParam(value = "placeType", required = false) PlaceType placeType,
             @RequestParam(value = "southwestLongitude") Double southwestLongitude,
             @RequestParam(value = "northeastLongitude") Double northeastLongitude,
             @RequestParam(value = "southwestLatitude") Double southwestLatitude,
@@ -31,6 +37,8 @@ public class PlaceController {
         return ResponseEntity.ok().body(
                 this.placeUseCase.reload(
                             page,
+                            durationHour,
+                            placeType,
                             southwestLongitude, northeastLongitude,
                             southwestLatitude, northeastLatitude)
                                  .stream().map(PlaceResponse::new)

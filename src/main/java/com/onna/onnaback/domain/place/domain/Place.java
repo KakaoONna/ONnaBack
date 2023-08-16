@@ -54,7 +54,7 @@ public class Place extends BaseEntity {
 
     @Column(name = "type")
     @Enumerated(value = EnumType.STRING)
-    private PlaceType type;
+    private PlaceType placeType;
 
     @Column(name = "lng")
     private Double longitude;

@@ -64,7 +64,7 @@ public class Spark extends BaseEntity {
     // 스파크 지속시간
     @Column(name = "duration")
     @Enumerated(value = EnumType.STRING)
-    private DurationHour duration;
+    private DurationHour durationHour;
 
     @Column(name = "hostDetail")
     @Lob
