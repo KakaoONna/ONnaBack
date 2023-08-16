@@ -54,7 +54,7 @@ public class PlaceResponse {
         this.name = place.getName();
         this.sparkType = place.getSparkList().stream().map(Spark::getType).distinct().collect(
                 Collectors.toList());
-        this.durationHour = place.getSparkList().stream().map(Spark::getDuration).distinct().collect(
+        this.durationHour = place.getSparkList().stream().map(Spark::getDurationHour).distinct().collect(
                 Collectors.toList());
         this.img = place.getImg();
         this.detailAddress = place.getDetailAddress();
@@ -62,7 +62,7 @@ public class PlaceResponse {
         this.businessHour = place.getBusinessHour();
         this.description = place.getDescription();
         this.detailInfo = place.getDetailInfo();
-        this.type = place.getType();
+        this.type = place.getPlaceType();
         this.longitude = place.getLongitude();
         this.latitude = place.getLatitude();
         this.createdAt = place.getCreatedAt();
