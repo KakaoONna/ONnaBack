@@ -21,7 +21,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Table(name = "MemberSparkMapping")
-
 public class MemberSparkMapping extends BaseEntity {
 
     @Id

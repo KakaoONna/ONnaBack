@@ -1,21 +1,29 @@
 package com.onna.onnaback.domain.member.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.onna.onnaback.domain.memberSparkMapping.domain.MemberSparkMapping;
 import com.onna.onnaback.domain.spark.domain.Spark;
-
 import com.onna.onnaback.global.utils.BaseEntity;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -24,70 +32,74 @@ import java.util.List;
 
 public class Member extends BaseEntity implements UserDetails {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "memberId")
     private Long memberId;
 
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
-    @Column(name="email")
+
+    @Column(name = "email")
     private String email;
-    @Column(name="profileImg")
+
+    @Column(name = "profileImg")
     private String profileImg;
+
     @Enumerated(value = EnumType.STRING)
-    @Column(name="gender")
+    @Column(name = "gender")
     private Gender gender;
 
     //생일(월-일) MMDD
-    @Column(name="birthDate")
+    @Column(name = "birthDate")
     private String birthDay;
+
     @Enumerated(value = EnumType.STRING)
-    @Column(name="ageRange")
+    @Column(name = "ageRange")
     private Age ageRange;
-    @Column(name="phoneNum")
+
+    @Column(name = "phoneNum")
     private String phoneNum;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private Role role;
 
-    @Column(name ="refreshToken")
+    @Column(name = "refreshToken")
     private String refreshToken;
 
     //oauth2
     @Enumerated(EnumType.STRING)
     @Column(name = "socialType")
     private SocialType socialType;
+
     @Column(name = "socialId")
     private String socialId; // 로그인한 소셜 타입의 식별자 값 (일반 로그인인 경우 null)
 
     @OneToMany(mappedBy = "host")
-    List<Spark> sparkList=new ArrayList<>();
-
-
+    List<Spark> sparkList = new ArrayList<>();
 
     @OneToMany(mappedBy = "applicant")
-    List<MemberSparkMapping> memberSparkMappingList=new ArrayList<>();
+    List<MemberSparkMapping> memberSparkMappingList = new ArrayList<>();
 
     public void updateRefreshToken(String updateRefreshToken) {
         this.refreshToken = updateRefreshToken;
     }
 
     @Builder
-    public Member(String name,Age ageRange,String email,Role role,SocialType socialType,String socialId,String phoneNum,String profileImg,String birthDay,Gender gender){
-        this.name=name;
-        this.email=email;
-        this.role=role;
-        this.socialType=socialType;
-        this.socialId=socialId;
-        this.ageRange=ageRange;
-        this.phoneNum=phoneNum;
-        this.profileImg=profileImg;
-        this.birthDay=birthDay;
-        this.gender=gender;
+    public Member(String name, Age ageRange, String email, Role role, SocialType socialType, String socialId,
+                  String phoneNum, String profileImg, String birthDay, Gender gender) {
+        this.name = name;
+        this.email = email;
+        this.role = role;
+        this.socialType = socialType;
+        this.socialId = socialId;
+        this.ageRange = ageRange;
+        this.phoneNum = phoneNum;
+        this.profileImg = profileImg;
+        this.birthDay = birthDay;
+        this.gender = gender;
     }
-
 
     @Override
     public ArrayList<GrantedAuthority> getAuthorities() {
