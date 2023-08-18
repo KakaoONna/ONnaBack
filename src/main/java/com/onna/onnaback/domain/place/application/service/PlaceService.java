@@ -10,7 +10,7 @@ import com.onna.onnaback.domain.place.application.port.in.PlaceUseCase;
 import com.onna.onnaback.domain.place.application.port.out.LoadPlacePort;
 import com.onna.onnaback.domain.place.domain.Place;
 import com.onna.onnaback.domain.place.domain.PlaceType;
-import com.onna.onnaback.domain.spark.domain.DurationHour;
+import com.onna.onnaback.domain.apply.spark.domain.DurationHour;
 
 import lombok.RequiredArgsConstructor;
 

@@ -1,4 +1,7 @@
 package com.onna.onnaback.domain.member.application.port.in;
 
-public class MemberUseCase {
+import com.onna.onnaback.domain.member.domain.Member;
+
+public interface MemberUseCase {
+    Member getById(Long memberId);
 }
