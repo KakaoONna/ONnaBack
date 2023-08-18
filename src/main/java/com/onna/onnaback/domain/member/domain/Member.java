@@ -17,8 +17,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.onna.onnaback.domain.memberSparkMapping.domain.MemberSparkMapping;
-import com.onna.onnaback.domain.spark.domain.Spark;
+import com.onna.onnaback.domain.apply.domain.MemberSparkMapping;
+import com.onna.onnaback.domain.apply.spark.domain.Spark;
 import com.onna.onnaback.global.utils.BaseEntity;
 
 import lombok.Builder;

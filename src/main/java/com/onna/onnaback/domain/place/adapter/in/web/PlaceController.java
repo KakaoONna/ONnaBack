@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceResponse;
 import com.onna.onnaback.domain.place.application.port.in.PlaceUseCase;
 import com.onna.onnaback.domain.place.domain.PlaceType;
-import com.onna.onnaback.domain.spark.domain.DurationHour;
+import com.onna.onnaback.domain.apply.spark.domain.DurationHour;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.onna.onnaback.domain.spark.domain;
+package com.onna.onnaback.domain.apply.spark.domain;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,8 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.onna.onnaback.domain.apply.domain.MemberSparkMapping;
 import com.onna.onnaback.domain.member.domain.Member;
-import com.onna.onnaback.domain.memberSparkMapping.domain.MemberSparkMapping;
 import com.onna.onnaback.domain.place.domain.Place;
 import com.onna.onnaback.global.utils.BaseEntity;
 

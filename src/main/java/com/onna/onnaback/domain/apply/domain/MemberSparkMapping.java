@@ -1,4 +1,4 @@
-package com.onna.onnaback.domain.memberSparkMapping.domain;
+package com.onna.onnaback.domain.apply.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,9 +13,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.onna.onnaback.domain.member.domain.Member;
-import com.onna.onnaback.domain.spark.domain.Spark;
+import com.onna.onnaback.domain.apply.spark.domain.Spark;
 import com.onna.onnaback.global.utils.BaseEntity;
 
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -39,4 +40,14 @@ public class MemberSparkMapping extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private AcceptStatus acceptStatus;
 
+    @Builder
+    public MemberSparkMapping(
+            Member applicant,
+            Spark applySpark,
+            AcceptStatus acceptStatus
+    ) {
+        this.applicant = applicant;
+        this.applySpark = applySpark;
+        this.acceptStatus = acceptStatus;
+    }
 }
