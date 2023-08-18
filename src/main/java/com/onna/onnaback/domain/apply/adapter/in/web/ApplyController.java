@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/apply")
 @RequiredArgsConstructor
 public class ApplyController {
+
     private final ApplyUseCase applyUseCase;
 
     @Operation(description = "스파크 클래스/미팅 지원하기")

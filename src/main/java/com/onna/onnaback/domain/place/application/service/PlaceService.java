@@ -6,11 +6,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.onna.onnaback.domain.apply.spark.domain.DurationHour;
 import com.onna.onnaback.domain.place.application.port.in.PlaceUseCase;
 import com.onna.onnaback.domain.place.application.port.out.LoadPlacePort;
 import com.onna.onnaback.domain.place.domain.Place;
 import com.onna.onnaback.domain.place.domain.PlaceType;
-import com.onna.onnaback.domain.apply.spark.domain.DurationHour;
 
 import lombok.RequiredArgsConstructor;
 
@@ -34,5 +34,10 @@ public class PlaceService implements PlaceUseCase {
                                      durationHour, placeType,
                                      southwestLongitude, northeastLongitude,
                                      southwestLatitude, northeastLatitude);
+    }
+
+    @Override
+    public Place getById(Long placeId) {
+        return loadPlacePort.getById(placeId).orElseThrow();
     }
 }

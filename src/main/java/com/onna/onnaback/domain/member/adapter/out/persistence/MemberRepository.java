@@ -11,8 +11,6 @@ import com.onna.onnaback.domain.member.domain.SocialType;
 @EnableJpaRepositories
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
-    Optional<Member> findById(Long memberId);
-
     Optional<Member> findByName(String username);
 
     Optional<Member> findByEmail(String email);

@@ -2,6 +2,7 @@ package com.onna.onnaback.domain.place.adapter.out.persistence;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
@@ -10,11 +11,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
+import com.onna.onnaback.domain.apply.spark.domain.DurationHour;
+import com.onna.onnaback.domain.apply.spark.domain.Spark;
 import com.onna.onnaback.domain.place.application.port.out.LoadPlacePort;
 import com.onna.onnaback.domain.place.domain.Place;
 import com.onna.onnaback.domain.place.domain.PlaceType;
-import com.onna.onnaback.domain.apply.spark.domain.DurationHour;
-import com.onna.onnaback.domain.apply.spark.domain.Spark;
 
 import lombok.RequiredArgsConstructor;
 
@@ -42,6 +43,12 @@ public class PlacePersistenceAdapter implements LoadPlacePort {
                                            northeastLatitude));
 
         return placeRepository.findAll(spec, pageable).getContent();
+    }
+
+    @Override
+    public Optional<Place> getById(Long placeId) {
+        // todo: orElseThrow 추가
+        return placeRepository.findById(placeId);
     }
 
     private Specification<Place> hasDurationHour(DurationHour durationHour) {
