@@ -29,7 +29,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 @Table(name = "Member")
-
 public class Member extends BaseEntity implements UserDetails {
 
     @Id
