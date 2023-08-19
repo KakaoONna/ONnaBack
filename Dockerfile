@@ -3,8 +3,7 @@ WORKDIR /gradle
 COPY gradlew build.gradle settings.gradle ./
 COPY gradle/ gradle/
 COPY . .
-RUN ["./gradlew", "clean", "build", "--no-daemon"]
-
+RUN ./gradlew clean build --no-daemon
 # Run stage
 FROM openjdk:11
 EXPOSE 8080
