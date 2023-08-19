@@ -23,6 +23,7 @@ import com.onna.onnaback.domain.member.domain.Member;
 import com.onna.onnaback.domain.place.domain.Place;
 import com.onna.onnaback.global.utils.BaseEntity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -80,5 +81,23 @@ public class Spark extends BaseEntity {
 
     @OneToMany(mappedBy = "applySpark")
     List<MemberSparkMapping> memberSparkMappingList = new ArrayList<>();
+
+    @Builder
+    public Spark(String title, String description, SparkType type, LocalDateTime sparkDate,
+                 Long memberCount, Long price, Long capacity, DurationHour durationHour, String hostDetail,
+                 Member host, Place place
+    ) {
+        this.title = title;
+        this.description = description;
+        this.type = type;
+        this.sparkDate = sparkDate;
+        this.memberCount = memberCount;
+        this.price = price;
+        this.capacity = capacity;
+        this.durationHour = durationHour;
+        this.hostDetail = hostDetail;
+        this.host = host;
+        this.place = place;
+    }
 
 }
