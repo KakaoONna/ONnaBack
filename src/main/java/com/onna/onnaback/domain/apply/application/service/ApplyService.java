@@ -7,8 +7,8 @@ import com.onna.onnaback.domain.apply.application.port.in.ApplyUseCase;
 import com.onna.onnaback.domain.apply.application.port.out.SaveApplyPort;
 import com.onna.onnaback.domain.member.application.port.in.MemberUseCase;
 import com.onna.onnaback.domain.member.domain.Member;
-import com.onna.onnaback.domain.apply.spark.application.port.in.SparkUseCase;
-import com.onna.onnaback.domain.apply.spark.domain.Spark;
+import com.onna.onnaback.domain.spark.application.port.in.SparkUseCase;
+import com.onna.onnaback.domain.spark.domain.Spark;
 
 import lombok.RequiredArgsConstructor;
 

@@ -1,4 +1,4 @@
-package com.onna.onnaback.domain.apply.spark.domain;
+package com.onna.onnaback.domain.spark.domain;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -70,6 +70,11 @@ public class Spark extends BaseEntity {
     @Column(name = "hostDetail")
     @Lob
     private String hostDetail;
+
+    // 모집상태
+    @Column(name = "recruitType")
+    @Enumerated(value = EnumType.STRING)
+    private RecruitType recruitType;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "memberId")
