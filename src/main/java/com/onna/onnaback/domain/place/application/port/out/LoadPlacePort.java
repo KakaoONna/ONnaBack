@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Pageable;
 
-import com.onna.onnaback.domain.apply.spark.domain.DurationHour;
+import com.onna.onnaback.domain.spark.domain.DurationHour;
 import com.onna.onnaback.domain.place.domain.Place;
 import com.onna.onnaback.domain.place.domain.PlaceType;
 

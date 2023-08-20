@@ -18,7 +18,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.onna.onnaback.domain.apply.domain.MemberSparkMapping;
-import com.onna.onnaback.domain.apply.spark.domain.Spark;
+import com.onna.onnaback.domain.spark.domain.Spark;
 import com.onna.onnaback.global.utils.BaseEntity;
 
 import lombok.Builder;
@@ -86,8 +86,9 @@ public class Member extends BaseEntity implements UserDetails {
     }
 
     @Builder
-    public Member(String name, Age ageRange, String email, Role role, SocialType socialType, String socialId,
+    public Member(Long memberId,String name, Age ageRange, String email, Role role, SocialType socialType, String socialId,
                   String phoneNum, String profileImg, String birthDay, Gender gender) {
+        this.memberId=memberId;
         this.name = name;
         this.email = email;
         this.role = role;

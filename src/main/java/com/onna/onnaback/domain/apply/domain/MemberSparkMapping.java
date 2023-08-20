@@ -13,15 +13,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.onna.onnaback.domain.member.domain.Member;
-import com.onna.onnaback.domain.apply.spark.domain.Spark;
+import com.onna.onnaback.domain.spark.domain.Spark;
 import com.onna.onnaback.global.utils.BaseEntity;
 
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
 @Table(name = "MemberSparkMapping")
+@Getter
 public class MemberSparkMapping extends BaseEntity {
 
     @Id

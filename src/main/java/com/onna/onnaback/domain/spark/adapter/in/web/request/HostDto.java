@@ -1,8 +1,7 @@
-package com.onna.onnaback.domain.apply.spark.adater.in.web.request;
+package com.onna.onnaback.domain.spark.adapter.in.web.request;
 
-import com.onna.onnaback.domain.apply.spark.domain.DurationHour;
-import com.onna.onnaback.domain.apply.spark.domain.SparkType;
-
+import com.onna.onnaback.domain.spark.domain.DurationHour;
+import com.onna.onnaback.domain.spark.domain.SparkType;
 import lombok.Getter;
 
 @Getter

@@ -1,6 +1,6 @@
-package com.onna.onnaback.domain.apply.spark.application.port.out;
+package com.onna.onnaback.domain.spark.application.port.out;
 
-import com.onna.onnaback.domain.apply.spark.adater.in.web.request.HostDto;
+import com.onna.onnaback.domain.spark.adapter.in.web.request.HostDto;
 import com.onna.onnaback.domain.member.domain.Member;
 import com.onna.onnaback.domain.place.domain.Place;
 
