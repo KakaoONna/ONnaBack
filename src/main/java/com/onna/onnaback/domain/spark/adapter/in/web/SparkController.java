@@ -19,7 +19,6 @@ public class SparkController {
 
     private final SparkUseCase sparkUseCase;
 
-
     @Operation(description = "장소별 동행컨텐츠 조회")
     @GetMapping("/{placeId}")
     public ResponseEntity<List<SparkResponse>> getSparkList(@PathVariable("placeId") Long placeId,

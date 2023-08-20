@@ -15,8 +15,4 @@ import org.springframework.lang.Nullable;
 
 public interface SparkRepository extends JpaRepository<Spark, Long>, JpaSpecificationExecutor<Spark> {
     Optional<Spark> findById(Long sparkId);
-
-
-
-
 }

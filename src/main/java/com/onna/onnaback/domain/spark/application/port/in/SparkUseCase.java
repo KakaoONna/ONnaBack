@@ -11,5 +11,5 @@ public interface SparkUseCase {
 
     String uploadSpark(HostDto hostDto);
 
-    List<SparkResponse> getSparkListByPlaceId(int page,int size,Long placeId);
+    List<SparkResponse> getSparkListByPlaceId(int page, int size, Long placeId);
 }

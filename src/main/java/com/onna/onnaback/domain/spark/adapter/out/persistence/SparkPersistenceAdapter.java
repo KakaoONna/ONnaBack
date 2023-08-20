@@ -97,7 +97,7 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
         return "host success";
     }
 
-    private static Specification<Spark> equalPlace(Place place){
+    private Specification<Spark> equalPlace(Place place){
         return new Specification<Spark>() {
             @Override
             public Predicate toPredicate(Root<Spark> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
