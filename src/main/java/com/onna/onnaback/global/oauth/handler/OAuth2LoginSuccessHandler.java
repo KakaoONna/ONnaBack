@@ -53,6 +53,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
             } else {
 //                loginSuccess(response, oAuth2User); // 로그인에 성공한 경우 access, refresh 토큰 생성
                 // accessToken을 쿼리스트링에 담는 url을 만들어준다.
+                System.err.println(redirectUrl);
                 String targetUrl = UriComponentsBuilder.fromUriString(redirectUrl)
                         .queryParam("accessToken", jwtService.createAccessToken(oAuth2User.getEmail()))
                         .build()
