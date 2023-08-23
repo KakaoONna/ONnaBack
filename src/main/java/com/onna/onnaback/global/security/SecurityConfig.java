@@ -2,7 +2,6 @@ package com.onna.onnaback.global.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onna.onnaback.domain.member.adapter.out.persistence.MemberRepository;
-import com.onna.onnaback.global.config.CorsConfig;
 import com.onna.onnaback.global.jwt.JwtService;
 import com.onna.onnaback.global.jwt.LoginService;
 import com.onna.onnaback.global.jwt.filter.CustomJsonUsernameAuthenticationFilter;
@@ -30,6 +29,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.servlet.Filter;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -43,7 +43,6 @@ public class SecurityConfig {
     private final OAuth2LoginFailureHandler oAuth2LoginFailureHandler;
     private final CustomOAuth2UserService customOAuth2UserService;
 
-    private final CorsConfig corsConfig;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -53,9 +52,7 @@ public class SecurityConfig {
                 .formLogin().disable() // FormLogin 사용 X
                 .httpBasic().disable() // httpBasic 사용 X
                 .csrf().disable() // csrf 보안 사용 X
-                .cors()
-                .and()
-                .headers().frameOptions().disable()
+                .cors().configurationSource(corsConfigurationSource())
                 .and()
                 // 세션 사용하지 않으므로 STATELESS로 설정
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -66,7 +63,7 @@ public class SecurityConfig {
                 //== URL별 권한 관리 옵션 ==//
                 .authorizeRequests()
                 .antMatchers("/swagger-ui/**","/v3/api-docs", "/swagger-resources/**").permitAll()
-                .antMatchers("/login/*","/login/oauth2/code/*","/login/success/*").permitAll()
+                .antMatchers("/login/*","/login/oauth2/code/*","/login/success/**").permitAll()
                 .antMatchers("/sign-up").permitAll() // 회원가입 접근 가능
                 .anyRequest().authenticated() // 위의 경로 이외에는 모두 인증된 사용자만 접근 가능
                 .and()
@@ -139,6 +136,22 @@ public class SecurityConfig {
     public Filter jwtAuthenticationProcessingFilter() {
         JwtAuthenticationProcessingFilter jwtAuthenticationFilter = new JwtAuthenticationProcessingFilter(jwtService, memberRepository);
         return jwtAuthenticationFilter;
+    }
+
+    // CORS 허용 적용
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+
+        config.setAllowCredentials(true);
+        config.setAllowedOrigins(List.of("http://localhost:3000"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setExposedHeaders(List.of("*"));
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 
 
