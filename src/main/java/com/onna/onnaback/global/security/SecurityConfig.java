@@ -2,6 +2,7 @@ package com.onna.onnaback.global.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onna.onnaback.domain.member.adapter.out.persistence.MemberRepository;
+import com.onna.onnaback.global.config.CorsConfig;
 import com.onna.onnaback.global.jwt.JwtService;
 import com.onna.onnaback.global.jwt.LoginService;
 import com.onna.onnaback.global.jwt.filter.CustomJsonUsernameAuthenticationFilter;
@@ -42,6 +43,8 @@ public class SecurityConfig {
     private final OAuth2LoginFailureHandler oAuth2LoginFailureHandler;
     private final CustomOAuth2UserService customOAuth2UserService;
 
+    private final CorsConfig corsConfig;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -53,8 +56,6 @@ public class SecurityConfig {
 
                 .headers().frameOptions().disable()
                 .and()
-                .cors().configurationSource(corsConfigurationSource())
-                .and()
                 // 세션 사용하지 않으므로 STATELESS로 설정
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
@@ -64,7 +65,7 @@ public class SecurityConfig {
                 //== URL별 권한 관리 옵션 ==//
                 .authorizeRequests()
                 .antMatchers("/swagger-ui/**","/v3/api-docs", "/swagger-resources/**").permitAll()
-                .antMatchers("/login/*","/login/oauth2/code/*").permitAll()
+                .antMatchers("/login/*","/login/oauth2/code/*","/login/success/*").permitAll()
                 .antMatchers("/sign-up").permitAll() // 회원가입 접근 가능
                 .anyRequest().authenticated() // 위의 경로 이외에는 모두 인증된 사용자만 접근 가능
                 .and()
@@ -72,14 +73,18 @@ public class SecurityConfig {
                 // [PART 3]
                 //== 소셜 로그인 설정 ==//
                 .oauth2Login()
+                .userInfoEndpoint()
+                .userService(customOAuth2UserService)// customUserService 설정
+                .and()
                 .successHandler(oAuth2LoginSuccessHandler) // 동의하고 계속하기를 눌렀을 때 Handler 설정
-                .failureHandler(oAuth2LoginFailureHandler) // 소셜 로그인 실패 시 핸들러 설정
-                .userInfoEndpoint().userService(customOAuth2UserService); // customUserService 설정
+                .failureHandler(oAuth2LoginFailureHandler); // 소셜 로그인 실패 시 핸들러 설정
+
 
         // [PART4]
         // 원래 스프링 시큐리티 필터 순서가 LogoutFilter 이후에 로그인 필터 동작
         // 따라서, LogoutFilter 이후에 우리가 만든 필터 동작하도록 설정
         // 순서 : LogoutFilter -> JwtAuthenticationProcessingFilter -> CustomJsonUsernamePasswordAuthenticationFilter
+        http.addFilter(corsConfig.corsFilter());
         http.addFilterAfter(customJsonUsernamePasswordAuthenticationFilter(), LogoutFilter.class);
         http.addFilterBefore(jwtAuthenticationProcessingFilter(), CustomJsonUsernameAuthenticationFilter.class);
 
@@ -135,19 +140,7 @@ public class SecurityConfig {
         JwtAuthenticationProcessingFilter jwtAuthenticationFilter = new JwtAuthenticationProcessingFilter(jwtService, memberRepository);
         return jwtAuthenticationFilter;
     }
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.addAllowedOrigin("*");
-        configuration.addAllowedHeader("*");
-        configuration.addAllowedMethod("*");
-        configuration.setAllowCredentials(true);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
 
 
 }

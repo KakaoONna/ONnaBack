@@ -64,8 +64,6 @@ public class OAuthAttributes {
      */
 
     public Member toEntity(SocialType socialType, OAuth2UserInfo oauth2UserInfo) {
-        System.err.println(oauth2UserInfo.getEmail());
-
 
         return Member.builder()
                 .name(oauth2UserInfo.getNickname())

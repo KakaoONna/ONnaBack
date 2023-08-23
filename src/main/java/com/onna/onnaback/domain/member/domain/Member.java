@@ -100,6 +100,12 @@ public class Member extends BaseEntity implements UserDetails {
         this.birthDay = birthDay;
         this.gender = gender;
     }
+    @Builder
+    public Member(Long memberId,String profileImg) {
+
+        this.memberId=memberId;
+        this.profileImg=profileImg;
+    }
 
     @Override
     public ArrayList<GrantedAuthority> getAuthorities() {
