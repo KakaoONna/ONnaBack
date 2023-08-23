@@ -53,7 +53,8 @@ public class SecurityConfig {
                 .formLogin().disable() // FormLogin 사용 X
                 .httpBasic().disable() // httpBasic 사용 X
                 .csrf().disable() // csrf 보안 사용 X
-
+                .cors()
+                .and()
                 .headers().frameOptions().disable()
                 .and()
                 // 세션 사용하지 않으므로 STATELESS로 설정
@@ -84,7 +85,6 @@ public class SecurityConfig {
         // 원래 스프링 시큐리티 필터 순서가 LogoutFilter 이후에 로그인 필터 동작
         // 따라서, LogoutFilter 이후에 우리가 만든 필터 동작하도록 설정
         // 순서 : LogoutFilter -> JwtAuthenticationProcessingFilter -> CustomJsonUsernamePasswordAuthenticationFilter
-        http.addFilter(corsConfig.corsFilter());
         http.addFilterAfter(customJsonUsernamePasswordAuthenticationFilter(), LogoutFilter.class);
         http.addFilterBefore(jwtAuthenticationProcessingFilter(), CustomJsonUsernameAuthenticationFilter.class);
 
