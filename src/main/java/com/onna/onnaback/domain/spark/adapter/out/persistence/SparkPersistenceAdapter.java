@@ -47,12 +47,11 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
     public List<SparkResponse> getSparkListByPlaceId(Pageable pageable, Long placeId) {
         Place place=placeRepository.findByPlaceId(placeId);
         System.err.println(place.getName());
-        Specification<Spark> spec = (root, query, criteriaBuilder) -> null;
-        spec.and(equalPlace(place));
-        return sparkRepository.findAll(spec,pageable).getContent().stream().map(spark ->
+        return sparkRepository.findSparksByPlace(place,pageable).getContent().stream().map(spark ->
                 SparkResponse.builder()
                         .sparkId(spark.getSparkId())
                         .description(spark.getDescription())
+                        .placeId(spark.getPlace().getPlaceId())
                         .detailAddress(spark.getPlace().getDetailAddress())
                         .lat(spark.getPlace().getLatitude())
                         .lng(spark.getPlace().getLongitude())
@@ -97,11 +96,11 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
         return "host success";
     }
 
-    private Specification<Spark> equalPlace(Place place){
+    private Specification<Spark> equalPlace(Long placeId){
         return new Specification<Spark>() {
             @Override
             public Predicate toPredicate(Root<Spark> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-                return criteriaBuilder.equal(root.get("place"),place);
+                return criteriaBuilder.equal(root.get("placeId"),placeId);
             }
         };
     }

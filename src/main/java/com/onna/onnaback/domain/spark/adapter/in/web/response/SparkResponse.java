@@ -16,6 +16,8 @@ public class SparkResponse {
 
     private long sparkId;
 
+    private long placeId;
+
     private String title;
 
     private SparkType sparkType;

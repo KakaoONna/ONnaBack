@@ -105,4 +105,6 @@ public class Spark extends BaseEntity {
         this.place = place;
     }
 
+
+
 }
