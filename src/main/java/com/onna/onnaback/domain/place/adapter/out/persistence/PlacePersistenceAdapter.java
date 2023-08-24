@@ -11,11 +11,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
-import com.onna.onnaback.domain.spark.domain.DurationHour;
-import com.onna.onnaback.domain.spark.domain.Spark;
+import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceReloadDto;
 import com.onna.onnaback.domain.place.application.port.out.LoadPlacePort;
 import com.onna.onnaback.domain.place.domain.Place;
 import com.onna.onnaback.domain.place.domain.PlaceType;
+import com.onna.onnaback.domain.spark.domain.DurationHour;
+import com.onna.onnaback.domain.spark.domain.Spark;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +25,41 @@ import lombok.RequiredArgsConstructor;
 public class PlacePersistenceAdapter implements LoadPlacePort {
 
     private final PlaceRepository placeRepository;
+
+    @Override
+    public List<PlaceReloadDto> getMarkers(DurationHour durationHour,
+                                           PlaceType placeType,
+                                           Double southwestLongitude, Double northeastLongitude,
+                                           Double southwestLatitude, Double northeastLatitude) {
+        Specification<Place> spec = Specification.where(null);
+
+        if (durationHour != null) {
+            spec = spec.and(hasDurationHour(durationHour));
+        }
+
+        if (placeType != null) {
+            spec = spec.and(hasPlaceType(placeType));
+        }
+
+        spec = spec.and(hasLocationBetween(southwestLongitude, northeastLongitude, southwestLatitude,
+                                           northeastLatitude));
+
+        List<Place> places = placeRepository.findAll(spec);
+
+        List<PlaceReloadDto> result = new ArrayList<>();
+
+        for (Place place : places) {
+            Long sparkCount = calculateSparkCount(place); // 메서드 호출을 통해 Spark 개수 계산
+            result.add(new PlaceReloadDto(place.getPlaceId(), place.getLongitude(), place.getLatitude(),
+                                          sparkCount));
+        }
+
+        return result;
+    }
+
+    private Long calculateSparkCount(Place place) {
+        return (long) place.getSparkList().size();
+    }
 
     @Override
     public List<Place> getList(Pageable pageable, DurationHour durationHour, PlaceType placeType,
