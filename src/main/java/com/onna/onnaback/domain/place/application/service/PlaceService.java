@@ -11,6 +11,7 @@ import com.onna.onnaback.domain.place.application.port.out.LoadPlacePort;
 import com.onna.onnaback.domain.place.domain.Place;
 import com.onna.onnaback.domain.place.domain.PlaceType;
 import com.onna.onnaback.domain.spark.domain.DurationHour;
+import com.onna.onnaback.domain.spark.domain.SparkType;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,7 +24,7 @@ public class PlaceService implements PlaceUseCase {
 
     @Override
     public List<PlaceReloadDto> reload(
-            DurationHour durationHour, PlaceType placeType,
+            SparkType sparkType, DurationHour durationHour, PlaceType placeType,
             Double southwestLongitude, Double northeastLongitude,
             Double southwestLatitude, Double northeastLatitude
     ) {
@@ -31,7 +32,7 @@ public class PlaceService implements PlaceUseCase {
 
         // 스파크 클래스/미팅 카운트 가져오기
         return loadPlacePort.getMarkers(
-                durationHour, placeType,
+                sparkType, durationHour, placeType,
                 southwestLongitude, northeastLongitude,
                 southwestLatitude, northeastLatitude);
     }

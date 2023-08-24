@@ -1,8 +1,10 @@
 package com.onna.onnaback.domain.place.adapter.out.persistence;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
@@ -17,6 +19,7 @@ import com.onna.onnaback.domain.place.domain.Place;
 import com.onna.onnaback.domain.place.domain.PlaceType;
 import com.onna.onnaback.domain.spark.domain.DurationHour;
 import com.onna.onnaback.domain.spark.domain.Spark;
+import com.onna.onnaback.domain.spark.domain.SparkType;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,11 +30,14 @@ public class PlacePersistenceAdapter implements LoadPlacePort {
     private final PlaceRepository placeRepository;
 
     @Override
-    public List<PlaceReloadDto> getMarkers(DurationHour durationHour,
-                                           PlaceType placeType,
+    public List<PlaceReloadDto> getMarkers(SparkType sparkType, DurationHour durationHour, PlaceType placeType,
                                            Double southwestLongitude, Double northeastLongitude,
                                            Double southwestLatitude, Double northeastLatitude) {
         Specification<Place> spec = Specification.where(null);
+
+        if (sparkType != null) {
+            spec = spec.and(hasSparkType(sparkType));
+        }
 
         if (durationHour != null) {
             spec = spec.and(hasDurationHour(durationHour));
@@ -46,12 +52,17 @@ public class PlacePersistenceAdapter implements LoadPlacePort {
 
         List<Place> places = placeRepository.findAll(spec);
 
+        Set<Long> uniquePlaceIds = new HashSet<>(); // 중복을 제거하기 위한 Set
+
         List<PlaceReloadDto> result = new ArrayList<>();
 
         for (Place place : places) {
-            Long sparkCount = calculateSparkCount(place); // 메서드 호출을 통해 Spark 개수 계산
-            result.add(new PlaceReloadDto(place.getPlaceId(), place.getLongitude(), place.getLatitude(),
-                                          sparkCount));
+            if (!uniquePlaceIds.contains(place.getPlaceId())) {
+                Long sparkCount = calculateSparkCount(place);
+                result.add(new PlaceReloadDto(place.getPlaceId(), place.getLongitude(), place.getLatitude(),
+                                              sparkCount));
+                uniquePlaceIds.add(place.getPlaceId());
+            }
         }
 
         return result;
@@ -85,6 +96,19 @@ public class PlacePersistenceAdapter implements LoadPlacePort {
     public Optional<Place> getById(Long placeId) {
         // todo: orElseThrow 추가
         return placeRepository.findById(placeId);
+    }
+
+    private Specification<Place> hasSparkType(SparkType sparkType) {
+        return (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            Join<Place, Spark> sparkJoin = root.join("sparkList");
+
+            // sparkType 일치할 경우 추가
+            predicates.add(criteriaBuilder.equal(sparkJoin.get("type"), sparkType));
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        };
     }
 
     private Specification<Place> hasDurationHour(DurationHour durationHour) {

@@ -9,11 +9,12 @@ import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceReloadDto;
 import com.onna.onnaback.domain.place.domain.Place;
 import com.onna.onnaback.domain.place.domain.PlaceType;
 import com.onna.onnaback.domain.spark.domain.DurationHour;
+import com.onna.onnaback.domain.spark.domain.SparkType;
 
 public interface LoadPlacePort {
 
     List<PlaceReloadDto> getMarkers(
-            DurationHour durationHour, PlaceType placeType,
+            SparkType sparkType, DurationHour durationHour, PlaceType placeType,
             Double southwestLongitude, Double northeastLongitude,
             Double southwestLatitude, Double northeastLatitude
     );
