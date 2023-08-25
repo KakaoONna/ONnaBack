@@ -48,7 +48,6 @@ public class OAuthService implements OAuthUseCase {
     public String requestAccessToken(String authorizationCode) {
 
         String tokenUri = authUrl + "/oauth/token";
-
         HttpHeaders httpHeaders=new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         httpHeaders.add("Accept", "application/json");
@@ -61,7 +60,6 @@ public class OAuthService implements OAuthUseCase {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body,httpHeaders);
 
         restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
-
         KakaoTokens response = restTemplate.postForObject(tokenUri, request, KakaoTokens.class);
         assert response != null;
         return response.getAccessToken();

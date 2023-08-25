@@ -10,10 +10,19 @@ import lombok.Getter;
 public class KakaoAccount {
     @JsonProperty("profile")
     public KakaoProfile profile;
+    @JsonProperty("email")
     public String email;
+
+    @JsonProperty("name")
     public String name;
+
+    @JsonProperty("age_range")
     public String age_range;
+
+    @JsonProperty("birthday")
     public String birthDay;
+
+    @JsonProperty("gender")
     public String gender;
 
 

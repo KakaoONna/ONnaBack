@@ -36,7 +36,7 @@ import java.io.IOException;
 @Slf4j
 public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
-    private static final String NO_CHECK_URL = "/login"; // "/login"으로 들어오는 요청은 Filter 작동 X
+    private static final String NO_CHECK_URL = "/api/auth"; // "/login"으로 들어오는 요청은 Filter 작동 X
 
     private final JwtService jwtService;
     private final MemberRepository memberRepository;
@@ -113,6 +113,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
     public void checkAccessTokenAndAuthentication(HttpServletRequest request, HttpServletResponse response,
                                                   FilterChain filterChain) throws ServletException, IOException {
         log.info("checkAccessTokenAndAuthentication() 호출");
+        System.err.println(jwtService.extractAccessToken(request));
         jwtService.extractAccessToken(request)
                 .filter(jwtService::isTokenValid)
                 .ifPresent(accessToken -> jwtService.extractEmail(accessToken)
@@ -139,14 +140,15 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
      */
     public void saveAuthentication(Member member) {
 
-        UserDetails userDetailsUser = Member.builder()
-                .email(member.getEmail())
-                .ageRange(member.getAgeRange())
-                .role(member.getRole())
+
+        UserDetails userDetailsUser =Member.builder()
                 .name(member.getName())
-                .gender(member.getGender())
-                .profileImg(member.getProfileImg())
+                .role(member.getRole())
+                .ageRange(member.getAgeRange())
                 .birthDay(member.getBirthDay())
+                .profileImg(member.getProfileImg())
+                .gender(member.getGender())
+                .gender(member.getGender())
                 .build();
 
         Authentication authentication =
