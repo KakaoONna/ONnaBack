@@ -15,6 +15,8 @@ import com.onna.onnaback.domain.spark.adapter.in.web.response.SparkResponse;
 import com.onna.onnaback.domain.spark.application.port.in.SparkUseCase;
 import com.onna.onnaback.domain.spark.application.port.out.LoadSparkPort;
 import com.onna.onnaback.domain.spark.application.port.out.SaveSparkPort;
+import com.onna.onnaback.domain.spark.domain.DurationHour;
+import com.onna.onnaback.domain.spark.domain.SortType;
 import com.onna.onnaback.domain.spark.domain.Spark;
 
 import lombok.RequiredArgsConstructor;
@@ -46,6 +48,13 @@ public class SparkService implements SparkUseCase {
         Member member = memberUseCase.getById(hostDto.getHostId());
         Place place = placeUseCase.getById(hostDto.getPlaceId());
         return saveSparkPort.saveApply(member, place, hostDto);
+    }
+
+    @Override
+    public List<SparkResponse> getList(int page, DurationHour durationHour, SortType sortType,
+                                       Double southwestLongitude, Double northeastLongitude,
+                                       Double southwestLatitude, Double northeastLatitude) {
+        return null;
     }
 
     @Override

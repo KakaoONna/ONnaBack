@@ -14,12 +14,6 @@ public interface PlaceUseCase {
             Double southwestLongitude, Double northeastLongitude,
             Double southwestLatitude, Double northeastLatitude
     );
-//    List<Place> reload(
-//            int page,
-//            DurationHour durationHour, PlaceType placeType,
-//            Double southwestLongitude, Double northeastLongitude,
-//            Double southwestLatitude, Double northeastLatitude
-//    );
 
     Place getById(Long placeId);
 }

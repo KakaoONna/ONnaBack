@@ -44,8 +44,8 @@ public class PlaceController {
         );
     }
 
-//    @Operation(description = "현 위치 주변 검색(재검색)")
-//    @GetMapping("/reload")
+//    @Operation(description = "필터에 맞는 리스트 반환")
+//    @GetMapping("/list")
 //    public ResponseEntity<List<PlaceResponse>> reload(
 //            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
 //            @RequestParam(value = "durationHour", required = false) DurationHour durationHour,
