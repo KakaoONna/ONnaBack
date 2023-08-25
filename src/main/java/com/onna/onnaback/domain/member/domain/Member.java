@@ -57,23 +57,12 @@ public class Member extends BaseEntity implements UserDetails {
     @Column(name = "ageRange")
     private Age ageRange;
 
-    @Column(name = "phoneNum")
-    private String phoneNum;
+    @Column(name = "refreshToken")
+    private String refreshToken;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private Role role;
-
-    @Column(name = "refreshToken")
-    private String refreshToken;
-
-    //oauth2
-    @Enumerated(EnumType.STRING)
-    @Column(name = "socialType")
-    private SocialType socialType;
-
-    @Column(name = "socialId")
-    private String socialId; // 로그인한 소셜 타입의 식별자 값 (일반 로그인인 경우 null)
 
     @OneToMany(mappedBy = "host")
     List<Spark> sparkList = new ArrayList<>();
@@ -81,24 +70,18 @@ public class Member extends BaseEntity implements UserDetails {
     @OneToMany(mappedBy = "applicant")
     List<MemberSparkMapping> memberSparkMappingList = new ArrayList<>();
 
-    public void updateRefreshToken(String updateRefreshToken) {
-        this.refreshToken = updateRefreshToken;
-    }
-
     @Builder
-    public Member(Long memberId,String name, Age ageRange, String email, Role role, SocialType socialType, String socialId,
-                  String phoneNum, String profileImg, String birthDay, Gender gender) {
+    public Member(Long memberId,String name, Age ageRange, String email, Role role,
+                  String refreshToken, String profileImg, String birthDay, Gender gender) {
         this.memberId=memberId;
         this.name = name;
         this.email = email;
         this.role = role;
-        this.socialType = socialType;
-        this.socialId = socialId;
         this.ageRange = ageRange;
-        this.phoneNum = phoneNum;
         this.profileImg = profileImg;
         this.birthDay = birthDay;
         this.gender = gender;
+        this.refreshToken=refreshToken;
     }
     @Builder
     public Member(Long memberId,String profileImg) {
@@ -107,6 +90,9 @@ public class Member extends BaseEntity implements UserDetails {
         this.profileImg=profileImg;
     }
 
+    public void updateRefreshToken(String updateRefreshToken) {
+        this.refreshToken = updateRefreshToken;
+    }
     @Override
     public ArrayList<GrantedAuthority> getAuthorities() {
         ArrayList<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();

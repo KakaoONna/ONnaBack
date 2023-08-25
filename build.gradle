@@ -31,6 +31,9 @@ dependencies {
     // oauth2-client 라이브러리
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
+    //rest template
+    implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
+
     //jwt
     implementation 'com.auth0:java-jwt:4.2.1'
 

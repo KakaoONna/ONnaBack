@@ -2,7 +2,7 @@ package com.onna.onnaback.global.jwt.handler;
 
 
 import com.onna.onnaback.domain.member.adapter.out.persistence.MemberRepository;
-import com.onna.onnaback.global.jwt.JwtService;
+import com.onna.onnaback.global.oauth.application.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
