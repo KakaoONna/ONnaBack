@@ -19,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class PlaceService implements PlaceUseCase {
-    private static final Integer PAGE_SIZE = 100;   // 한 페이지당 사이즈
     private final LoadPlacePort loadPlacePort;
 
     @Override
@@ -36,21 +35,6 @@ public class PlaceService implements PlaceUseCase {
                 southwestLongitude, northeastLongitude,
                 southwestLatitude, northeastLatitude);
     }
-
-//    @Override
-//    public List<Place> reload(
-//            int page,
-//            DurationHour durationHour, PlaceType placeType,
-//            Double southwestLongitude, Double northeastLongitude,
-//            Double southwestLatitude, Double northeastLatitude
-//    ) {
-//        // todo: 부산 외곽의 경우 에러 처리
-//
-//        return loadPlacePort.getList(PageRequest.of(page - 1, PAGE_SIZE),
-//                                     durationHour, placeType,
-//                                     southwestLongitude, northeastLongitude,
-//                                     southwestLatitude, northeastLatitude);
-//    }
 
     @Override
     public Place getById(Long placeId) {

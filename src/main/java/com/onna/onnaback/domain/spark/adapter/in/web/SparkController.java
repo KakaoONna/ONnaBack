@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.onna.onnaback.domain.spark.adapter.in.web.response.SparkListDto;
 import com.onna.onnaback.domain.spark.adapter.in.web.response.SparkResponse;
 import com.onna.onnaback.domain.spark.application.port.in.SparkUseCase;
 import com.onna.onnaback.domain.spark.domain.DurationHour;
 import com.onna.onnaback.domain.spark.domain.SortType;
+import com.onna.onnaback.domain.spark.domain.SparkType;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -39,10 +41,11 @@ public class SparkController {
 
     @Operation(description = "필터에 맞는 리스트 반환")
     @GetMapping("/list")
-    public ResponseEntity<List<SparkResponse>> reload(
+    public ResponseEntity<List<SparkListDto>> getList(
             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-            @RequestParam(value = "sort", required = false) DurationHour durationHour,
-            @RequestParam(value = "durationHour", required = false) SortType sortType,
+            @RequestParam(value = "sparkType", required = false) SparkType sparkType,
+            @RequestParam(value = "durationHour", required = false) DurationHour durationHour,
+            @RequestParam(value = "sort", required = false) SortType sortType,
             @RequestParam(value = "southwestLongitude") Double southwestLongitude,
             @RequestParam(value = "northeastLongitude") Double northeastLongitude,
             @RequestParam(value = "southwestLatitude") Double southwestLatitude,
@@ -51,12 +54,11 @@ public class SparkController {
         return ResponseEntity.ok().body(
                 this.sparkUseCase.getList(
                         page,
+                        sparkType,
                         durationHour,
                         sortType,
                         southwestLongitude, northeastLongitude,
                         southwestLatitude, northeastLatitude)
-//                                 .stream().map(SparkResponse::new)
-//                                 .collect(Collectors.toList())
         );
     }
 }

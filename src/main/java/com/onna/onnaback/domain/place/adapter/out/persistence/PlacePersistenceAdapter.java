@@ -9,7 +9,6 @@ import java.util.Set;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
@@ -70,26 +69,6 @@ public class PlacePersistenceAdapter implements LoadPlacePort {
 
     private Long calculateSparkCount(Place place) {
         return (long) place.getSparkList().size();
-    }
-
-    @Override
-    public List<Place> getList(Pageable pageable, DurationHour durationHour, PlaceType placeType,
-                               Double southwestLongitude, Double northeastLongitude,
-                               Double southwestLatitude, Double northeastLatitude) {
-        Specification<Place> spec = Specification.where(null);
-
-        if (durationHour != null) {
-            spec = spec.and(hasDurationHour(durationHour));
-        }
-
-        if (placeType != null) {
-            spec = spec.and(hasPlaceType(placeType));
-        }
-
-        spec = spec.and(hasLocationBetween(southwestLongitude, northeastLongitude, southwestLatitude,
-                                           northeastLatitude));
-
-        return placeRepository.findAll(spec, pageable).getContent();
     }
 
     @Override

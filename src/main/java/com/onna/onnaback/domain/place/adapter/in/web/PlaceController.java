@@ -43,27 +43,4 @@ public class PlaceController {
                         southwestLatitude, northeastLatitude)
         );
     }
-
-//    @Operation(description = "필터에 맞는 리스트 반환")
-//    @GetMapping("/list")
-//    public ResponseEntity<List<PlaceResponse>> reload(
-//            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-//            @RequestParam(value = "durationHour", required = false) DurationHour durationHour,
-//            @RequestParam(value = "placeType", required = false) PlaceType placeType,
-//            @RequestParam(value = "southwestLongitude") Double southwestLongitude,
-//            @RequestParam(value = "northeastLongitude") Double northeastLongitude,
-//            @RequestParam(value = "southwestLatitude") Double southwestLatitude,
-//            @RequestParam(value = "northeastLatitude") Double northeastLatitude
-//    ) {
-//        return ResponseEntity.ok().body(
-//                this.placeUseCase.reload(
-//                            page,
-//                            durationHour,
-//                            placeType,
-//                            southwestLongitude, northeastLongitude,
-//                            southwestLatitude, northeastLatitude)
-//                                 .stream().map(PlaceResponse::new)
-//                                 .collect(Collectors.toList())
-//        );
-//    }
 }
