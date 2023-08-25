@@ -2,15 +2,13 @@ package com.onna.onnaback.global.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onna.onnaback.domain.member.adapter.out.persistence.MemberRepository;
-import com.onna.onnaback.global.jwt.JwtService;
-import com.onna.onnaback.global.jwt.LoginService;
 import com.onna.onnaback.global.jwt.filter.CustomJsonUsernameAuthenticationFilter;
 import com.onna.onnaback.global.jwt.filter.JwtAuthenticationProcessingFilter;
 import com.onna.onnaback.global.jwt.handler.LoginFailureHandler;
 import com.onna.onnaback.global.jwt.handler.LoginSuccessHandler;
-import com.onna.onnaback.global.oauth.service.CustomOAuth2UserService;
-import com.onna.onnaback.global.oauth.handler.OAuth2LoginFailureHandler;
-import com.onna.onnaback.global.oauth.handler.OAuth2LoginSuccessHandler;
+import com.onna.onnaback.global.oauth.application.service.JwtService;
+import com.onna.onnaback.global.oauth.application.service.OAuthLoginService;
+import com.onna.onnaback.global.oauth.application.service.OAuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,13 +33,10 @@ import java.util.List;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final LoginService loginService;
+    private final OAuthLoginService oAuthLoginService;
     private final JwtService jwtService;
     private final MemberRepository memberRepository;
     private final ObjectMapper objectMapper;
-    private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
-    private final OAuth2LoginFailureHandler oAuth2LoginFailureHandler;
-    private final CustomOAuth2UserService customOAuth2UserService;
 
 
     @Bean
@@ -62,23 +57,12 @@ public class SecurityConfig {
                 // [PART 2]
                 //== URL별 권한 관리 옵션 ==//
                 .authorizeRequests()
-                .antMatchers("/swagger-ui/**","/v3/api-docs", "/swagger-resources/**").permitAll()
-                .antMatchers("/login/*","/login/oauth2/code/*","/login/success/**").permitAll()
-                .antMatchers("/sign-up").permitAll() // 회원가입 접근 가능
-                .anyRequest().authenticated() // 위의 경로 이외에는 모두 인증된 사용자만 접근 가능
-                .and()
-
-                // [PART 3]
-                //== 소셜 로그인 설정 ==//
-                .oauth2Login()
-                .userInfoEndpoint()
-                .userService(customOAuth2UserService)// customUserService 설정
-                .and()
-                .successHandler(oAuth2LoginSuccessHandler) // 동의하고 계속하기를 눌렀을 때 Handler 설정
-                .failureHandler(oAuth2LoginFailureHandler); // 소셜 로그인 실패 시 핸들러 설정
+                .antMatchers("/swagger-ui/**","/v3/api-docs", "/swagger-resources/**","/api/auth/**").permitAll()
+                .anyRequest().authenticated(); // 위의 경로 이외에는 모두 인증된 사용자만 접근 가능
 
 
-        // [PART4]
+
+        // [PART3]
         // 원래 스프링 시큐리티 필터 순서가 LogoutFilter 이후에 로그인 필터 동작
         // 따라서, LogoutFilter 이후에 우리가 만든 필터 동작하도록 설정
         // 순서 : LogoutFilter -> JwtAuthenticationProcessingFilter -> CustomJsonUsernamePasswordAuthenticationFilter
@@ -98,7 +82,7 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(loginService);
+        provider.setUserDetailsService(oAuthLoginService);
         return new ProviderManager(provider);
     }
     /**

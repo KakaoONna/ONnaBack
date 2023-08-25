@@ -1,10 +1,8 @@
 package com.onna.onnaback.global.jwt.filter;
 
-
-
 import com.onna.onnaback.domain.member.adapter.out.persistence.MemberRepository;
 import com.onna.onnaback.domain.member.domain.Member;
-import com.onna.onnaback.global.jwt.JwtService;
+import com.onna.onnaback.global.oauth.application.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -115,22 +113,14 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
     public void checkAccessTokenAndAuthentication(HttpServletRequest request, HttpServletResponse response,
                                                   FilterChain filterChain) throws ServletException, IOException {
         log.info("checkAccessTokenAndAuthentication() 호출");
-        try{
-            jwtService.extractAccessToken(request)
-                    .filter(jwtService::isTokenValid)
-                    .ifPresent(accessToken -> jwtService.extractEmail(accessToken)
-                            .ifPresent(email -> memberRepository.findByEmail(email)
-                                    .ifPresent(this::saveAuthentication)));
+        jwtService.extractAccessToken(request)
+                .filter(jwtService::isTokenValid)
+                .ifPresent(accessToken -> jwtService.extractEmail(accessToken)
+                        .ifPresent(email -> memberRepository.findByEmail(email)
+                                .ifPresent(this::saveAuthentication)));
 
-            filterChain.doFilter(request, response);
-        }catch(Exception e){
-            log.info(e.getMessage());
-        }
-
+        filterChain.doFilter(request, response);
     }
-
-
-
 
     /**
      * [인증 허가 메소드]
@@ -149,14 +139,16 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
      */
     public void saveAuthentication(Member member) {
 
-
-        UserDetails userDetailsUser =  Member.builder()
-                .name(member.getName())
-                .role(member.getRole())
+        UserDetails userDetailsUser = Member.builder()
                 .email(member.getEmail())
-                .socialId(member.getSocialId())
-                .socialType(member.getSocialType())
+                .ageRange(member.getAgeRange())
+                .role(member.getRole())
+                .name(member.getName())
+                .gender(member.getGender())
+                .profileImg(member.getProfileImg())
+                .birthDay(member.getBirthDay())
                 .build();
+
         Authentication authentication =
                 new UsernamePasswordAuthenticationToken(userDetailsUser, null,
                         authoritiesMapper.mapAuthorities(userDetailsUser.getAuthorities()));
