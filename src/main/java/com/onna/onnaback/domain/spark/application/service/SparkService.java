@@ -5,7 +5,7 @@ import com.onna.onnaback.domain.spark.adapter.in.web.request.HostDto;
 import com.onna.onnaback.domain.spark.adapter.in.web.response.SparkResponse;
 import com.onna.onnaback.domain.spark.application.port.out.SaveSparkPort;
 import com.onna.onnaback.domain.spark.domain.Spark;
-import com.onna.onnaback.global.oauth.service.CustomOAuth2UserService;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
