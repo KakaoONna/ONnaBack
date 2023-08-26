@@ -14,40 +14,52 @@ import java.util.List;
 @Builder
 public class SparkResponse {
 
-    private long sparkId;
 
+    //place 관련
     private long placeId;
 
-    private String title;
+    private String placeDetailAddress;
+
+    private String placeDescription;
+
+    private Double placeLng;
+
+    private Double placeLat;
+
+    private String placeDetailInfo;
+
+    private String placePhoneNum;
+
+    private String placeBusinessHour;
+
+    // spark 관련
+    private long sparkId;
+
+    private String sparkTitle;
 
     private SparkType sparkType;
 
     private LocalDateTime sparkDate;
 
-    private DurationHour durationHour;
+    private DurationHour sparkDurationHour;
 
-    private Long capacity;
+    private Long sparkCapacity;
 
-    private Long memberCount;
+    private Long sparkMemberCount;
 
-    private RecruitType recruitType;
+    private RecruitType sparkRecruitType;
 
-    private Long price;
+    private Long sparkPrice;
 
-    private String hostName;
+    private String sparkHostName;
 
-    private String hostImg;
+    private String sparkHostImg;
 
-    private String hostDetail;
+    private String sparkHostDetail;
 
-    private String description;
+    private String sparkDescription;
 
-    private List<ParticipateMemberDto> participateMember;
+    private List<ParticipateMemberDto> sparkParticipateMember;
 
-    private String detailAddress;
-
-    private Double lng;
-
-    private Double lat;
 
 }

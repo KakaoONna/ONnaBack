@@ -20,7 +20,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class OAuthLoginService implements UserDetailsService {
+public class OAuthLoginService {
 
     private final MemberRepository memberRepository;
 
@@ -33,17 +33,21 @@ public class OAuthLoginService implements UserDetailsService {
 
         String accessToken = oAuthService.requestAccessToken(authorizationCode);
         KakaoInfoResponse kakaoInfoResponse =oAuthService.requestOauthInfo(accessToken);
-        System.err.println(kakaoInfoResponse.getKakaoAccount().getEmail());
         String email=kakaoInfoResponse.getKakaoAccount().getEmail();
         Member member=memberRepository.findByEmail(email).orElseGet(
                 ()->saveMember(kakaoInfoResponse)
         );
+        System.err.println(kakaoInfoResponse.getKakaoAccount().getEmail());
+        System.err.println(member.getEmail());
+        String serviceAccessToken= jwtService.createAccessToken(email);
+        String serviceRefreshToken= jwtService.createRefreshToken(email);
 
-
+        member.updateRefreshToken(serviceRefreshToken);
         return OAuthLoginResponse.builder()
-                .accessToken(jwtService.createAccessToken(kakaoInfoResponse.getKakaoAccount().email))
-                .refreshToken(jwtService.createRefreshToken()).build();
-
+                .memberEmail(member.getEmail())
+                .accessToken(serviceAccessToken)
+                .refreshToken(serviceRefreshToken)
+                .build();
     }
 
     public Member saveMember(KakaoInfoResponse kakaoInfoResponse) {
@@ -88,8 +92,4 @@ public class OAuthLoginService implements UserDetailsService {
 
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return memberRepository.findByEmail(email).orElseThrow(()-> new UsernameNotFoundException("해당 멤버가 존재하지 않습니다"));
-    }
 }
