@@ -2,6 +2,7 @@ package com.onna.onnaback.domain.place.application.service;
 
 import java.util.List;
 
+import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceSearchDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,5 +40,10 @@ public class PlaceService implements PlaceUseCase {
     @Override
     public Place getById(Long placeId) {
         return loadPlacePort.getById(placeId).orElseThrow();
+    }
+
+    @Override
+    public List<PlaceSearchDto> searchPlace(String value) {
+        return loadPlacePort.searchPlaceList(value);
     }
 }
