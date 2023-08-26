@@ -9,11 +9,12 @@ import com.onna.onnaback.global.oauth.adapter.in.web.response.kakao.KakaoInfoRes
 import com.onna.onnaback.global.oauth.adapter.in.web.response.OAuthLoginResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class OAuthLoginService {
 
     private final MemberRepository memberRepository;
@@ -23,6 +24,7 @@ public class OAuthLoginService {
     private final JwtService jwtService;
 
 
+    @Transactional
     public OAuthLoginResponse login(String authorizationCode) {
 
         String accessToken = oAuthService.requestAccessToken(authorizationCode);
@@ -44,6 +46,7 @@ public class OAuthLoginService {
                 .build();
     }
 
+    @Transactional
     public Member saveMember(KakaoInfoResponse kakaoInfoResponse) {
         Gender memberGender;
         Age memberAge = null;
