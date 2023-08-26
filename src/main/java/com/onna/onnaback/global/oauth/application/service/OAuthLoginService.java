@@ -6,20 +6,15 @@ import com.onna.onnaback.domain.member.domain.Gender;
 import com.onna.onnaback.domain.member.domain.Member;
 import com.onna.onnaback.domain.member.domain.Role;
 import com.onna.onnaback.global.oauth.adapter.in.web.response.kakao.KakaoInfoResponse;
-import com.onna.onnaback.global.oauth.adapter.in.web.response.kakao.KakaoLoginRequest;
 import com.onna.onnaback.global.oauth.adapter.in.web.response.OAuthLoginResponse;
-import com.onna.onnaback.global.oauth.adapter.in.web.response.kakao.KakaoProfile;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
-public class OAuthLoginService implements UserDetailsService {
+public class OAuthLoginService {
 
     private final MemberRepository memberRepository;
 
@@ -32,32 +27,34 @@ public class OAuthLoginService implements UserDetailsService {
 
         String accessToken = oAuthService.requestAccessToken(authorizationCode);
         KakaoInfoResponse kakaoInfoResponse =oAuthService.requestOauthInfo(accessToken);
-        System.err.println(kakaoInfoResponse.getKakaoAccount().getEmail());
         String email=kakaoInfoResponse.getKakaoAccount().getEmail();
-        String gender=kakaoInfoResponse.getKakaoAccount().getGender();
-        String age=kakaoInfoResponse.getKakaoAccount().getAge_range();
         Member member=memberRepository.findByEmail(email).orElseGet(
-                ()->saveMember(kakaoInfoResponse,gender,age)
+                ()->saveMember(kakaoInfoResponse)
         );
+        System.err.println(kakaoInfoResponse.getKakaoAccount().getEmail());
+        System.err.println(member.getEmail());
+        String serviceAccessToken= jwtService.createAccessToken(email);
+        String serviceRefreshToken= jwtService.createRefreshToken(email);
 
-
+        member.updateRefreshToken(serviceRefreshToken);
         return OAuthLoginResponse.builder()
-                .refreshToken(jwtService.createAccessToken(kakaoInfoResponse.getKakaoAccount().email))
-                .accessToken(jwtService.createRefreshToken()).build();
-
+                .memberEmail(member.getEmail())
+                .accessToken(serviceAccessToken)
+                .refreshToken(serviceRefreshToken)
+                .build();
     }
 
-    // todo : param 3개 리펙토링
-    public Member saveMember(KakaoInfoResponse kakaoInfoResponse,String gender,String age) {
+    public Member saveMember(KakaoInfoResponse kakaoInfoResponse) {
         Gender memberGender;
         Age memberAge = null;
         // gender enum으로
-        if (gender.equals("female")) {
+        if (kakaoInfoResponse.getKakaoAccount().getGender().equals("female")) {
             memberGender = Gender.WOMAN;
 
         } else {
             memberGender = Gender.MAN;
         }
+        String age=kakaoInfoResponse.getKakaoAccount().getAge_range();
 
         if (age.equals("10~14") | age.equals("15~19")) {
             memberAge = Age.TEENS;
@@ -73,24 +70,20 @@ public class OAuthLoginService implements UserDetailsService {
             memberAge = Age.SIXTIES;
         }
 
+        System.err.println(kakaoInfoResponse.getKakaoAccount().getBirthDay());
 
         Member member = Member.builder()
-                .email(kakaoInfoResponse.kakaoAccount.getEmail())
+                .email(kakaoInfoResponse.getKakaoAccount().getEmail())
                 .gender(memberGender)
                 .ageRange(memberAge)
                 .role(Role.USER)
-                .name(kakaoInfoResponse.kakaoAccount.getName())
-                .birthDay(kakaoInfoResponse.kakaoAccount.getBirthDay())
-                .profileImg(kakaoInfoResponse.kakaoAccount.getProfile().getProfile_image_url())
+                .name(kakaoInfoResponse.getKakaoAccount().getProfile().getNickname())
+                .birthDay(kakaoInfoResponse.getKakaoAccount().getBirthDay())
+                .profileImg(kakaoInfoResponse.getKakaoAccount().getProfile().getProfile_image_url())
                 .build();
         memberRepository.saveAndFlush(member);
         return  member;
 
     }
 
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
-    }
 }

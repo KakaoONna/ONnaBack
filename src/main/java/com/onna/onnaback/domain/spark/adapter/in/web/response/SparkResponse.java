@@ -1,57 +1,65 @@
 package com.onna.onnaback.domain.spark.adapter.in.web.response;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 import com.onna.onnaback.domain.spark.domain.DurationHour;
 import com.onna.onnaback.domain.spark.domain.RecruitType;
 import com.onna.onnaback.domain.spark.domain.SparkType;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
-@Getter
-@AllArgsConstructor
 public class SparkResponse {
 
-    long sparkId;
 
-    long placeId;
+    //place 관련
+    private long placeId;
 
-    String title;
+    private String placeDetailAddress;
 
-    SparkType sparkType;
+    private String placeDescription;
 
-    LocalDateTime sparkDate;
+    private Double placeLng;
 
-    DurationHour durationHour;
+    private Double placeLat;
 
-    Long capacity;
+    private String placeDetailInfo;
 
-    Long memberCount;
+    private String placePhoneNum;
 
-    RecruitType recruitType;
+    private String placeBusinessHour;
 
-    Long price;
+    // spark 관련
+    private long sparkId;
 
-    String hostName;
+    private String sparkTitle;
 
-    String hostImg;
+    private SparkType sparkType;
 
-    String hostDetail;
+    private LocalDateTime sparkDate;
 
-    String description;
+    private DurationHour sparkDurationHour;
 
-    List<ParticipateMemberDto> participateMember;
+    private Long sparkCapacity;
 
-    String detailAddress;
+    private Long sparkMemberCount;
 
-    Double lng;
+    private RecruitType sparkRecruitType;
 
-    Double lat;
+    private Long sparkPrice;
+
+    private String sparkHostName;
+
+    private String sparkHostImg;
+
+    private String sparkHostDetail;
+
+    private String sparkDescription;
+
+    private List<ParticipateMemberDto> sparkParticipateMember;
+
 
 }

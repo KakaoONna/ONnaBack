@@ -61,14 +61,11 @@ public class OAuthService implements OAuthUseCase {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body,httpHeaders);
 
         restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
-
         KakaoTokens response = restTemplate.postForObject(tokenUri, request, KakaoTokens.class);
         assert response != null;
         return response.getAccessToken();
 
     }
-
-
 
 
     @Override
