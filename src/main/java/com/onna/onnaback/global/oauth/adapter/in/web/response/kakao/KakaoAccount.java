@@ -10,6 +10,7 @@ import lombok.Getter;
 public class KakaoAccount {
     @JsonProperty("profile")
     public KakaoProfile profile;
+
     @JsonProperty("email")
     public String email;
 

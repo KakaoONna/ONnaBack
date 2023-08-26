@@ -5,18 +5,12 @@ import com.onna.onnaback.domain.member.domain.Age;
 import com.onna.onnaback.domain.member.domain.Gender;
 import com.onna.onnaback.domain.member.domain.Member;
 import com.onna.onnaback.domain.member.domain.Role;
-import com.onna.onnaback.global.exception.BaseException;
 import com.onna.onnaback.global.oauth.adapter.in.web.response.kakao.KakaoInfoResponse;
-import com.onna.onnaback.global.oauth.adapter.in.web.response.kakao.KakaoLoginRequest;
 import com.onna.onnaback.global.oauth.adapter.in.web.response.OAuthLoginResponse;
-import com.onna.onnaback.global.oauth.adapter.in.web.response.kakao.KakaoProfile;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor

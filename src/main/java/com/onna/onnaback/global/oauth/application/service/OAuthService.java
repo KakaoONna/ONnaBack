@@ -48,6 +48,7 @@ public class OAuthService implements OAuthUseCase {
     public String requestAccessToken(String authorizationCode) {
 
         String tokenUri = authUrl + "/oauth/token";
+
         HttpHeaders httpHeaders=new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         httpHeaders.add("Accept", "application/json");
@@ -65,8 +66,6 @@ public class OAuthService implements OAuthUseCase {
         return response.getAccessToken();
 
     }
-
-
 
 
     @Override

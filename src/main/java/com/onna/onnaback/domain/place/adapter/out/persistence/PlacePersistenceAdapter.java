@@ -1,21 +1,24 @@
 package com.onna.onnaback.domain.place.adapter.out.persistence;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
-import com.onna.onnaback.domain.spark.domain.DurationHour;
-import com.onna.onnaback.domain.spark.domain.Spark;
+import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceReloadDto;
 import com.onna.onnaback.domain.place.application.port.out.LoadPlacePort;
 import com.onna.onnaback.domain.place.domain.Place;
 import com.onna.onnaback.domain.place.domain.PlaceType;
+import com.onna.onnaback.domain.spark.domain.DurationHour;
+import com.onna.onnaback.domain.spark.domain.Spark;
+import com.onna.onnaback.domain.spark.domain.SparkType;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,10 +29,14 @@ public class PlacePersistenceAdapter implements LoadPlacePort {
     private final PlaceRepository placeRepository;
 
     @Override
-    public List<Place> getList(Pageable pageable, DurationHour durationHour, PlaceType placeType,
-                               Double southwestLongitude, Double northeastLongitude,
-                               Double southwestLatitude, Double northeastLatitude) {
+    public List<PlaceReloadDto> getMarkers(SparkType sparkType, DurationHour durationHour, PlaceType placeType,
+                                           Double southwestLongitude, Double northeastLongitude,
+                                           Double southwestLatitude, Double northeastLatitude) {
         Specification<Place> spec = Specification.where(null);
+
+        if (sparkType != null) {
+            spec = spec.and(hasSparkType(sparkType));
+        }
 
         if (durationHour != null) {
             spec = spec.and(hasDurationHour(durationHour));
@@ -42,13 +49,45 @@ public class PlacePersistenceAdapter implements LoadPlacePort {
         spec = spec.and(hasLocationBetween(southwestLongitude, northeastLongitude, southwestLatitude,
                                            northeastLatitude));
 
-        return placeRepository.findAll(spec, pageable).getContent();
+        List<Place> places = placeRepository.findAll(spec);
+
+        Set<Long> uniquePlaceIds = new HashSet<>(); // 중복을 제거하기 위한 Set
+
+        List<PlaceReloadDto> result = new ArrayList<>();
+
+        for (Place place : places) {
+            if (!uniquePlaceIds.contains(place.getPlaceId())) {
+                Long sparkCount = calculateSparkCount(place);
+                result.add(new PlaceReloadDto(place.getPlaceId(), place.getLongitude(), place.getLatitude(),
+                                              sparkCount));
+                uniquePlaceIds.add(place.getPlaceId());
+            }
+        }
+
+        return result;
+    }
+
+    private Long calculateSparkCount(Place place) {
+        return (long) place.getSparkList().size();
     }
 
     @Override
     public Optional<Place> getById(Long placeId) {
         // todo: orElseThrow 추가
         return placeRepository.findById(placeId);
+    }
+
+    private Specification<Place> hasSparkType(SparkType sparkType) {
+        return (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            Join<Place, Spark> sparkJoin = root.join("sparkList");
+
+            // sparkType 일치할 경우 추가
+            predicates.add(criteriaBuilder.equal(sparkJoin.get("type"), sparkType));
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        };
     }
 
     private Specification<Place> hasDurationHour(DurationHour durationHour) {

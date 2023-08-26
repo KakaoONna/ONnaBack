@@ -2,11 +2,11 @@ package com.onna.onnaback.global.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onna.onnaback.domain.member.adapter.out.persistence.MemberRepository;
+
 import com.onna.onnaback.global.jwt.filter.JwtAuthenticationFilter;
 import com.onna.onnaback.global.oauth.application.service.JwtService;
 import com.onna.onnaback.global.oauth.application.service.OAuthLoginService;
 
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -54,6 +54,7 @@ public class SecurityConfig {
 
         return http.build();
     }
+
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter(){
