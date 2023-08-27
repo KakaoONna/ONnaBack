@@ -5,10 +5,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 
+import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceSearchDto;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
@@ -75,6 +77,18 @@ public class PlacePersistenceAdapter implements LoadPlacePort {
     public Optional<Place> getById(Long placeId) {
         // todo: orElseThrow 추가
         return placeRepository.findById(placeId);
+    }
+
+    @Override
+    public List<PlaceSearchDto> searchPlaceList(String value) {
+        return placeRepository.findByNameContaining(value).stream().map(
+               place ->  PlaceSearchDto.builder()
+                       .name(place.getName())
+                       .detailAddress(place.getDetailAddress())
+                       .placeId(place.getPlaceId())
+                       .placeType(place.getPlaceType())
+                       .build()
+        ).collect(Collectors.toList());
     }
 
     private Specification<Place> hasSparkType(SparkType sparkType) {
