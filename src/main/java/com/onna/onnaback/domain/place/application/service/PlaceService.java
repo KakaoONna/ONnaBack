@@ -46,4 +46,5 @@ public class PlaceService implements PlaceUseCase {
     public List<PlaceSearchDto> searchPlace(String value) {
         return loadPlacePort.searchPlaceList(value);
     }
+
 }

@@ -16,6 +16,6 @@ public interface PlaceRepository extends JpaRepository<Place, Long>, JpaSpecific
     @Query("select p from Place p where placeId = :placeId")
     Place findByPlaceId(@Param("placeId") Long placeId);
 
-    @Query("select p from Place p where name like %:name%")
-    List<Place> searchPlace(@Param("name") String name);
+    List<Place> findByNameContaining(String name);
+
 }

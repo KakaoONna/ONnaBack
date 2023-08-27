@@ -19,4 +19,5 @@ public interface PlaceUseCase {
     Place getById(Long placeId);
 
     List<PlaceSearchDto> searchPlace(String value);
+
 }

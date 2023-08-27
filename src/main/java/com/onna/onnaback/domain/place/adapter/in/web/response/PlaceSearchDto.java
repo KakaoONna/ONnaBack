@@ -15,4 +15,5 @@ public class PlaceSearchDto {
     private String detailAddress;
 
     private PlaceType placeType;
+
 }

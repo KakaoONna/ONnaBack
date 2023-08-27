@@ -21,4 +21,5 @@ public interface LoadPlacePort {
     Optional<Place> getById(Long placeId);
 
     List<PlaceSearchDto> searchPlaceList(String value);
+
 }

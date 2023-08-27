@@ -81,7 +81,7 @@ public class PlacePersistenceAdapter implements LoadPlacePort {
 
     @Override
     public List<PlaceSearchDto> searchPlaceList(String value) {
-        return placeRepository.searchPlace(value).stream().map(
+        return placeRepository.findByNameContaining(value).stream().map(
                place ->  PlaceSearchDto.builder()
                        .name(place.getName())
                        .detailAddress(place.getDetailAddress())
