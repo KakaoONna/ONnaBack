@@ -1,12 +1,17 @@
 package com.onna.onnaback.domain.apply.adapter.in.web;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.onna.onnaback.domain.apply.adapter.in.web.request.ApplyRequest;
+import com.onna.onnaback.domain.apply.adapter.in.web.response.ApplyDto;
 import com.onna.onnaback.domain.apply.application.port.in.ApplyUseCase;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,6 +30,12 @@ public class ApplyController {
         Long memberId = applyRequest.getMemberId();
         Long sparkId = applyRequest.getSparkId();
         return ResponseEntity.ok().body(applyUseCase.apply(memberId, sparkId));
+    }
+
+    @Operation(description = "신청 내역 확인하기")
+    @GetMapping("/list/{memberId}")
+    public ResponseEntity<List<ApplyDto>> getList(@PathVariable("memberId") Long memberId) {
+        return ResponseEntity.ok().body(applyUseCase.getList(memberId));
     }
 
 }
