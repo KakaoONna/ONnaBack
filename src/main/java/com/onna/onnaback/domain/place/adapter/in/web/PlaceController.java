@@ -2,11 +2,9 @@ package com.onna.onnaback.domain.place.adapter.in.web;
 
 import java.util.List;
 
+import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceSearchDto;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceReloadDto;
 import com.onna.onnaback.domain.place.application.port.in.PlaceUseCase;
@@ -42,5 +40,11 @@ public class PlaceController {
                         southwestLongitude, northeastLongitude,
                         southwestLatitude, northeastLatitude)
         );
+    }
+
+    @Operation(description = "장소 키워드 검색 API")
+    @GetMapping("/search/{value}")
+    public ResponseEntity<List<PlaceSearchDto>> searchPlace(@PathVariable("value")String value){
+        return ResponseEntity.ok().body(this.placeUseCase.searchPlace(value));
     }
 }

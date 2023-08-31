@@ -1,5 +1,6 @@
 package com.onna.onnaback.domain.place.adapter.out.persistence;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,4 +15,7 @@ public interface PlaceRepository extends JpaRepository<Place, Long>, JpaSpecific
 
     @Query("select p from Place p where placeId = :placeId")
     Place findByPlaceId(@Param("placeId") Long placeId);
+
+    List<Place> findByNameContaining(String name);
+
 }

@@ -12,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -22,6 +23,7 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 @Getter
 @Slf4j
+@Transactional(readOnly = true)
 public class OAuthService implements OAuthUseCase {
 
     private static final String GRANT_TYPE = "authorization_code";
@@ -61,14 +63,11 @@ public class OAuthService implements OAuthUseCase {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body,httpHeaders);
 
         restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
-
         KakaoTokens response = restTemplate.postForObject(tokenUri, request, KakaoTokens.class);
         assert response != null;
         return response.getAccessToken();
 
     }
-
-
 
 
     @Override
