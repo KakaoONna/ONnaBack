@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Pageable;
 
+import com.onna.onnaback.domain.member.domain.Member;
+import com.onna.onnaback.domain.spark.adapter.in.web.response.HostListDto;
 import com.onna.onnaback.domain.spark.adapter.in.web.response.SparkListDto;
 import com.onna.onnaback.domain.spark.adapter.in.web.response.SparkResponse;
 import com.onna.onnaback.domain.spark.domain.DurationHour;
@@ -23,4 +25,6 @@ public interface LoadSparkPort {
             Double southwestLongitude, Double northeastLongitude,
             Double southwestLatitude, Double northeastLatitude
     );
+
+    List<HostListDto> getHostList(Member host);
 }
