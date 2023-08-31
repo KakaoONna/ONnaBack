@@ -1,5 +1,7 @@
 package com.onna.onnaback.domain.spark.adapter.out.persistence;
 
+import static com.onna.onnaback.domain.spark.domain.RecruitType.RECRUITING;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -27,7 +29,6 @@ import com.onna.onnaback.domain.spark.adapter.in.web.response.SparkResponse;
 import com.onna.onnaback.domain.spark.application.port.out.LoadSparkPort;
 import com.onna.onnaback.domain.spark.application.port.out.SaveSparkPort;
 import com.onna.onnaback.domain.spark.domain.DurationHour;
-import com.onna.onnaback.domain.spark.domain.RecruitType;
 import com.onna.onnaback.domain.spark.domain.SortType;
 import com.onna.onnaback.domain.spark.domain.Spark;
 import com.onna.onnaback.domain.spark.domain.SparkType;
@@ -181,6 +182,7 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
                            .capacity(hostDto.getCapacity())
                            .durationHour(hostDto.getDurationHour())
                            .hostDetail(hostDto.getHostDetail())
+                           .recruitType(RECRUITING)
                            .host(host)
                            .place(place)
                            .build();
@@ -216,7 +218,7 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            predicates.add(criteriaBuilder.equal(root.get("recruitType"), RecruitType.RECRUITING));
+            predicates.add(criteriaBuilder.equal(root.get("recruitType"), RECRUITING));
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };

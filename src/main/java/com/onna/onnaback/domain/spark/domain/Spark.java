@@ -90,7 +90,7 @@ public class Spark extends BaseEntity {
     @Builder
     public Spark(String title, String description, SparkType type, LocalDateTime sparkDate,
                  Long memberCount, Long price, Long capacity, DurationHour durationHour, String hostDetail,
-                 Member host, Place place
+                 RecruitType recruitType, Member host, Place place
     ) {
         this.title = title;
         this.description = description;
@@ -101,10 +101,9 @@ public class Spark extends BaseEntity {
         this.capacity = capacity;
         this.durationHour = durationHour;
         this.hostDetail = hostDetail;
+        this.recruitType = recruitType;
         this.host = host;
         this.place = place;
     }
-
-
 
 }
