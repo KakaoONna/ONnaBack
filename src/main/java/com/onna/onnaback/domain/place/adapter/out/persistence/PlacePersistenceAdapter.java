@@ -58,7 +58,10 @@ public class PlacePersistenceAdapter implements LoadPlacePort {
         for (Place place : places) {
             if (!uniquePlaceIds.contains(place.getPlaceId())) {
                 Long sparkCount = calculateSparkCount(place);
-                result.add(new PlaceReloadDto(place.getPlaceId(), place.getLongitude(), place.getLatitude(),
+                result.add(new PlaceReloadDto(place.getPlaceId(),
+                                              place.getPlaceType(),
+                                              place.getLongitude(),
+                                              place.getLatitude(),
                                               sparkCount));
                 uniquePlaceIds.add(place.getPlaceId());
             }
