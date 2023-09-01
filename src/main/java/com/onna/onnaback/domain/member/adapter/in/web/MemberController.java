@@ -1,17 +1,31 @@
 package com.onna.onnaback.domain.member.adapter.in.web;
 
+import com.onna.onnaback.domain.member.adapter.in.web.response.MemberInfoResponse;
+import com.onna.onnaback.domain.member.application.port.in.MemberUseCase;
+import com.onna.onnaback.domain.member.domain.Member;
+import com.onna.onnaback.global.oauth.adapter.in.web.response.OAuthLoginResponse;
+import com.onna.onnaback.global.oauth.adapter.in.web.response.kakao.KakaoLoginRequest;
+import com.onna.onnaback.global.oauth.application.service.CustomUserDetails;
+import io.swagger.v3.oas.annotations.Operation;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/member")
 public class MemberController {
-    @GetMapping("/test")
-    public String index() {
-        return "Hello World";
+
+    private final MemberUseCase memberUseCase;
+
+    @Operation(description = "유저정보 조회")
+    @GetMapping("/info")
+    public ResponseEntity<MemberInfoResponse> getMemberInfo(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+
+        return ResponseEntity.ok().body(memberUseCase.getMemberInfo(customUserDetails.getMember()));
     }
+
 }

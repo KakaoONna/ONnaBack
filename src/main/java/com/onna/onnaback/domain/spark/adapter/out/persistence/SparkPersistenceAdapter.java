@@ -1,7 +1,5 @@
 package com.onna.onnaback.domain.spark.adapter.out.persistence;
 
-import static com.onna.onnaback.domain.spark.domain.RecruitType.RECRUITING;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -23,13 +21,13 @@ import com.onna.onnaback.domain.member.domain.Member;
 import com.onna.onnaback.domain.place.adapter.out.persistence.PlaceRepository;
 import com.onna.onnaback.domain.place.domain.Place;
 import com.onna.onnaback.domain.spark.adapter.in.web.request.HostDto;
-import com.onna.onnaback.domain.spark.adapter.in.web.response.HostListDto;
 import com.onna.onnaback.domain.spark.adapter.in.web.response.ParticipateMemberDto;
 import com.onna.onnaback.domain.spark.adapter.in.web.response.SparkListDto;
 import com.onna.onnaback.domain.spark.adapter.in.web.response.SparkResponse;
 import com.onna.onnaback.domain.spark.application.port.out.LoadSparkPort;
 import com.onna.onnaback.domain.spark.application.port.out.SaveSparkPort;
 import com.onna.onnaback.domain.spark.domain.DurationHour;
+import com.onna.onnaback.domain.spark.domain.RecruitType;
 import com.onna.onnaback.domain.spark.domain.SortType;
 import com.onna.onnaback.domain.spark.domain.Spark;
 import com.onna.onnaback.domain.spark.domain.SparkType;
@@ -170,29 +168,6 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
     }
 
     @Override
-    public List<HostListDto> getHostList(Member host) {
-        List<Spark> sparks = sparkRepository.findAllByHostMemberId(host.getMemberId());
-
-        List<HostListDto> hostListDtos = new ArrayList<>();
-
-        for (Spark spark : sparks) {
-            hostListDtos.add(new HostListDto(
-                    spark.getSparkId(),
-                    spark.getPlace().getName(),
-                    spark.getSparkDate(),
-                    spark.getDurationHour(),
-                    spark.getMemberCount(),
-                    spark.getCapacity(),
-                    spark.getPrice(),
-                    spark.getTitle(),
-                    spark.getRecruitType()
-            ));
-        }
-
-        return hostListDtos;
-    }
-
-    @Override
     public String saveApply(Member host, Place place, HostDto hostDto) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime localDateTime = LocalDateTime.parse(hostDto.getSparkDate(), formatter);
@@ -206,7 +181,6 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
                            .capacity(hostDto.getCapacity())
                            .durationHour(hostDto.getDurationHour())
                            .hostDetail(hostDto.getHostDetail())
-                           .recruitType(RECRUITING)
                            .host(host)
                            .place(place)
                            .build();
@@ -242,7 +216,7 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            predicates.add(criteriaBuilder.equal(root.get("recruitType"), RECRUITING));
+            predicates.add(criteriaBuilder.equal(root.get("recruitType"), RecruitType.RECRUITING));
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };

@@ -5,6 +5,7 @@ import com.onna.onnaback.domain.member.adapter.out.persistence.MemberRepository;
 import com.onna.onnaback.domain.member.domain.Member;
 import com.onna.onnaback.global.exception.BaseException;
 import com.onna.onnaback.global.exception.ErrorCode;
+import com.onna.onnaback.global.oauth.application.service.CustomUserDetails;
 import com.onna.onnaback.global.oauth.application.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -84,14 +85,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     public void saveAuthentication(Member member) {
 
 
-        UserDetails userDetailsUser = Member.builder()
-                .email(member.getEmail())
-                .name(member.getName())
-                .build();
+
+        CustomUserDetails customUserDetails = new CustomUserDetails(member);
 
         Authentication authentication =
-                new UsernamePasswordAuthenticationToken(userDetailsUser, null,
-                        authoritiesMapper.mapAuthorities(userDetailsUser.getAuthorities()));
+                new UsernamePasswordAuthenticationToken(customUserDetails, null,
+                        authoritiesMapper.mapAuthorities(customUserDetails.getAuthorities()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
