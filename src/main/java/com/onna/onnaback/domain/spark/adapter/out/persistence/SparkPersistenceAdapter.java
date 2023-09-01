@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 
+import com.onna.onnaback.global.exception.BaseException;
+import com.onna.onnaback.global.exception.ErrorCode;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
@@ -55,6 +57,7 @@ public class SparkPersistenceAdapter implements LoadSparkPort,SaveSparkPort {
         return sparkRepository.findSparksByPlace(place, pageable).getContent()
                 .stream().map(spark -> SparkResponse.builder()
                         .sparkId(spark.getSparkId())
+                        .img(spark.getImg())
                         .title(spark.getTitle())
                         .durationHour(spark.getDurationHour())
                         .sparkType(spark.getType())
@@ -156,6 +159,28 @@ public class SparkPersistenceAdapter implements LoadSparkPort,SaveSparkPort {
         }
 
         return hostListDtos;
+    }
+
+    @Override
+    public SparkResponse getSparkInfo(Long id) {
+        Spark spark = sparkRepository.findById(id).orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND));
+        return SparkResponse.builder()
+                .title(spark.getTitle())
+                .img(spark.getImg())
+                .sparkType(spark.getType())
+                .sparkDate(spark.getSparkDate())
+                .price(spark.getPrice())
+                .durationHour(spark.getDurationHour())
+                .capacity(spark.getCapacity())
+                .hostName(spark.getHost().getName())
+                .hostImg(spark.getHost().getProfileImg())
+                .hostDetail(spark.getHostDetail())
+                .memberCount(spark.getMemberCount())
+                .recruitType(spark.getRecruitType())
+                .lng(spark.getPlace().getLongitude())
+                .lat(spark.getPlace().getLatitude())
+                .detailAddress(spark.getPlace().getDetailAddress())
+                .build();
     }
 
     @Override

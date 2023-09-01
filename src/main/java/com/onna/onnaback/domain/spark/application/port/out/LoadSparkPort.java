@@ -28,4 +28,6 @@ public interface LoadSparkPort {
 
     List<HostListDto> getHostList(Member host);
 
+    SparkResponse getSparkInfo(Long id);
+
 }
