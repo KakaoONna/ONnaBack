@@ -59,9 +59,9 @@ public class SparkService implements SparkUseCase {
                                       Double southwestLongitude, Double northeastLongitude,
                                       Double southwestLatitude, Double northeastLatitude) {
         return loadSparkPort.getList(PageRequest.of(page - 1, PAGE_SIZE),
-                sparkType, durationHour, sortType,
-                southwestLongitude, northeastLongitude,
-                southwestLatitude, northeastLatitude);
+                                     sparkType, durationHour, sortType,
+                                     southwestLongitude, northeastLongitude,
+                                     southwestLatitude, northeastLatitude);
     }
 
     @Override
