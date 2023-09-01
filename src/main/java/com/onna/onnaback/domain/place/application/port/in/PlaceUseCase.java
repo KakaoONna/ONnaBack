@@ -2,7 +2,9 @@ package com.onna.onnaback.domain.place.application.port.in;
 
 import java.util.List;
 
+import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceDetailInfo;
 import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceReloadDto;
+import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceResponse;
 import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceSearchDto;
 import com.onna.onnaback.domain.place.domain.Place;
 import com.onna.onnaback.domain.place.domain.PlaceType;
@@ -19,5 +21,7 @@ public interface PlaceUseCase {
     Place getById(Long placeId);
 
     List<PlaceSearchDto> searchPlace(String value);
+
+    PlaceDetailInfo getPlaceInfo(Long placeId);
 
 }

@@ -27,4 +27,5 @@ public interface LoadSparkPort {
     );
 
     List<HostListDto> getHostList(Member host);
+
 }

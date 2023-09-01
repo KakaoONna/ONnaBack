@@ -45,6 +45,9 @@ public class Spark extends BaseEntity {
     @Lob
     private String description;
 
+    @Column(name = "img")
+    private String img;
+
     // 스파크 클래스, 스파크 미팅 구분
     @Column(name = "type")
     @Enumerated(value = EnumType.STRING)
@@ -90,7 +93,7 @@ public class Spark extends BaseEntity {
     @Builder
     public Spark(String title, String description, SparkType type, LocalDateTime sparkDate,
                  Long memberCount, Long price, Long capacity, DurationHour durationHour, String hostDetail,
-                 RecruitType recruitType, Member host, Place place
+                 RecruitType recruitType, Member host, Place place,String img
     ) {
         this.title = title;
         this.description = description;
@@ -104,6 +107,7 @@ public class Spark extends BaseEntity {
         this.recruitType = recruitType;
         this.host = host;
         this.place = place;
+        this.img = img;
     }
 
 }

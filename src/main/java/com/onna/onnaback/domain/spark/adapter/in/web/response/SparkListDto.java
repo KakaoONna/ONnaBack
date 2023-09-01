@@ -7,10 +7,12 @@ import com.onna.onnaback.domain.spark.domain.RecruitType;
 import com.onna.onnaback.domain.spark.domain.SparkType;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
+@Builder
 public class SparkListDto {
 
     LocalDateTime createdAt;

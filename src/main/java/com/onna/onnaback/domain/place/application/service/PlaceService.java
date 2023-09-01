@@ -1,8 +1,13 @@
 package com.onna.onnaback.domain.place.application.service;
 
 import java.util.List;
+import java.util.Optional;
 
+import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceDetailInfo;
+import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceResponse;
 import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceSearchDto;
+import com.onna.onnaback.global.exception.BaseException;
+import com.onna.onnaback.global.exception.ErrorCode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,6 +50,21 @@ public class PlaceService implements PlaceUseCase {
     @Override
     public List<PlaceSearchDto> searchPlace(String value) {
         return loadPlacePort.searchPlaceList(value);
+    }
+
+    @Override
+    public PlaceDetailInfo getPlaceInfo(Long placeId) {
+        Place place = loadPlacePort.getById(placeId).orElseThrow(()-> new BaseException(ErrorCode.NOT_FOUND));
+        return PlaceDetailInfo.builder()
+                .id(placeId)
+                .detailInfo(place.getDetailInfo())
+                .img(place.getImg())
+                .detailAddress(place.getDetailAddress())
+                .businessHour(place.getBusinessHour())
+                .description(place.getDescription())
+                .name(place.getName())
+                .phoneNum(place.getPhoneNum())
+                .build();
     }
 
 }
