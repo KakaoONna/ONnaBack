@@ -39,6 +39,7 @@ public class SparkController {
         );
     }
 
+
     @Operation(description = "필터에 맞는 리스트 반환")
     @GetMapping("/list")
     public ResponseEntity<List<SparkListDto>> getList(
