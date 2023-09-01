@@ -1,5 +1,6 @@
 package com.onna.onnaback.domain.member.application.service;
 
+import com.onna.onnaback.domain.member.adapter.in.web.response.MemberInfoResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,5 +25,15 @@ public class MemberService implements MemberUseCase {
     @Override
     public Member getById(Long memberId) {
         return loadMemberPort.getById(memberId).orElseThrow();
+    }
+
+    @Override
+    public MemberInfoResponse getMemberInfo(Member member) {
+        return MemberInfoResponse.builder()
+                .memberId(member.getMemberId())
+                .email(member.getEmail())
+                .name(member.getName())
+                .profileImg(member.getProfileImg())
+                .build();
     }
 }
