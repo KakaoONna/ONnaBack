@@ -10,11 +10,11 @@ import java.util.stream.Collectors;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 
-import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceSearchDto;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
 import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceReloadDto;
+import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceSearchDto;
 import com.onna.onnaback.domain.place.application.port.out.LoadPlacePort;
 import com.onna.onnaback.domain.place.domain.Place;
 import com.onna.onnaback.domain.place.domain.PlaceType;
@@ -60,7 +60,10 @@ public class PlacePersistenceAdapter implements LoadPlacePort {
         for (Place place : places) {
             if (!uniquePlaceIds.contains(place.getPlaceId())) {
                 Long sparkCount = calculateSparkCount(place);
-                result.add(new PlaceReloadDto(place.getPlaceId(), place.getLongitude(), place.getLatitude(),
+                result.add(new PlaceReloadDto(place.getPlaceId(),
+                                              place.getPlaceType(),
+                                              place.getLongitude(),
+                                              place.getLatitude(),
                                               sparkCount));
                 uniquePlaceIds.add(place.getPlaceId());
             }
@@ -82,12 +85,12 @@ public class PlacePersistenceAdapter implements LoadPlacePort {
     @Override
     public List<PlaceSearchDto> searchPlaceList(String value) {
         return placeRepository.findByNameContaining(value).stream().map(
-               place ->  PlaceSearchDto.builder()
-                       .name(place.getName())
-                       .detailAddress(place.getDetailAddress())
-                       .placeId(place.getPlaceId())
-                       .placeType(place.getPlaceType())
-                       .build()
+                place -> PlaceSearchDto.builder()
+                                       .name(place.getName())
+                                       .detailAddress(place.getDetailAddress())
+                                       .placeId(place.getPlaceId())
+                                       .placeType(place.getPlaceType())
+                                       .build()
         ).collect(Collectors.toList());
     }
 
