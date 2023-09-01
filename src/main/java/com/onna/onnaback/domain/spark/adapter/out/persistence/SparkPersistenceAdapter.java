@@ -21,6 +21,7 @@ import com.onna.onnaback.domain.member.domain.Member;
 import com.onna.onnaback.domain.place.adapter.out.persistence.PlaceRepository;
 import com.onna.onnaback.domain.place.domain.Place;
 import com.onna.onnaback.domain.spark.adapter.in.web.request.HostDto;
+import com.onna.onnaback.domain.spark.adapter.in.web.response.HostListDto;
 import com.onna.onnaback.domain.spark.adapter.in.web.response.ParticipateMemberDto;
 import com.onna.onnaback.domain.spark.adapter.in.web.response.SparkListDto;
 import com.onna.onnaback.domain.spark.adapter.in.web.response.SparkResponse;
@@ -165,6 +166,29 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
         }
 
         return result;
+    }
+
+    @Override
+    public List<HostListDto> getHostList(Member host) {
+        List<Spark> sparks = sparkRepository.findAllByHostMemberId(host.getMemberId());
+
+        List<HostListDto> hostListDtos = new ArrayList<>();
+
+        for (Spark spark : sparks) {
+            hostListDtos.add(new HostListDto(
+                    spark.getSparkId(),
+                    spark.getPlace().getName(),
+                    spark.getSparkDate(),
+                    spark.getDurationHour(),
+                    spark.getMemberCount(),
+                    spark.getCapacity(),
+                    spark.getPrice(),
+                    spark.getTitle(),
+                    spark.getRecruitType()
+            ));
+        }
+
+        return hostListDtos;
     }
 
     @Override

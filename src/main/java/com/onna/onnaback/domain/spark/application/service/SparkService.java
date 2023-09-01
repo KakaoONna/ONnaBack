@@ -11,6 +11,7 @@ import com.onna.onnaback.domain.member.domain.Member;
 import com.onna.onnaback.domain.place.application.port.in.PlaceUseCase;
 import com.onna.onnaback.domain.place.domain.Place;
 import com.onna.onnaback.domain.spark.adapter.in.web.request.HostDto;
+import com.onna.onnaback.domain.spark.adapter.in.web.response.HostListDto;
 import com.onna.onnaback.domain.spark.adapter.in.web.response.SparkListDto;
 import com.onna.onnaback.domain.spark.adapter.in.web.response.SparkResponse;
 import com.onna.onnaback.domain.spark.application.port.in.SparkUseCase;
@@ -62,6 +63,11 @@ public class SparkService implements SparkUseCase {
                                      sparkType, durationHour, sortType,
                                      southwestLongitude, northeastLongitude,
                                      southwestLatitude, northeastLatitude);
+    }
+
+    @Override
+    public List<HostListDto> getHostList(Member host) {
+        return loadSparkPort.getHostList(host);
     }
 
     @Override
