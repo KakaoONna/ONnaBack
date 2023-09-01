@@ -16,7 +16,7 @@ import com.onna.onnaback.domain.spark.domain.Spark;
 public interface SparkRepository extends JpaRepository<Spark, Long>, JpaSpecificationExecutor<Spark> {
     Optional<Spark> findById(Long sparkId);
 
-    @Query("select s from Spark s where place = :place")
+    @Query("select s from Spark s where s.place = :place")
     Page<Spark> findSparksByPlace(@Param("place") Place place, Pageable pageable);
 
     List<Spark> findAllByHostMemberId(Long hostId);

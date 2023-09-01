@@ -3,9 +3,7 @@ package com.onna.onnaback.domain.place.adapter.in.web;
 import java.util.List;
 
 import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceDetailInfo;
-import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceResponse;
 import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceSearchDto;
-import com.onna.onnaback.domain.spark.adapter.in.web.response.SparkResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
