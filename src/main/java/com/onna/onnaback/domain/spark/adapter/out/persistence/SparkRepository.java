@@ -20,4 +20,5 @@ public interface SparkRepository extends JpaRepository<Spark, Long>, JpaSpecific
     Page<Spark> findSparksByPlace(@Param("place") Place place, Pageable pageable);
 
     List<Spark> findAllByHostMemberId(Long hostId);
+
 }
