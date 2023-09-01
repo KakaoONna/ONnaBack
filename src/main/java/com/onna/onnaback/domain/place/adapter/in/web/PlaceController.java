@@ -51,7 +51,7 @@ public class PlaceController {
 
     @Operation(description = "장소 상세조회")
     @GetMapping("/{placeId}")
-    public ResponseEntity<PlaceDetailInfo> getSparkDetail(@PathVariable("placeId") Long placeId)
+    public ResponseEntity<PlaceDetailInfo> getPlaceDetail(@PathVariable("placeId") Long placeId)
     {
         return ResponseEntity.ok().body(this.placeUseCase.getPlaceInfo(placeId));
     }

@@ -75,4 +75,9 @@ public class SparkService implements SparkUseCase {
 
         return loadSparkPort.getSparkListByPlaceId(PageRequest.of(page - 1, size), placeId);
     }
+
+    @Override
+    public SparkResponse getSparkInfo(Long id) {
+        return loadSparkPort.getSparkInfo(id);
+    }
 }

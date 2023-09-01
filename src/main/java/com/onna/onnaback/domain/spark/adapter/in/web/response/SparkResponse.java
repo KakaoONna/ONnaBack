@@ -22,6 +22,8 @@ public class SparkResponse {
 
     String title;
 
+    String img;
+
     SparkType sparkType;
 
     LocalDateTime sparkDate;

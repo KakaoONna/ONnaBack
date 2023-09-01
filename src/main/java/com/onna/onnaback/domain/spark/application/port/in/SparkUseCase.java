@@ -28,4 +28,6 @@ public interface SparkUseCase {
     List<HostListDto> getHostList(Member host);
 
     List<SparkResponse> getSparkListByPlaceId(int page, int size, Long placeId);
+
+    SparkResponse getSparkInfo(Long id);
 }
