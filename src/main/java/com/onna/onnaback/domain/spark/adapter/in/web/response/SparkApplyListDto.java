@@ -9,6 +9,8 @@ import lombok.Getter;
 
 @Getter
 public class SparkApplyListDto {
+    Long applicantId;
+
     String applicantImg;
 
     String applicantName;
@@ -20,8 +22,9 @@ public class SparkApplyListDto {
     AcceptStatus acceptStatus;
 
     @Builder
-    public SparkApplyListDto(String applicantImg, String applicantName, Age ageRange,
+    public SparkApplyListDto(Long applicantId, String applicantImg, String applicantName, Age ageRange,
                              Gender gender, AcceptStatus acceptStatus) {
+        this.applicantId = applicantId;
         this.applicantImg = applicantImg;
         this.applicantName = applicantName;
         this.ageRange = ageRange;

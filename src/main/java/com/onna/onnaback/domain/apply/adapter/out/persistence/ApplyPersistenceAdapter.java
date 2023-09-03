@@ -65,11 +65,13 @@ public class ApplyPersistenceAdapter implements SaveApplyPort, LoadApplyPort {
         for (MemberSparkMapping memberSparkMapping : memberSparkMappings) {
             Member applicant = memberSparkMapping.getApplicant();
 
-            sparkApplyListDtos.add(new SparkApplyListDto(applicant.getProfileImg(),
-                                                         applicant.getName(),
-                                                         applicant.getAgeRange(),
-                                                         applicant.getGender(),
-                                                         memberSparkMapping.getAcceptStatus()));
+            sparkApplyListDtos.add(new SparkApplyListDto(
+                    applicant.getMemberId(),
+                    applicant.getProfileImg(),
+                    applicant.getName(),
+                    applicant.getAgeRange(),
+                    applicant.getGender(),
+                    memberSparkMapping.getAcceptStatus()));
         }
 
         return sparkApplyListDtos;
