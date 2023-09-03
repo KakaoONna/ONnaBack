@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.onna.onnaback.domain.apply.adapter.in.web.response.ApplyDto;
 import com.onna.onnaback.domain.apply.application.port.out.LoadApplyPort;
 import com.onna.onnaback.domain.apply.application.port.out.SaveApplyPort;
+import com.onna.onnaback.domain.apply.domain.AcceptStatus;
 import com.onna.onnaback.domain.apply.domain.MemberSparkMapping;
 import com.onna.onnaback.domain.member.domain.Member;
 import com.onna.onnaback.domain.spark.adapter.in.web.response.SparkApplyListDto;
@@ -32,6 +33,14 @@ public class ApplyPersistenceAdapter implements SaveApplyPort, LoadApplyPort {
                                                                   .build();
         applyRepository.save(memberSparkMapping);
         return "apply success";
+    }
+
+    @Override
+    public String saveProcess(Long sparkId, Long applicantId, AcceptStatus acceptStatus) {
+        MemberSparkMapping memberSparkMapping = applyRepository.findByApplySparkSparkIdAndApplicantMemberId(
+                sparkId, applicantId);
+        memberSparkMapping.updateAcceptStatus(acceptStatus);
+        return "update success";
     }
 
     @Override

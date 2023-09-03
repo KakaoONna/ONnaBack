@@ -9,6 +9,7 @@ import com.onna.onnaback.domain.apply.adapter.in.web.response.ApplyDto;
 import com.onna.onnaback.domain.apply.application.port.in.ApplyUseCase;
 import com.onna.onnaback.domain.apply.application.port.out.LoadApplyPort;
 import com.onna.onnaback.domain.apply.application.port.out.SaveApplyPort;
+import com.onna.onnaback.domain.apply.domain.AcceptStatus;
 import com.onna.onnaback.domain.member.application.port.in.MemberUseCase;
 import com.onna.onnaback.domain.member.domain.Member;
 import com.onna.onnaback.domain.spark.application.port.in.SparkUseCase;
@@ -38,5 +39,12 @@ public class ApplyService implements ApplyUseCase {
     public List<ApplyDto> getList(Long memberId) {
         Member applicant = memberUseCase.getById(memberId);
         return loadApplyPort.getList(applicant);
+    }
+
+    @Override
+    @Transactional
+    public String applyProcess(Long sparkId, Long applicantId, AcceptStatus acceptStatus) {
+        // todo: 에러처리(인원 초과)
+        return saveApplyPort.saveProcess(sparkId, applicantId, acceptStatus);
     }
 }

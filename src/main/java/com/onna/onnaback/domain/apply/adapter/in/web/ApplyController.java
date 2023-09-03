@@ -5,15 +5,18 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.onna.onnaback.domain.apply.adapter.in.web.request.ApplyProcessRequest;
 import com.onna.onnaback.domain.apply.adapter.in.web.request.ApplyRequest;
 import com.onna.onnaback.domain.apply.adapter.in.web.response.ApplyDto;
 import com.onna.onnaback.domain.apply.application.port.in.ApplyUseCase;
+import com.onna.onnaback.domain.apply.domain.AcceptStatus;
 import com.onna.onnaback.domain.member.domain.Member;
 import com.onna.onnaback.global.oauth.application.service.CustomUserDetails;
 
@@ -40,6 +43,15 @@ public class ApplyController {
     @GetMapping("/list/{memberId}")
     public ResponseEntity<List<ApplyDto>> getList(@PathVariable("memberId") Long memberId) {
         return ResponseEntity.ok().body(applyUseCase.getList(memberId));
+    }
+
+    @Operation(description = "스파크 지원 수락/거절하기")
+    @PatchMapping("/process")
+    public ResponseEntity<String> applyProcess(@RequestBody ApplyProcessRequest applyProcessRequest) {
+        Long sparkId = applyProcessRequest.getSparkId();
+        Long applicantId = applyProcessRequest.getApplicantId();
+        AcceptStatus acceptStatus = applyProcessRequest.getAcceptStatus();
+        return ResponseEntity.ok().body(applyUseCase.applyProcess(sparkId, applicantId, acceptStatus));
     }
 
 }
