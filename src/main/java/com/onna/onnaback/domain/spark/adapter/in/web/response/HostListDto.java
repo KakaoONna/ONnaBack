@@ -10,23 +10,23 @@ import lombok.Getter;
 
 @Getter
 public class HostListDto {
-    private Long sparkId;
+    Long sparkId;
 
-    private String placeName;
+    String placeName;
 
-    private LocalDateTime sparkDate;
+    LocalDateTime sparkDate;
 
-    private DurationHour durationHour;
+    DurationHour durationHour;
 
-    private Long memberCount;
+    Long memberCount;
 
-    private Long capacity;
+    Long capacity;
 
-    private Long price;
+    Long price;
 
-    private String title;
+    String title;
 
-    private RecruitType recruitType;
+    RecruitType recruitType;
 
     @Builder
     public HostListDto(Long sparkId, String placeName, LocalDateTime sparkDate,

@@ -8,4 +8,8 @@ import com.onna.onnaback.domain.apply.domain.MemberSparkMapping;
 
 public interface ApplyRepository extends JpaRepository<MemberSparkMapping, Long> {
     List<MemberSparkMapping> findAllByApplicantMemberId(Long applicantId);
+
+    List<MemberSparkMapping> findAllByApplySparkSparkId(Long sparkId);
+
+    MemberSparkMapping findByApplySparkSparkIdAndApplicantMemberId(Long sparkId, Long applicantId);
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import com.onna.onnaback.domain.member.domain.Member;
 import com.onna.onnaback.domain.spark.adapter.in.web.request.HostDto;
 import com.onna.onnaback.domain.spark.adapter.in.web.response.HostListDto;
+import com.onna.onnaback.domain.spark.adapter.in.web.response.SparkApplyListDto;
 import com.onna.onnaback.domain.spark.adapter.in.web.response.SparkListDto;
 import com.onna.onnaback.domain.spark.adapter.in.web.response.SparkResponse;
 import com.onna.onnaback.domain.spark.domain.DurationHour;
@@ -26,6 +27,8 @@ public interface SparkUseCase {
     );
 
     List<HostListDto> getHostList(Member host);
+
+    List<SparkApplyListDto> getSparkApplyList(Long sparkId);
 
     List<SparkResponse> getSparkListByPlaceId(int page, int size, Long placeId);
 

@@ -4,8 +4,6 @@ import lombok.Getter;
 
 @Getter
 public class ApplyRequest {
-
-    private Long memberId;
-
-    private Long sparkId;
+    
+    Long sparkId;
 }
