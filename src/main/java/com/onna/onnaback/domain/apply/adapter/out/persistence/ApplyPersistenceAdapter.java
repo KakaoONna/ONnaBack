@@ -12,6 +12,7 @@ import com.onna.onnaback.domain.apply.application.port.out.LoadApplyPort;
 import com.onna.onnaback.domain.apply.application.port.out.SaveApplyPort;
 import com.onna.onnaback.domain.apply.domain.MemberSparkMapping;
 import com.onna.onnaback.domain.member.domain.Member;
+import com.onna.onnaback.domain.spark.adapter.in.web.response.SparkApplyListDto;
 import com.onna.onnaback.domain.spark.domain.Spark;
 
 import lombok.RequiredArgsConstructor;
@@ -53,5 +54,24 @@ public class ApplyPersistenceAdapter implements SaveApplyPort, LoadApplyPort {
             ));
         }
         return applyDtos;
+    }
+
+    @Override
+    public List<SparkApplyListDto> getSparkApplyList(Long sparkId) {
+        List<MemberSparkMapping> memberSparkMappings = applyRepository.findAllByApplySparkSparkId(sparkId);
+
+        List<SparkApplyListDto> sparkApplyListDtos = new ArrayList<>();
+
+        for (MemberSparkMapping memberSparkMapping : memberSparkMappings) {
+            Member applicant = memberSparkMapping.getApplicant();
+
+            sparkApplyListDtos.add(new SparkApplyListDto(applicant.getProfileImg(),
+                                                         applicant.getName(),
+                                                         applicant.getAgeRange(),
+                                                         applicant.getGender(),
+                                                         memberSparkMapping.getAcceptStatus()));
+        }
+
+        return sparkApplyListDtos;
     }
 }
