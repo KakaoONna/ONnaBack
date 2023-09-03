@@ -2,7 +2,6 @@ package com.onna.onnaback.domain.spark.adapter.in.web;
 
 import java.util.List;
 
-import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceDetailInfo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +21,7 @@ import com.onna.onnaback.domain.spark.application.port.in.SparkUseCase;
 import com.onna.onnaback.domain.spark.domain.DurationHour;
 import com.onna.onnaback.domain.spark.domain.SortType;
 import com.onna.onnaback.domain.spark.domain.SparkType;
+import com.onna.onnaback.global.oauth.application.service.CustomUserDetails;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -36,10 +36,12 @@ public class SparkController {
     @Operation(description = "장소별 동행컨텐츠 조회")
     @GetMapping("/place/{placeId}")
     public ResponseEntity<List<SparkResponse>> getSparkContentList(@PathVariable("placeId") Long placeId,
-                                                            @RequestParam(value = "page", required = false,
-                                                                    defaultValue = "1") int page,
-                                                            @RequestParam(value = "size", required = false,
-                                                                    defaultValue = "5") int size
+                                                                   @RequestParam(value = "page",
+                                                                           required = false,
+                                                                           defaultValue = "1") int page,
+                                                                   @RequestParam(value = "size",
+                                                                           required = false,
+                                                                           defaultValue = "5") int size
     ) {
         return ResponseEntity.ok().body(
                 this.sparkUseCase.getSparkListByPlaceId(page, size, placeId)
@@ -48,8 +50,7 @@ public class SparkController {
 
     @Operation(description = "스파크 상세조회")
     @GetMapping("/{sparkId}")
-    public ResponseEntity<SparkResponse> getSparkDetail(@PathVariable("sparkId") Long sparkId)
-    {
+    public ResponseEntity<SparkResponse> getSparkDetail(@PathVariable("sparkId") Long sparkId) {
         return ResponseEntity.ok().body(this.sparkUseCase.getSparkInfo(sparkId));
     }
 
@@ -61,7 +62,9 @@ public class SparkController {
 
     @Operation(description = "주최 내역 확인하기")
     @GetMapping("/list/host")
-    public ResponseEntity<List<HostListDto>> getHostList(@AuthenticationPrincipal Member host) {
+    public ResponseEntity<List<HostListDto>> getHostList(@AuthenticationPrincipal
+                                                                 CustomUserDetails customUserDetails) {
+        Member host = customUserDetails.getMember();
         return ResponseEntity.ok().body(sparkUseCase.getHostList(host));
     }
 

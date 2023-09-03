@@ -28,8 +28,8 @@ public class ApplyService implements ApplyUseCase {
 
     @Override
     @Transactional
-    public String apply(Long memberId, Long sparkId) {
-        Member member = memberUseCase.getById(memberId);
+    public String apply(Member applicant, Long sparkId) {
+        Member member = memberUseCase.getById(applicant.getMemberId());
         Spark spark = sparkUseCase.getById(sparkId);
         return saveApplyPort.saveApply(member, spark);
     }
