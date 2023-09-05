@@ -2,6 +2,7 @@ package com.onna.onnaback.domain.spark.adapter.in.web.response;
 
 import java.time.LocalDateTime;
 
+import com.onna.onnaback.domain.spark.domain.Always;
 import com.onna.onnaback.domain.spark.domain.DurationHour;
 import com.onna.onnaback.domain.spark.domain.RecruitType;
 
@@ -10,30 +11,33 @@ import lombok.Getter;
 
 @Getter
 public class HostListDto {
-    private Long sparkId;
+    Long sparkId;
 
-    private String placeName;
+    String placeName;
 
-    private LocalDateTime sparkDate;
+    Always always;
 
-    private DurationHour durationHour;
+    LocalDateTime sparkDate;
 
-    private Long memberCount;
+    DurationHour durationHour;
 
-    private Long capacity;
+    Long memberCount;
 
-    private Long price;
+    Long capacity;
 
-    private String title;
+    Long price;
 
-    private RecruitType recruitType;
+    String title;
+
+    RecruitType recruitType;
 
     @Builder
-    public HostListDto(Long sparkId, String placeName, LocalDateTime sparkDate,
+    public HostListDto(Long sparkId, String placeName, Always always, LocalDateTime sparkDate,
                        DurationHour durationHour, Long memberCount, Long capacity,
                        Long price, String title, RecruitType recruitType) {
         this.sparkId = sparkId;
         this.placeName = placeName;
+        this.always = always;
         this.sparkDate = sparkDate;
         this.durationHour = durationHour;
         this.memberCount = memberCount;

@@ -6,12 +6,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.onna.onnaback.domain.apply.application.port.out.LoadApplyPort;
 import com.onna.onnaback.domain.member.application.port.in.MemberUseCase;
 import com.onna.onnaback.domain.member.domain.Member;
 import com.onna.onnaback.domain.place.application.port.in.PlaceUseCase;
 import com.onna.onnaback.domain.place.domain.Place;
 import com.onna.onnaback.domain.spark.adapter.in.web.request.HostDto;
 import com.onna.onnaback.domain.spark.adapter.in.web.response.HostListDto;
+import com.onna.onnaback.domain.spark.adapter.in.web.response.SparkApplyListDto;
 import com.onna.onnaback.domain.spark.adapter.in.web.response.SparkListDto;
 import com.onna.onnaback.domain.spark.adapter.in.web.response.SparkResponse;
 import com.onna.onnaback.domain.spark.application.port.in.SparkUseCase;
@@ -34,6 +36,7 @@ public class SparkService implements SparkUseCase {
 
     private final PlaceUseCase placeUseCase;
     private final LoadSparkPort loadSparkPort;
+    private final LoadApplyPort loadApplyPort;
     private final SaveSparkPort saveSparkPort;
 
     /**
@@ -71,8 +74,18 @@ public class SparkService implements SparkUseCase {
     }
 
     @Override
+    public List<SparkApplyListDto> getSparkApplyList(Long sparkId) {
+        return loadApplyPort.getSparkApplyList(sparkId);
+    }
+
+    @Override
     public List<SparkResponse> getSparkListByPlaceId(int page, int size, Long placeId) {
 
         return loadSparkPort.getSparkListByPlaceId(PageRequest.of(page - 1, size), placeId);
+    }
+
+    @Override
+    public SparkResponse getSparkInfo(Long id) {
+        return loadSparkPort.getSparkInfo(id);
     }
 }

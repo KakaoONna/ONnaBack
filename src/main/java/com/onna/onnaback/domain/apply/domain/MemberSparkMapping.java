@@ -52,4 +52,9 @@ public class MemberSparkMapping extends BaseEntity {
         this.applySpark = applySpark;
         this.acceptStatus = acceptStatus;
     }
+
+    public MemberSparkMapping updateAcceptStatus(AcceptStatus acceptStatus) {
+        this.acceptStatus = acceptStatus;
+        return this;
+    }
 }

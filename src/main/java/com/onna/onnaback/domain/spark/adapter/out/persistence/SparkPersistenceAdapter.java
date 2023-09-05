@@ -32,12 +32,14 @@ import com.onna.onnaback.domain.spark.domain.RecruitType;
 import com.onna.onnaback.domain.spark.domain.SortType;
 import com.onna.onnaback.domain.spark.domain.Spark;
 import com.onna.onnaback.domain.spark.domain.SparkType;
+import com.onna.onnaback.global.exception.BaseException;
+import com.onna.onnaback.global.exception.ErrorCode;
 
 import lombok.RequiredArgsConstructor;
 
 @Repository
 @RequiredArgsConstructor
-public class SparkPersistenceAdapter implements LoadSparkPort,SaveSparkPort {
+public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
 
     private final SparkRepository sparkRepository;
     private final PlaceRepository placeRepository;
@@ -53,28 +55,34 @@ public class SparkPersistenceAdapter implements LoadSparkPort,SaveSparkPort {
         Place place = placeRepository.findByPlaceId(placeId);
         System.err.println(place.getName());
         return sparkRepository.findSparksByPlace(place, pageable).getContent()
-                .stream().map(spark -> SparkResponse.builder()
-                        .sparkId(spark.getSparkId())
-                        .title(spark.getTitle())
-                        .durationHour(spark.getDurationHour())
-                        .sparkType(spark.getType())
-                        .sparkDate(spark.getSparkDate())
-                        .capacity(spark.getCapacity())
-                        .memberCount(spark.getMemberCount())
-                        .price(spark.getPrice())
-                        .hostName(spark.getHost().getName())
-                        .hostDetail(spark.getHostDetail())
-                        .hostImg(spark.getHost().getProfileImg())
-                        .description(spark.getDescription())
-                        .participateMember(spark.getMemberSparkMappingList().stream().map(
-                                memberSparkMapping -> ParticipateMemberDto.builder()
-                                        .memberId(memberSparkMapping.getApplicant().getMemberId())
-                                        .profileImg(memberSparkMapping.getApplicant().getProfileImg())
-                                        .build()
-                        ).collect(Collectors.toList()))
-                        .build()).collect(Collectors.toList());
+                              .stream().map(spark -> SparkResponse.builder()
+                                                                  .sparkId(spark.getSparkId())
+                                                                  .img(spark.getImg())
+                                                                  .title(spark.getTitle())
+                                                                  .durationHour(spark.getDurationHour())
+                                                                  .sparkType(spark.getType())
+                                                                  .sparkDate(spark.getSparkDate())
+                                                                  .capacity(spark.getCapacity())
+                                                                  .memberCount(spark.getMemberCount())
+                                                                  .price(spark.getPrice())
+                                                                  .hostName(spark.getHost().getName())
+                                                                  .hostDetail(spark.getHostDetail())
+                                                                  .hostImg(spark.getHost().getProfileImg())
+                                                                  .description(spark.getDescription())
+                                                                  .participateMember(
+                                                                          spark.getMemberSparkMappingList()
+                                                                               .stream().map(
+                                                                                       memberSparkMapping -> ParticipateMemberDto.builder()
+                                                                                                                                 .memberId(
+                                                                                                                                         memberSparkMapping.getApplicant()
+                                                                                                                                                           .getMemberId())
+                                                                                                                                 .profileImg(
+                                                                                                                                         memberSparkMapping.getApplicant()
+                                                                                                                                                           .getProfileImg())
+                                                                                                                                 .build()
+                                                                               ).collect(Collectors.toList()))
+                                                                  .build()).collect(Collectors.toList());
     }
-
 
     @Override
     public List<SparkListDto> getList(Pageable pageable, SparkType sparkType,
@@ -145,6 +153,7 @@ public class SparkPersistenceAdapter implements LoadSparkPort,SaveSparkPort {
             hostListDtos.add(new HostListDto(
                     spark.getSparkId(),
                     spark.getPlace().getName(),
+                    spark.getAlways(),
                     spark.getSparkDate(),
                     spark.getDurationHour(),
                     spark.getMemberCount(),
@@ -159,6 +168,28 @@ public class SparkPersistenceAdapter implements LoadSparkPort,SaveSparkPort {
     }
 
     @Override
+    public SparkResponse getSparkInfo(Long id) {
+        Spark spark = sparkRepository.findById(id).orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND));
+        return SparkResponse.builder()
+                            .title(spark.getTitle())
+                            .img(spark.getImg())
+                            .sparkType(spark.getType())
+                            .sparkDate(spark.getSparkDate())
+                            .price(spark.getPrice())
+                            .durationHour(spark.getDurationHour())
+                            .capacity(spark.getCapacity())
+                            .hostName(spark.getHost().getName())
+                            .hostImg(spark.getHost().getProfileImg())
+                            .hostDetail(spark.getHostDetail())
+                            .memberCount(spark.getMemberCount())
+                            .recruitType(spark.getRecruitType())
+                            .lng(spark.getPlace().getLongitude())
+                            .lat(spark.getPlace().getLatitude())
+                            .detailAddress(spark.getPlace().getDetailAddress())
+                            .build();
+    }
+
+    @Override
     public String saveApply(Member host, Place place, HostDto hostDto) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime localDateTime = LocalDateTime.parse(hostDto.getSparkDate(), formatter);
@@ -166,6 +197,7 @@ public class SparkPersistenceAdapter implements LoadSparkPort,SaveSparkPort {
                            .title(hostDto.getTitle())
                            .description(hostDto.getDescription())
                            .type(hostDto.getType())
+                           .always(hostDto.getAlways())
                            .sparkDate(localDateTime)
                            .price(hostDto.getPrice())
                            .memberCount(0L)
