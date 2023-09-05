@@ -2,6 +2,7 @@ package com.onna.onnaback.domain.spark.adapter.in.web.response;
 
 import java.time.LocalDateTime;
 
+import com.onna.onnaback.domain.spark.domain.Always;
 import com.onna.onnaback.domain.spark.domain.DurationHour;
 import com.onna.onnaback.domain.spark.domain.RecruitType;
 
@@ -13,6 +14,8 @@ public class HostListDto {
     Long sparkId;
 
     String placeName;
+
+    Always always;
 
     LocalDateTime sparkDate;
 
@@ -29,11 +32,12 @@ public class HostListDto {
     RecruitType recruitType;
 
     @Builder
-    public HostListDto(Long sparkId, String placeName, LocalDateTime sparkDate,
+    public HostListDto(Long sparkId, String placeName, Always always, LocalDateTime sparkDate,
                        DurationHour durationHour, Long memberCount, Long capacity,
                        Long price, String title, RecruitType recruitType) {
         this.sparkId = sparkId;
         this.placeName = placeName;
+        this.always = always;
         this.sparkDate = sparkDate;
         this.durationHour = durationHour;
         this.memberCount = memberCount;

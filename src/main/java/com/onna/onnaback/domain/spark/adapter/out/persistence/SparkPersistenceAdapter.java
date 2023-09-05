@@ -153,6 +153,7 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
             hostListDtos.add(new HostListDto(
                     spark.getSparkId(),
                     spark.getPlace().getName(),
+                    spark.getAlways(),
                     spark.getSparkDate(),
                     spark.getDurationHour(),
                     spark.getMemberCount(),
@@ -196,6 +197,7 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
                            .title(hostDto.getTitle())
                            .description(hostDto.getDescription())
                            .type(hostDto.getType())
+                           .always(hostDto.getAlways())
                            .sparkDate(localDateTime)
                            .price(hostDto.getPrice())
                            .memberCount(0L)
