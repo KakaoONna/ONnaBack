@@ -1,29 +1,33 @@
 package com.onna.onnaback.domain.spark.adapter.in.web.request;
 
+import com.onna.onnaback.domain.spark.domain.Always;
 import com.onna.onnaback.domain.spark.domain.DurationHour;
 import com.onna.onnaback.domain.spark.domain.SparkType;
+
 import lombok.Getter;
 
 @Getter
 public class HostDto {
 
-    private Long hostId;
+    Long hostId;
 
-    private Long placeId;
+    Long placeId;
 
-    private String title;
+    String title;
 
-    private String description;
+    String description;
 
-    private SparkType type;
+    SparkType type;
 
-    private String sparkDate;
+    Always always; // 상시, 상시x
 
-    private Long price;
+    String sparkDate; // 주최 일시
 
-    private Long capacity;
+    Long price;
 
-    private DurationHour durationHour;
+    Long capacity;
 
-    private String hostDetail;
+    DurationHour durationHour;
+
+    String hostDetail;
 }

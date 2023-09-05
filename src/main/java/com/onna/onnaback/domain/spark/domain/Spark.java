@@ -53,6 +53,10 @@ public class Spark extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private SparkType type;
 
+    @Column(name = "always")
+    @Enumerated(value = EnumType.STRING)
+    private Always always;
+
     @Column(name = "sparkDate")
     private LocalDateTime sparkDate;
 
@@ -91,13 +95,14 @@ public class Spark extends BaseEntity {
     List<MemberSparkMapping> memberSparkMappingList = new ArrayList<>();
 
     @Builder
-    public Spark(String title, String description, SparkType type, LocalDateTime sparkDate,
+    public Spark(String title, String description, SparkType type, Always always, LocalDateTime sparkDate,
                  Long memberCount, Long price, Long capacity, DurationHour durationHour, String hostDetail,
-                 RecruitType recruitType, Member host, Place place,String img
+                 RecruitType recruitType, Member host, Place place, String img
     ) {
         this.title = title;
         this.description = description;
         this.type = type;
+        this.always = always;
         this.sparkDate = sparkDate;
         this.memberCount = memberCount;
         this.price = price;

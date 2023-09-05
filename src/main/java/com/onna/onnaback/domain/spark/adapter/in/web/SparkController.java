@@ -58,6 +58,7 @@ public class SparkController {
     @Operation(description = "주최하기")
     @PostMapping("/host")
     public String host(@RequestBody HostDto hostDto) {
+        System.out.println("debug");
         return sparkUseCase.uploadSpark(hostDto);
     }
 
