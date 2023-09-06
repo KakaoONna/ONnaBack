@@ -204,6 +204,7 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
                            .capacity(hostDto.getCapacity())
                            .durationHour(hostDto.getDurationHour())
                            .hostDetail(hostDto.getHostDetail())
+                           .recruitType(RecruitType.RECRUITING)
                            .host(host)
                            .place(place)
                            .build();
