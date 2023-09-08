@@ -31,10 +31,12 @@ public class HostListDto {
 
     RecruitType recruitType;
 
+    Long waitingCount; // 신청 대기 수
+
     @Builder
     public HostListDto(Long sparkId, String placeName, Always always, LocalDateTime sparkDate,
                        DurationHour durationHour, Long memberCount, Long capacity,
-                       Long price, String title, RecruitType recruitType) {
+                       Long price, String title, RecruitType recruitType, Long waitingCount) {
         this.sparkId = sparkId;
         this.placeName = placeName;
         this.always = always;
@@ -45,5 +47,6 @@ public class HostListDto {
         this.price = price;
         this.title = title;
         this.recruitType = recruitType;
+        this.waitingCount = waitingCount;
     }
 }
