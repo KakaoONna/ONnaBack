@@ -17,6 +17,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
+import com.onna.onnaback.domain.apply.domain.AcceptStatus;
+import com.onna.onnaback.domain.apply.domain.MemberSparkMapping;
 import com.onna.onnaback.domain.member.domain.Member;
 import com.onna.onnaback.domain.place.adapter.out.persistence.PlaceRepository;
 import com.onna.onnaback.domain.place.domain.Place;
@@ -150,6 +152,13 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
         List<HostListDto> hostListDtos = new ArrayList<>();
 
         for (Spark spark : sparks) {
+            // 신청 대기 수 카운트
+            List<MemberSparkMapping> memberSparkMapping = spark.getMemberSparkMappingList();
+            Long waitingCount = memberSparkMapping.stream()
+                                                  .filter(mapping -> mapping.getAcceptStatus()
+                                                                     == AcceptStatus.PENDING)
+                                                  .count();
+
             hostListDtos.add(new HostListDto(
                     spark.getSparkId(),
                     spark.getPlace().getName(),
@@ -160,7 +169,8 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
                     spark.getCapacity(),
                     spark.getPrice(),
                     spark.getTitle(),
-                    spark.getRecruitType()
+                    spark.getRecruitType(),
+                    waitingCount
             ));
         }
 
