@@ -65,6 +65,10 @@ public class Spark extends BaseEntity {
     @Column(name = "price")
     private Long price;
 
+    @Column(name = "capacityType")
+    @Enumerated(value = EnumType.STRING)
+    private CapacityType capacityType;
+
     @Column(name = "capacity")
     private Long capacity;
 
@@ -95,7 +99,8 @@ public class Spark extends BaseEntity {
 
     @Builder
     public Spark(String title, String description, SparkType type, Always always, LocalDateTime sparkDate,
-                 Long memberCount, Long price, Long capacity, DurationHour durationHour, String hostDetail,
+                 Long memberCount, Long price, CapacityType capacityType, Long capacity,
+                 DurationHour durationHour, String hostDetail,
                  RecruitType recruitType, Member host, Place place, String img
     ) {
         this.title = title;
@@ -105,6 +110,7 @@ public class Spark extends BaseEntity {
         this.sparkDate = sparkDate;
         this.memberCount = memberCount;
         this.price = price;
+        this.capacityType = capacityType;
         this.capacity = capacity;
         this.durationHour = durationHour;
         this.hostDetail = hostDetail;

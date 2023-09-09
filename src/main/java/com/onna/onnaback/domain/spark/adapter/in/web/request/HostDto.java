@@ -1,6 +1,7 @@
 package com.onna.onnaback.domain.spark.adapter.in.web.request;
 
 import com.onna.onnaback.domain.spark.domain.Always;
+import com.onna.onnaback.domain.spark.domain.CapacityType;
 import com.onna.onnaback.domain.spark.domain.DurationHour;
 import com.onna.onnaback.domain.spark.domain.SparkType;
 
@@ -24,6 +25,8 @@ public class HostDto {
     String sparkDate; // 주최 일시
 
     Long price;
+
+    CapacityType capacityType;
 
     Long capacity;
 

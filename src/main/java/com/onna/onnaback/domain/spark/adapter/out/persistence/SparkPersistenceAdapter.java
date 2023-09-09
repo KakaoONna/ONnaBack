@@ -166,6 +166,7 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
                     spark.getSparkDate(),
                     spark.getDurationHour(),
                     spark.getMemberCount(),
+                    spark.getCapacityType(),
                     spark.getCapacity(),
                     spark.getPrice(),
                     spark.getTitle(),
@@ -211,6 +212,7 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
                            .sparkDate(localDateTime)
                            .price(hostDto.getPrice())
                            .memberCount(0L)
+                           .capacityType(hostDto.getCapacityType())
                            .capacity(hostDto.getCapacity())
                            .durationHour(hostDto.getDurationHour())
                            .hostDetail(hostDto.getHostDetail())
