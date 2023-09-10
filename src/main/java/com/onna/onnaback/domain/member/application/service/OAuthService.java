@@ -1,12 +1,12 @@
-package com.onna.onnaback.global.oauth.application.service;
+package com.onna.onnaback.domain.member.application.service;
 
-import com.onna.onnaback.global.oauth.adapter.in.web.response.kakao.KakaoInfoResponse;
-import com.onna.onnaback.global.oauth.adapter.in.web.response.kakao.KakaoTokens;
-import com.onna.onnaback.global.oauth.application.port.in.OAuthUseCase;
+import com.onna.onnaback.domain.member.adapter.out.external.response.kakao.KakaoInfoResponse;
+import com.onna.onnaback.domain.member.adapter.out.external.response.kakao.KakaoTokens;
+import com.onna.onnaback.domain.member.application.port.in.OAuthUseCase;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;

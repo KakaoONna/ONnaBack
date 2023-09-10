@@ -2,6 +2,7 @@ package com.onna.onnaback.domain.apply.adapter.in.web;
 
 import java.util.List;
 
+import com.onna.onnaback.domain.member.application.service.CustomUserDetails;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,6 @@ import com.onna.onnaback.domain.apply.adapter.in.web.response.ApplyDto;
 import com.onna.onnaback.domain.apply.application.port.in.ApplyUseCase;
 import com.onna.onnaback.domain.apply.domain.AcceptStatus;
 import com.onna.onnaback.domain.member.domain.Member;
-import com.onna.onnaback.global.oauth.application.service.CustomUserDetails;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;

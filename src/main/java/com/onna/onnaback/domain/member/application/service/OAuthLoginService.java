@@ -1,12 +1,12 @@
-package com.onna.onnaback.global.oauth.application.service;
+package com.onna.onnaback.domain.member.application.service;
 
+import com.onna.onnaback.domain.member.adapter.out.external.response.OAuthLoginResponse;
+import com.onna.onnaback.domain.member.adapter.out.external.response.kakao.KakaoInfoResponse;
 import com.onna.onnaback.domain.member.adapter.out.persistence.MemberRepository;
 import com.onna.onnaback.domain.member.domain.Age;
 import com.onna.onnaback.domain.member.domain.Gender;
 import com.onna.onnaback.domain.member.domain.Member;
 import com.onna.onnaback.domain.member.domain.Role;
-import com.onna.onnaback.global.oauth.adapter.in.web.response.kakao.KakaoInfoResponse;
-import com.onna.onnaback.global.oauth.adapter.in.web.response.OAuthLoginResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

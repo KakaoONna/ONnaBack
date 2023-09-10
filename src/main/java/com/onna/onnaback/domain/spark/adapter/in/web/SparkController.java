@@ -2,6 +2,7 @@ package com.onna.onnaback.domain.spark.adapter.in.web;
 
 import java.util.List;
 
+import com.onna.onnaback.domain.member.application.service.CustomUserDetails;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +23,7 @@ import com.onna.onnaback.domain.spark.application.port.in.SparkUseCase;
 import com.onna.onnaback.domain.spark.domain.DurationHour;
 import com.onna.onnaback.domain.spark.domain.SortType;
 import com.onna.onnaback.domain.spark.domain.SparkType;
-import com.onna.onnaback.global.oauth.application.service.CustomUserDetails;
+
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -64,7 +65,7 @@ public class SparkController {
     @Operation(description = "주최 내역 확인하기")
     @GetMapping("/list/host")
     public ResponseEntity<List<HostListDto>> getHostList(@AuthenticationPrincipal
-                                                                 CustomUserDetails customUserDetails) {
+                                                         CustomUserDetails customUserDetails) {
         Member host = customUserDetails.getMember();
         return ResponseEntity.ok().body(sparkUseCase.getHostList(host));
     }

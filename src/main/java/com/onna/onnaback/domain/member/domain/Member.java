@@ -13,10 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.onna.onnaback.global.oauth.application.service.CustomUserDetails;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+
 
 import com.onna.onnaback.domain.apply.domain.MemberSparkMapping;
 import com.onna.onnaback.domain.spark.domain.Spark;
