@@ -1,7 +1,7 @@
 package com.onna.onnaback.domain.member.adapter.out.external;
 
 import com.onna.onnaback.domain.member.adapter.out.external.response.OAuthLoginResponse;
-import com.onna.onnaback.domain.member.adapter.out.external.response.kakao.KakaoLoginRequest;
+import com.onna.onnaback.domain.member.adapter.out.external.request.KakaoLoginRequest;
 import com.onna.onnaback.domain.member.application.service.OAuthLoginService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
