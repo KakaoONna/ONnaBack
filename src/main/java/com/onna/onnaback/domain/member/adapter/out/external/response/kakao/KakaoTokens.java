@@ -1,10 +1,8 @@
-package com.onna.onnaback.global.oauth.adapter.in.web.response.kakao;
+package com.onna.onnaback.domain.member.adapter.out.external.response.kakao;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor

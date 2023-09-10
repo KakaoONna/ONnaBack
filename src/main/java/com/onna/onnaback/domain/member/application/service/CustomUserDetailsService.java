@@ -1,4 +1,4 @@
-package com.onna.onnaback.global.oauth.application.service;
+package com.onna.onnaback.domain.member.application.service;
 
 import com.onna.onnaback.domain.member.adapter.out.persistence.MemberRepository;
 import com.onna.onnaback.domain.member.domain.Member;

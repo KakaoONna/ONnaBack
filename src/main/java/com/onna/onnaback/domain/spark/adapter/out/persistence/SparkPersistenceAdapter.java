@@ -169,7 +169,7 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
 
     @Override
     public SparkResponse getSparkInfo(Long id) {
-        Spark spark = sparkRepository.findById(id).orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND));
+        Spark spark = sparkRepository.findBySparkId(id).orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND));
         return SparkResponse.builder()
                             .title(spark.getTitle())
                             .img(spark.getImg())

@@ -1,4 +1,4 @@
-package com.onna.onnaback.global.oauth.adapter.in.web.response.kakao;
+package com.onna.onnaback.domain.member.adapter.out.external.response.kakao;
 
 import lombok.Data;
 

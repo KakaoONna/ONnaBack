@@ -1,4 +1,4 @@
-package com.onna.onnaback.global.oauth.application.service;
+package com.onna.onnaback.domain.member.application.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

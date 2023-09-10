@@ -1,4 +1,4 @@
-package com.onna.onnaback.global.oauth.adapter.in.web.response;
+package com.onna.onnaback.domain.member.adapter.out.external.response;
 
 import lombok.Builder;
 import lombok.Data;

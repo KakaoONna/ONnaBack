@@ -1,7 +1,7 @@
-package com.onna.onnaback.global.oauth.application.port.in;
+package com.onna.onnaback.domain.member.application.port.in;
 
-import com.onna.onnaback.global.oauth.adapter.in.web.response.kakao.KakaoInfoResponse;
-import com.onna.onnaback.global.oauth.adapter.in.web.response.kakao.KakaoLoginRequest;
+
+import com.onna.onnaback.domain.member.adapter.out.external.response.kakao.KakaoInfoResponse;
 
 public interface OAuthUseCase {
     String requestAccessToken(String authorizationCode);

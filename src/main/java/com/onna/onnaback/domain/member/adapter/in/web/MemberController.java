@@ -2,10 +2,8 @@ package com.onna.onnaback.domain.member.adapter.in.web;
 
 import com.onna.onnaback.domain.member.adapter.in.web.response.MemberInfoResponse;
 import com.onna.onnaback.domain.member.application.port.in.MemberUseCase;
-import com.onna.onnaback.domain.member.domain.Member;
-import com.onna.onnaback.global.oauth.adapter.in.web.response.OAuthLoginResponse;
-import com.onna.onnaback.global.oauth.adapter.in.web.response.kakao.KakaoLoginRequest;
-import com.onna.onnaback.global.oauth.application.service.CustomUserDetails;
+
+import com.onna.onnaback.domain.member.application.service.CustomUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

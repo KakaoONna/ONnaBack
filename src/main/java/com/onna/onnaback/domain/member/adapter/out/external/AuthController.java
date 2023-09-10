@@ -1,8 +1,8 @@
-package com.onna.onnaback.global.oauth.adapter.in.web;
+package com.onna.onnaback.domain.member.adapter.out.external;
 
-import com.onna.onnaback.global.oauth.adapter.in.web.response.kakao.KakaoLoginRequest;
-import com.onna.onnaback.global.oauth.adapter.in.web.response.OAuthLoginResponse;
-import com.onna.onnaback.global.oauth.application.service.OAuthLoginService;
+import com.onna.onnaback.domain.member.adapter.out.external.response.OAuthLoginResponse;
+import com.onna.onnaback.domain.member.adapter.out.external.response.kakao.KakaoLoginRequest;
+import com.onna.onnaback.domain.member.application.service.OAuthLoginService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

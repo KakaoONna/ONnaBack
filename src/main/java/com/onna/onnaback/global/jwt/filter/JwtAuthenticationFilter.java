@@ -2,11 +2,10 @@ package com.onna.onnaback.global.jwt.filter;
 
 
 import com.onna.onnaback.domain.member.adapter.out.persistence.MemberRepository;
+import com.onna.onnaback.domain.member.application.service.CustomUserDetails;
+import com.onna.onnaback.domain.member.application.service.JwtService;
 import com.onna.onnaback.domain.member.domain.Member;
-import com.onna.onnaback.global.exception.BaseException;
-import com.onna.onnaback.global.exception.ErrorCode;
-import com.onna.onnaback.global.oauth.application.service.CustomUserDetails;
-import com.onna.onnaback.global.oauth.application.service.JwtService;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
