@@ -38,6 +38,9 @@ public class ApplyService implements ApplyUseCase {
         if (loadApplyPort.isAlreadyApply(applicant.getMemberId(), sparkId)) {
             throw new BaseException(ErrorCode.APPLY_ALREADY);
         }
+        if (spark.getMemberCount() >= spark.getCapacity()) {
+            throw new BaseException(ErrorCode.OVER_MEMBERCOUNT);
+        }
         
         return saveApplyPort.saveApply(member, spark);
     }

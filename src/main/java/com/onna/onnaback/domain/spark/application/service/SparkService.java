@@ -41,13 +41,8 @@ public class SparkService implements SparkUseCase {
 
     /**
      * 스파크 미팅/클래스 정보를 반환합니다.
-     * @param sparkId 스파크 아이디
      * @return 스파크 미팅/클래스 정보
      */
-    @Override
-    public Spark getById(Long sparkId) {
-        return loadSparkPort.getById(sparkId).orElseThrow();
-    }
 
     @Override
     @Transactional
@@ -87,6 +82,11 @@ public class SparkService implements SparkUseCase {
     @Override
     public SparkResponse getSparkInfo(Long id) {
         return loadSparkPort.getSparkInfo(id);
+    }
+
+    @Override
+    public Spark getById(Long sparkId) {
+        return loadSparkPort.getById(sparkId);
     }
 
     @Override
