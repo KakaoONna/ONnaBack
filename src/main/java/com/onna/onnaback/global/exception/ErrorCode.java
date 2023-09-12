@@ -22,7 +22,8 @@ public enum ErrorCode {
 
     //BUSINESS LOGIC EXCEPTION
     SPARK_NOT_FOUND(INTERNAL_SERVER_ERROR, 404, "해당 스파크 컨텐츠가 존재하지 않습니다."),
-    APPLY_ALREADY(HttpStatus.BAD_REQUEST, 405, "이미 신청한 스파크 컨텐츠입니다.");
+    APPLY_ALREADY(HttpStatus.BAD_REQUEST, 405, "이미 신청한 스파크 컨텐츠입니다."),
+    OVER_MEMBERCOUNT(HttpStatus.BAD_REQUEST, 406, "모집 인원을 초과했습니다.");
 
     private final HttpStatus httpStatus;
     private final int code;

@@ -36,9 +36,7 @@ public class ApplyPersistenceAdapter implements SaveApplyPort, LoadApplyPort {
     }
 
     @Override
-    public String saveProcess(Long sparkId, Long applicantId, AcceptStatus acceptStatus) {
-        MemberSparkMapping memberSparkMapping = applyRepository.findByApplySparkSparkIdAndApplicantMemberId(
-                sparkId, applicantId);
+    public String saveProcess(MemberSparkMapping memberSparkMapping, AcceptStatus acceptStatus) {
         memberSparkMapping.updateAcceptStatus(acceptStatus);
         return "update success";
     }
@@ -89,5 +87,10 @@ public class ApplyPersistenceAdapter implements SaveApplyPort, LoadApplyPort {
     @Override
     public Boolean isAlreadyApply(Long applicantId, Long sparkId) {
         return applyRepository.findByApplySparkSparkIdAndApplicantMemberId(sparkId, applicantId) != null;
+    }
+
+    @Override
+    public MemberSparkMapping getApply(Long appicantId, Long sparkId) {
+        return applyRepository.findByApplySparkSparkIdAndApplicantMemberId(sparkId, appicantId);
     }
 }

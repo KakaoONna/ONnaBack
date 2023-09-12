@@ -88,4 +88,9 @@ public class SparkService implements SparkUseCase {
     public SparkResponse getSparkInfo(Long id) {
         return loadSparkPort.getSparkInfo(id);
     }
+
+    @Override
+    public Spark increaseMemberCount(Spark spark) {
+        return spark.increaseMemberCount();
+    }
 }

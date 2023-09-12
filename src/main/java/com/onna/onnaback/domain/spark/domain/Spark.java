@@ -120,4 +120,9 @@ public class Spark extends BaseEntity {
         this.img = img;
     }
 
+    public Spark increaseMemberCount() {
+        this.memberCount++;
+        return this;
+    }
+
 }
