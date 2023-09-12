@@ -85,4 +85,10 @@ public class ApplyPersistenceAdapter implements SaveApplyPort, LoadApplyPort {
 
         return sparkApplyListDtos;
     }
+
+    @Override
+    public Boolean isAlreadyApply(Long applicantId, Long sparkId) {
+        return applyRepository.findByApplySparkSparkIdAndApplicantMemberId(sparkId, applicantId) != null ?
+               true : false;
+    }
 }

@@ -14,6 +14,8 @@ import com.onna.onnaback.domain.member.application.port.in.MemberUseCase;
 import com.onna.onnaback.domain.member.domain.Member;
 import com.onna.onnaback.domain.spark.application.port.in.SparkUseCase;
 import com.onna.onnaback.domain.spark.domain.Spark;
+import com.onna.onnaback.global.exception.BaseException;
+import com.onna.onnaback.global.exception.ErrorCode;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,9 +31,14 @@ public class ApplyService implements ApplyUseCase {
 
     @Override
     @Transactional
-    public String apply(Member applicant, Long sparkId) {
+    public String apply(Member applicant, Long sparkId) throws BaseException {
         Member member = memberUseCase.getById(applicant.getMemberId());
         Spark spark = sparkUseCase.getById(sparkId);
+        
+        if (loadApplyPort.isAlreadyApply(applicant.getMemberId(), sparkId)) {
+            throw new BaseException(ErrorCode.APPLY_ALREADY);
+        }
+
         return saveApplyPort.saveApply(member, spark);
     }
 

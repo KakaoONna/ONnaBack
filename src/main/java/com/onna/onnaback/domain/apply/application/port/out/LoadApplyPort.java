@@ -10,4 +10,6 @@ public interface LoadApplyPort {
     List<ApplyDto> getList(Member applicant);
 
     List<SparkApplyListDto> getSparkApplyList(Long sparkId);
+
+    Boolean isAlreadyApply(Long appicantId, Long sparkId);
 }
