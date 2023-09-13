@@ -30,6 +30,8 @@ public class HostListDto {
 
     Long price;
 
+    String img;
+
     String title;
 
     RecruitType recruitType;
@@ -39,7 +41,7 @@ public class HostListDto {
     @Builder
     public HostListDto(Long sparkId, String placeName, Always always, LocalDateTime sparkDate,
                        DurationHour durationHour, Long memberCount, CapacityType capacityType, Long capacity,
-                       Long price, String title, RecruitType recruitType, Long waitingCount) {
+                       Long price, String img, String title, RecruitType recruitType, Long waitingCount) {
         this.sparkId = sparkId;
         this.placeName = placeName;
         this.always = always;
@@ -49,6 +51,7 @@ public class HostListDto {
         this.capacityType = capacityType;
         this.capacity = capacity;
         this.price = price;
+        this.img = img;
         this.title = title;
         this.recruitType = recruitType;
         this.waitingCount = waitingCount;

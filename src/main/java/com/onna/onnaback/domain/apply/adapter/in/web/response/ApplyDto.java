@@ -26,6 +26,8 @@ public class ApplyDto {
 
     private Long price;
 
+    private String img;
+
     private String title;
 
     private AcceptStatus acceptStatus;
