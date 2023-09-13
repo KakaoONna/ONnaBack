@@ -33,4 +33,6 @@ public interface SparkUseCase {
     List<SparkResponse> getSparkListByPlaceId(int page, int size, Long placeId);
 
     SparkResponse getSparkInfo(Long id);
+
+    Spark increaseMemberCount(Spark spark);
 }

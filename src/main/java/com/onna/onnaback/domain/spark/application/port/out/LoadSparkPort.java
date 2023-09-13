@@ -1,7 +1,6 @@
 package com.onna.onnaback.domain.spark.application.port.out;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.domain.Pageable;
 
@@ -15,7 +14,7 @@ import com.onna.onnaback.domain.spark.domain.Spark;
 import com.onna.onnaback.domain.spark.domain.SparkType;
 
 public interface LoadSparkPort {
-    Optional<Spark> getById(Long sparkId);
+    Spark getById(Long sparkId);
 
     List<SparkResponse> getSparkListByPlaceId(Pageable pageable, Long placeId);
 

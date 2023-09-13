@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -47,9 +46,8 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
     private final PlaceRepository placeRepository;
 
     @Override
-    public Optional<Spark> getById(Long sparkId) {
-        // todo: orElseThrow 추가
-        return sparkRepository.findById(sparkId);
+    public Spark getById(Long sparkId) {
+        return sparkRepository.findBySparkId(sparkId).orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND));
     }
 
     @Override
@@ -180,7 +178,7 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
 
     @Override
     public SparkResponse getSparkInfo(Long id) {
-        Spark spark = sparkRepository.findBySparkId(id).orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND));
+        Spark spark = getById(id);
         return SparkResponse.builder()
                             .title(spark.getTitle())
                             .img(spark.getImg())
