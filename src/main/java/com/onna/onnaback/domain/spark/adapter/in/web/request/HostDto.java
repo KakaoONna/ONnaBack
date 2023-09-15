@@ -9,9 +9,6 @@ import lombok.Getter;
 
 @Getter
 public class HostDto {
-
-    Long hostId;
-
     Long placeId;
 
     String title;

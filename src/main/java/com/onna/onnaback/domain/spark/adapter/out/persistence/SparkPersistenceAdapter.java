@@ -167,6 +167,7 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
                     spark.getCapacityType(),
                     spark.getCapacity(),
                     spark.getPrice(),
+                    spark.getImg(),
                     spark.getTitle(),
                     spark.getRecruitType(),
                     waitingCount
