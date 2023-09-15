@@ -10,14 +10,10 @@ spring:
   jpa:
     properties:
       hibernate:
-          dialect : org.hibernate.dialect.PostgreSQLDialect
     open-in-view: true
     hibernate:
       ddl-auto: update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
       use-new-id-generator-mappings: false
-  sql:
-    init:
-      platform: postgres
 

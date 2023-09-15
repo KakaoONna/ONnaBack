@@ -13,7 +13,7 @@ import org.springframework.data.repository.query.Param;
 public interface PlaceRepository extends JpaRepository<Place, Long>, JpaSpecificationExecutor<Place> {
     Optional<Place> findById(Long memberId);
 
-    @Query("select p from Place p where placeId = :placeId")
+    @Query("select p from Place p where p.placeId = :placeId")
     Place findByPlaceId(@Param("placeId") Long placeId);
 
     List<Place> findByNameContaining(String name);
