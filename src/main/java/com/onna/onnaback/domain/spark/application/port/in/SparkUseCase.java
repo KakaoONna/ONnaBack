@@ -16,7 +16,7 @@ import com.onna.onnaback.domain.spark.domain.SparkType;
 public interface SparkUseCase {
     Spark getById(Long sparkId);
 
-    String uploadSpark(HostDto hostDto);
+    String uploadSpark(Member host, HostDto hostDto);
 
     List<SparkListDto> getList(
             int page,
@@ -33,4 +33,6 @@ public interface SparkUseCase {
     List<SparkResponse> getSparkListByPlaceId(int page, int size, Long placeId);
 
     SparkResponse getSparkInfo(Long id);
+
+    Spark increaseMemberCount(Spark spark);
 }

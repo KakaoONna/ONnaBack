@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -17,6 +16,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
+import com.onna.onnaback.domain.apply.domain.AcceptStatus;
+import com.onna.onnaback.domain.apply.domain.MemberSparkMapping;
 import com.onna.onnaback.domain.member.domain.Member;
 import com.onna.onnaback.domain.place.adapter.out.persistence.PlaceRepository;
 import com.onna.onnaback.domain.place.domain.Place;
@@ -45,9 +46,8 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
     private final PlaceRepository placeRepository;
 
     @Override
-    public Optional<Spark> getById(Long sparkId) {
-        // todo: orElseThrow 추가
-        return sparkRepository.findById(sparkId);
+    public Spark getById(Long sparkId) {
+        return sparkRepository.findBySparkId(sparkId).orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND));
     }
 
     @Override
@@ -148,6 +148,13 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
         List<HostListDto> hostListDtos = new ArrayList<>();
 
         for (Spark spark : sparks) {
+            // 신청 대기 수 카운트
+            List<MemberSparkMapping> memberSparkMapping = spark.getMemberSparkMappingList();
+            Long waitingCount = memberSparkMapping.stream()
+                                                  .filter(mapping -> mapping.getAcceptStatus()
+                                                                     == AcceptStatus.PENDING)
+                                                  .count();
+
             hostListDtos.add(new HostListDto(
                     spark.getSparkId(),
                     spark.getPlace().getName(),
@@ -155,10 +162,13 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
                     spark.getSparkDate(),
                     spark.getDurationHour(),
                     spark.getMemberCount(),
+                    spark.getCapacityType(),
                     spark.getCapacity(),
                     spark.getPrice(),
+                    spark.getImg(),
                     spark.getTitle(),
-                    spark.getRecruitType()
+                    spark.getRecruitType(),
+                    waitingCount
             ));
         }
 
@@ -168,6 +178,7 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
     @Override
     public SparkResponse getSparkInfo(Long id) {
         Spark spark = sparkRepository.findSparkAndHost(id);
+
         return SparkResponse.builder()
                             .title(spark.getTitle())
                             .img(spark.getImg())
@@ -199,9 +210,11 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
                            .sparkDate(localDateTime)
                            .price(hostDto.getPrice())
                            .memberCount(0L)
+                           .capacityType(hostDto.getCapacityType())
                            .capacity(hostDto.getCapacity())
                            .durationHour(hostDto.getDurationHour())
                            .hostDetail(hostDto.getHostDetail())
+                           .recruitType(RecruitType.RECRUITING)
                            .host(host)
                            .place(place)
                            .build();

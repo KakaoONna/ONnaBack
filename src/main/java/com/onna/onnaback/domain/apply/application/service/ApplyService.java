@@ -10,10 +10,13 @@ import com.onna.onnaback.domain.apply.application.port.in.ApplyUseCase;
 import com.onna.onnaback.domain.apply.application.port.out.LoadApplyPort;
 import com.onna.onnaback.domain.apply.application.port.out.SaveApplyPort;
 import com.onna.onnaback.domain.apply.domain.AcceptStatus;
+import com.onna.onnaback.domain.apply.domain.MemberSparkMapping;
 import com.onna.onnaback.domain.member.application.port.in.MemberUseCase;
 import com.onna.onnaback.domain.member.domain.Member;
 import com.onna.onnaback.domain.spark.application.port.in.SparkUseCase;
 import com.onna.onnaback.domain.spark.domain.Spark;
+import com.onna.onnaback.global.exception.BaseException;
+import com.onna.onnaback.global.exception.ErrorCode;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,9 +32,16 @@ public class ApplyService implements ApplyUseCase {
 
     @Override
     @Transactional
-    public String apply(Member applicant, Long sparkId) {
+    public String apply(Member applicant, Long sparkId) throws BaseException {
         Member member = memberUseCase.getById(applicant.getMemberId());
         Spark spark = sparkUseCase.getById(sparkId);
+        if (loadApplyPort.isAlreadyApply(applicant.getMemberId(), sparkId)) {
+            throw new BaseException(ErrorCode.APPLY_ALREADY);
+        }
+        if (spark.getMemberCount() >= spark.getCapacity()) {
+            throw new BaseException(ErrorCode.OVER_MEMBERCOUNT);
+        }
+        
         return saveApplyPort.saveApply(member, spark);
     }
 
@@ -44,7 +54,16 @@ public class ApplyService implements ApplyUseCase {
     @Override
     @Transactional
     public String applyProcess(Long sparkId, Long applicantId, AcceptStatus acceptStatus) {
-        // todo: 에러처리(인원 초과)
-        return saveApplyPort.saveProcess(sparkId, applicantId, acceptStatus);
+        MemberSparkMapping memberSparkMapping = loadApplyPort.getApply(applicantId, sparkId);
+        // 인원 추가 검사
+        if (memberSparkMapping.getApplySpark().getMemberCount() >= memberSparkMapping.getApplySpark()
+                                                                                     .getCapacity()) {
+            throw new BaseException(ErrorCode.OVER_MEMBERCOUNT);
+        }
+        if (acceptStatus == AcceptStatus.ACCEPT) {
+            sparkUseCase.increaseMemberCount(memberSparkMapping.getApplySpark());
+        }
+
+        return saveApplyPort.saveProcess(memberSparkMapping, acceptStatus);
     }
 }
