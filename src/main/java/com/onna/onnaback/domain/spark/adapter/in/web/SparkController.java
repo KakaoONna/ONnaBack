@@ -2,7 +2,6 @@ package com.onna.onnaback.domain.spark.adapter.in.web;
 
 import java.util.List;
 
-import com.onna.onnaback.domain.member.application.service.CustomUserDetails;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.onna.onnaback.domain.member.application.service.CustomUserDetails;
 import com.onna.onnaback.domain.member.domain.Member;
 import com.onna.onnaback.domain.spark.adapter.in.web.request.HostDto;
 import com.onna.onnaback.domain.spark.adapter.in.web.response.HostListDto;
@@ -23,7 +23,6 @@ import com.onna.onnaback.domain.spark.application.port.in.SparkUseCase;
 import com.onna.onnaback.domain.spark.domain.DurationHour;
 import com.onna.onnaback.domain.spark.domain.SortType;
 import com.onna.onnaback.domain.spark.domain.SparkType;
-
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -58,14 +57,16 @@ public class SparkController {
 
     @Operation(description = "주최하기")
     @PostMapping("/host")
-    public String host(@RequestBody HostDto hostDto) {
-        return sparkUseCase.uploadSpark(hostDto);
+    public String host(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                       @RequestBody HostDto hostDto) {
+        Member host = customUserDetails.getMember();
+        return sparkUseCase.uploadSpark(host, hostDto);
     }
 
     @Operation(description = "주최 내역 확인하기")
     @GetMapping("/list/host")
     public ResponseEntity<List<HostListDto>> getHostList(@AuthenticationPrincipal
-                                                         CustomUserDetails customUserDetails) {
+                                                                 CustomUserDetails customUserDetails) {
         Member host = customUserDetails.getMember();
         return ResponseEntity.ok().body(sparkUseCase.getHostList(host));
     }
