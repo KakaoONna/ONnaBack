@@ -6,7 +6,6 @@ spring:
   mvc:
     path match:
       matching-strategy: ant_path_matcher
-
   jpa:
     properties:
       hibernate:
