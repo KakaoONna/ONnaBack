@@ -126,6 +126,7 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
                         spark.getRecruitType(),
                         spark.getPlace().getImg(),
                         spark.getPrice(),
+                        spark.getPlace().getName(),
                         spark.getPlace().getDetailAddress(),
                         spark.getPlace().getLongitude(),
                         spark.getPlace().getLatitude()

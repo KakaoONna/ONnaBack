@@ -39,6 +39,8 @@ public class SparkListDto {
 
     Long price;
 
+    String placeName;
+
     String detailAddress;
 
     Double lng;
