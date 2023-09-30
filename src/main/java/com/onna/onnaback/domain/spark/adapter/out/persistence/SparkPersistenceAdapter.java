@@ -61,7 +61,7 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
                                                                   .sparkType(spark.getType())
                                                                   .sparkDate(spark.getSparkDate())
                                                                   .capacity(spark.getCapacity())
-                                                                  .memberCount(spark.getMemberCount())
+                                                                  .memberCount((long) spark.getMemberSparkMappingList().size())
                                                                   .price(spark.getPrice())
                                                                   .hostName(spark.getHost().getName())
                                                                   .hostDetail(spark.getHostDetail())
@@ -196,6 +196,18 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
                             .lng(spark.getPlace().getLongitude())
                             .lat(spark.getPlace().getLatitude())
                             .detailAddress(spark.getPlace().getDetailAddress())
+                            .participateMember(
+                                    spark.getMemberSparkMappingList()
+                                            .stream().map(
+                                                    memberSparkMapping -> ParticipateMemberDto.builder()
+                                                            .memberId(
+                                                                    memberSparkMapping.getApplicant()
+                                                                            .getMemberId())
+                                                            .profileImg(
+                                                                    memberSparkMapping.getApplicant()
+                                                                            .getProfileImg())
+                                                            .build()
+                                            ).collect(Collectors.toList()))
                             .build();
     }
 
