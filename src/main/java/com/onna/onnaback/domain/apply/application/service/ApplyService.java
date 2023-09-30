@@ -41,13 +41,12 @@ public class ApplyService implements ApplyUseCase {
         if (spark.getMemberCount() >= spark.getCapacity()) {
             throw new BaseException(ErrorCode.OVER_MEMBERCOUNT);
         }
-        
+
         return saveApplyPort.saveApply(member, spark);
     }
 
     @Override
-    public List<ApplyDto> getList(Long memberId) {
-        Member applicant = memberUseCase.getById(memberId);
+    public List<ApplyDto> getList(Member applicant) {
         return loadApplyPort.getList(applicant);
     }
 
