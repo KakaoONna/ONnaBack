@@ -59,6 +59,7 @@ public class Spark extends BaseEntity {
     @Column(name = "sparkDate")
     private LocalDateTime sparkDate;
 
+    //현재 신청 인원수
     @Column(name = "memberCount")
     private Long memberCount;
 
@@ -69,6 +70,7 @@ public class Spark extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private CapacityType capacityType;
 
+    // 전체인원수
     @Column(name = "capacity")
     private Long capacity;
 
