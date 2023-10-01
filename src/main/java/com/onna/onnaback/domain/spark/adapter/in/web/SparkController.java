@@ -3,6 +3,7 @@ package com.onna.onnaback.domain.spark.adapter.in.web;
 import java.util.List;
 
 import com.onna.onnaback.domain.member.application.service.CustomUserDetails;
+import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceSearchDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -100,4 +101,11 @@ public class SparkController {
                         southwestLatitude, northeastLatitude)
         );
     }
+
+    @Operation(description = "장소 키워드 검색 API")
+    @GetMapping("/search/{value}")
+    public ResponseEntity<List<SparkResponse>> searchSpark(@PathVariable("value")String value){
+        return ResponseEntity.ok().body(this.sparkUseCase.searchSpark(value));
+    }
+
 }

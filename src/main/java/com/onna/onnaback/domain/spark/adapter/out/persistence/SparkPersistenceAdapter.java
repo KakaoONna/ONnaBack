@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 
+import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceSearchDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
@@ -209,6 +210,43 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
                                                             .build()
                                             ).collect(Collectors.toList()))
                             .build();
+    }
+
+    @Override
+    public List<SparkResponse> searchSpark(String value) {
+        return sparkRepository.findByTitleContaining(value).stream().map(
+                spark -> SparkResponse.builder()
+                        .sparkId(spark.getSparkId())
+                        .sparkDate(spark.getSparkDate())
+                        .sparkType(spark.getType())
+                        .memberCount(spark.getMemberCount())
+                        .hostImg(spark.getHost().getProfileImg())
+                        .img(spark.getImg())
+                        .durationHour(spark.getDurationHour())
+                        .detailAddress(spark.getPlace().getDetailAddress())
+                        .hostName(spark.getHost().getName())
+                        .hostDetail(spark.getHostDetail())
+                        .recruitType(spark.getRecruitType())
+                        .capacity(spark.getCapacity())
+                        .title(spark.getTitle())
+                        .price(spark.getPrice())
+                        .description(spark.getDescription())
+                        .lat(spark.getPlace().getLatitude())
+                        .lng(spark.getPlace().getLatitude())
+                        .participateMember(
+                                spark.getMemberSparkMappingList()
+                                        .stream().map(
+                                                memberSparkMapping -> ParticipateMemberDto.builder()
+                                                        .memberId(
+                                                                memberSparkMapping.getApplicant()
+                                                                        .getMemberId())
+                                                        .profileImg(
+                                                                memberSparkMapping.getApplicant()
+                                                                        .getProfileImg())
+                                                        .build()
+                                        ).collect(Collectors.toList()))
+                        .build()
+        ).collect(Collectors.toList());
     }
 
     @Override

@@ -35,4 +35,6 @@ public interface SparkUseCase {
     SparkResponse getSparkInfo(Long id);
 
     Spark increaseMemberCount(Spark spark);
+
+    List<SparkResponse> searchSpark(String value);
 }
