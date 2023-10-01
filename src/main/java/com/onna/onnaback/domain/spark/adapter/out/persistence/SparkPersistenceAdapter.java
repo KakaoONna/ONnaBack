@@ -62,10 +62,8 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
                                                                   .sparkType(spark.getType())
                                                                   .sparkDate(spark.getSparkDate())
                                                                   .capacity(spark.getCapacity())
-                                                                  .memberCount(
-                                                                          (long) spark.getMemberSparkMappingList()
-                                                                                      .size())
-                                                                  .price(spark.getPrice())
+                                                                  .memberCount((long) spark.getMemberSparkMappingList().size())
+                                                                    .price(spark.getPrice())
                                                                   .hostName(spark.getHost().getName())
                                                                   .hostDetail(spark.getHostDetail())
                                                                   .hostImg(spark.getHost().getProfileImg())
@@ -201,16 +199,16 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
                             .detailAddress(spark.getPlace().getDetailAddress())
                             .participateMember(
                                     spark.getMemberSparkMappingList()
-                                         .stream().map(
-                                                 memberSparkMapping -> ParticipateMemberDto.builder()
-                                                                                           .memberId(
-                                                                                                   memberSparkMapping.getApplicant()
-                                                                                                                     .getMemberId())
-                                                                                           .profileImg(
-                                                                                                   memberSparkMapping.getApplicant()
-                                                                                                                     .getProfileImg())
-                                                                                           .build()
-                                         ).collect(Collectors.toList()))
+                                            .stream().map(
+                                                    memberSparkMapping -> ParticipateMemberDto.builder()
+                                                            .memberId(
+                                                                    memberSparkMapping.getApplicant()
+                                                                            .getMemberId())
+                                                            .profileImg(
+                                                                    memberSparkMapping.getApplicant()
+                                                                            .getProfileImg())
+                                                            .build()
+                                            ).collect(Collectors.toList()))
                             .build();
     }
 
@@ -252,7 +250,7 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
     }
 
     @Override
-    public String saveApply(Member host, Place place, HostDto hostDto) {
+    public Spark saveApply(Member host, Place place, HostDto hostDto) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime localDateTime = LocalDateTime.parse(hostDto.getSparkDate(), formatter);
         Spark spark = Spark.builder()
