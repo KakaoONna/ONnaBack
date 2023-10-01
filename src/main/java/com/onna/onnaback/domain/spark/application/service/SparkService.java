@@ -92,4 +92,9 @@ public class SparkService implements SparkUseCase {
     public Spark increaseMemberCount(Spark spark) {
         return spark.increaseMemberCount();
     }
+
+    @Override
+    public List<SparkResponse> searchSpark(String value) {
+        return loadSparkPort.searchSpark(value);
+    }
 }
