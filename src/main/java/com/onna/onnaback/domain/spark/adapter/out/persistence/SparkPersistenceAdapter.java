@@ -252,7 +252,7 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
     }
 
     @Override
-    public String saveApply(Member host, Place place, HostDto hostDto) {
+    public Spark saveApply(Member host, Place place, HostDto hostDto) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime localDateTime = LocalDateTime.parse(hostDto.getSparkDate(), formatter);
         Spark spark = Spark.builder()
