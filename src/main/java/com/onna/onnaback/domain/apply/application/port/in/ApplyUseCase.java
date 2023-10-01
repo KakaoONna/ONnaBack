@@ -12,7 +12,7 @@ public interface ApplyUseCase {
             Long sparkId
     );
 
-    List<ApplyDto> getList(Long memberId);
+    List<ApplyDto> getList(Member applicant);
 
     String applyProcess(Long sparkId, Long applicantId, AcceptStatus acceptStatus);
 }
