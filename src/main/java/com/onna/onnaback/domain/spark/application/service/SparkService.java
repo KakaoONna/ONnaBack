@@ -46,7 +46,7 @@ public class SparkService implements SparkUseCase {
 
     @Override
     @Transactional
-    public String uploadSpark(Member host, HostDto hostDto) {
+    public Spark uploadSpark(Member host, HostDto hostDto) {
         Place place = placeUseCase.getById(hostDto.getPlaceId());
         return saveSparkPort.saveApply(host, place, hostDto);
     }

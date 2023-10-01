@@ -2,12 +2,10 @@ package com.onna.onnaback.domain.apply.adapter.in.web;
 
 import java.util.List;
 
-import com.onna.onnaback.domain.member.application.service.CustomUserDetails;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +16,7 @@ import com.onna.onnaback.domain.apply.adapter.in.web.request.ApplyRequest;
 import com.onna.onnaback.domain.apply.adapter.in.web.response.ApplyDto;
 import com.onna.onnaback.domain.apply.application.port.in.ApplyUseCase;
 import com.onna.onnaback.domain.apply.domain.AcceptStatus;
+import com.onna.onnaback.domain.member.application.service.CustomUserDetails;
 import com.onna.onnaback.domain.member.domain.Member;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -41,8 +40,10 @@ public class ApplyController {
 
     @Operation(description = "신청 내역 확인하기")
     @GetMapping("/list/{memberId}")
-    public ResponseEntity<List<ApplyDto>> getList(@PathVariable("memberId") Long memberId) {
-        return ResponseEntity.ok().body(applyUseCase.getList(memberId));
+    public ResponseEntity<List<ApplyDto>> getList(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        Member applicant = customUserDetails.getMember();
+        return ResponseEntity.ok().body(applyUseCase.getList(applicant));
     }
 
     @Operation(description = "스파크 지원 수락/거절하기")

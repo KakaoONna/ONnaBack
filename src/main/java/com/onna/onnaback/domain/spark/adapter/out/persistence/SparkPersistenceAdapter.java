@@ -63,7 +63,7 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
                                                                   .sparkDate(spark.getSparkDate())
                                                                   .capacity(spark.getCapacity())
                                                                   .memberCount((long) spark.getMemberSparkMappingList().size())
-                                                                  .price(spark.getPrice())
+                                                                    .price(spark.getPrice())
                                                                   .hostName(spark.getHost().getName())
                                                                   .hostDetail(spark.getHostDetail())
                                                                   .hostImg(spark.getHost().getProfileImg())
@@ -250,7 +250,7 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
     }
 
     @Override
-    public String saveApply(Member host, Place place, HostDto hostDto) {
+    public Spark saveApply(Member host, Place place, HostDto hostDto) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime localDateTime = LocalDateTime.parse(hostDto.getSparkDate(), formatter);
         Spark spark = Spark.builder()
@@ -269,8 +269,7 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
                            .host(host)
                            .place(place)
                            .build();
-        sparkRepository.save(spark);
-        return "host success";
+        return sparkRepository.save(spark);
     }
 
     private Specification<Spark> equalPlace(Long placeId) {

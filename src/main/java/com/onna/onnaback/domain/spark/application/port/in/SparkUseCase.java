@@ -16,7 +16,7 @@ import com.onna.onnaback.domain.spark.domain.SparkType;
 public interface SparkUseCase {
     Spark getById(Long sparkId);
 
-    String uploadSpark(Member host, HostDto hostDto);
+    Spark uploadSpark(Member host, HostDto hostDto);
 
     List<SparkListDto> getList(
             int page,
