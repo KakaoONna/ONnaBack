@@ -182,6 +182,7 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
         Spark spark = sparkRepository.findSparkAndHost(id);
 
         return SparkResponse.builder()
+                            .sparkId(spark.getSparkId())
                             .title(spark.getTitle())
                             .img(spark.getImg())
                             .sparkType(spark.getType())
@@ -194,6 +195,8 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
                             .hostDetail(spark.getHostDetail())
                             .memberCount(spark.getMemberCount())
                             .recruitType(spark.getRecruitType())
+                            .placeId(spark.getPlace().getPlaceId())
+                            .placeName(spark.getPlace().getName())
                             .lng(spark.getPlace().getLongitude())
                             .lat(spark.getPlace().getLatitude())
                             .detailAddress(spark.getPlace().getDetailAddress())
