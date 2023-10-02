@@ -26,4 +26,6 @@ public interface SparkRepository extends JpaRepository<Spark, Long>, JpaSpecific
     @Query("select s from Spark s join fetch s.host where s.sparkId = :id")
     Spark findSparkAndHost(@Param("id") Long id);
 
+    List<Spark> findByTitleContaining(String title);
+
 }

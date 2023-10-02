@@ -29,4 +29,6 @@ public interface LoadSparkPort {
 
     SparkResponse getSparkInfo(Long id);
 
+    List<SparkResponse> searchSpark(String value);
+
 }
