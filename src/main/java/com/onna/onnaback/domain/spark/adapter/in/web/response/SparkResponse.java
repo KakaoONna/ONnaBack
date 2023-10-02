@@ -18,7 +18,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class SparkResponse {
 
-    long sparkId;
+    Long sparkId;
 
     String title;
 
@@ -49,6 +49,10 @@ public class SparkResponse {
     List<ParticipateMemberDto> participateMember;
 
     String detailAddress;
+
+    Long placeId;
+
+    String placeName;
 
     Double lng;
 
