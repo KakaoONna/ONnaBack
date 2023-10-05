@@ -106,7 +106,7 @@ public class SparkController {
         );
     }
 
-    @Operation(description = "장소 키워드 검색 API")
+    @Operation(description = "스파크 키워드 검색 API")
     @GetMapping("/search/{value}")
     public ResponseEntity<List<SparkResponse>> searchSpark(@PathVariable("value")String value){
         return ResponseEntity.ok().body(this.sparkUseCase.searchSpark(value));
