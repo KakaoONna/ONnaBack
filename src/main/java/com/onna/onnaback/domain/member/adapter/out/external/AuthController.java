@@ -24,5 +24,12 @@ public class AuthController {
         return ResponseEntity.ok(oAuthLoginService.login(kakaoLoginRequest.getAuthorizationCode()));
     }
 
+    @Operation(description = "카카오 로컬 로그인")
+    @PostMapping("/local")
+    public ResponseEntity<OAuthLoginResponse> localLoginKakao(@RequestBody KakaoLoginRequest kakaoLoginRequest) {
+        System.err.println(kakaoLoginRequest.getAuthorizationCode());
+        return ResponseEntity.ok(oAuthLoginService.localLogin(kakaoLoginRequest.getAuthorizationCode()));
+    }
+
 
 }

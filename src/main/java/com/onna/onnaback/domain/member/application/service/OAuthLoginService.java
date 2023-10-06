@@ -47,6 +47,28 @@ public class OAuthLoginService {
     }
 
     @Transactional
+    public OAuthLoginResponse localLogin(String authorizationCode) {
+
+        String accessToken = oAuthService.requestLocalAccessToken(authorizationCode);
+        KakaoInfoResponse kakaoInfoResponse =oAuthService.requestOauthInfo(accessToken);
+        String email=kakaoInfoResponse.getKakaoAccount().getEmail();
+        Member member=memberRepository.findByEmail(email).orElseGet(
+                ()->saveMember(kakaoInfoResponse)
+        );
+        System.err.println(kakaoInfoResponse.getKakaoAccount().getEmail());
+        System.err.println(member.getEmail());
+        String serviceAccessToken= jwtService.createAccessToken(email);
+        String serviceRefreshToken= jwtService.createRefreshToken(email);
+
+        member.updateRefreshToken(serviceRefreshToken);
+        return OAuthLoginResponse.builder()
+                .memberEmail(member.getEmail())
+                .accessToken(serviceAccessToken)
+                .refreshToken(serviceRefreshToken)
+                .build();
+    }
+
+    @Transactional
     public Member saveMember(KakaoInfoResponse kakaoInfoResponse) {
         Gender memberGender;
         Age memberAge = null;

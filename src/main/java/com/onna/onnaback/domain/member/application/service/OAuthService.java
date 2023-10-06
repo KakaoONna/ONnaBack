@@ -41,6 +41,10 @@ public class OAuthService implements OAuthUseCase {
     @Value("${oauth.kakao.url.redirect-uri}")
     private String redirectUri;
 
+    @Value("${oauth.kakao.url.redirect-local}")
+    private String redirectLocalUri;
+
+
     private final RestTemplate restTemplate;
 
 
@@ -60,6 +64,29 @@ public class OAuthService implements OAuthUseCase {
         body.add("grant_type", GRANT_TYPE);
         body.add("client_id", clientId);
         body.add("redirect_uri",redirectUri);
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body,httpHeaders);
+
+        restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
+        KakaoTokens response = restTemplate.postForObject(tokenUri, request, KakaoTokens.class);
+        assert response != null;
+        return response.getAccessToken();
+
+    }
+
+    @Override
+    public String requestLocalAccessToken(String authorizationCode) {
+
+        String tokenUri = authUrl + "/oauth/token";
+
+        HttpHeaders httpHeaders=new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        httpHeaders.add("Accept", "application/json");
+
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("code",authorizationCode);
+        body.add("grant_type", GRANT_TYPE);
+        body.add("client_id", clientId);
+        body.add("redirect_uri",redirectLocalUri);
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body,httpHeaders);
 
         restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
