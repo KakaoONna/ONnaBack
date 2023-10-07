@@ -55,6 +55,7 @@ public class ApplyPersistenceAdapter implements SaveApplyPort, LoadApplyPort {
                                        memberSparkMapping.getApplySpark().getDurationHour(),
                                        memberSparkMapping.getApplySpark().getMemberCount(),
                                        memberSparkMapping.getApplySpark().getCapacity(),
+                                       memberSparkMapping.getApplySpark().getCapacityType(),
                                        memberSparkMapping.getApplySpark().getPrice(),
                                        memberSparkMapping.getApplySpark().getImg(),
                                        memberSparkMapping.getApplySpark().getTitle(),

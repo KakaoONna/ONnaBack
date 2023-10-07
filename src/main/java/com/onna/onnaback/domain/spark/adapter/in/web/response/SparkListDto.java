@@ -2,6 +2,7 @@ package com.onna.onnaback.domain.spark.adapter.in.web.response;
 
 import java.time.LocalDateTime;
 
+import com.onna.onnaback.domain.spark.domain.CapacityType;
 import com.onna.onnaback.domain.spark.domain.DurationHour;
 import com.onna.onnaback.domain.spark.domain.RecruitType;
 import com.onna.onnaback.domain.spark.domain.SparkType;
@@ -30,6 +31,8 @@ public class SparkListDto {
     DurationHour durationHour;
 
     Long capacity;
+
+    CapacityType capacityType;
 
     Long memberCount;
 
