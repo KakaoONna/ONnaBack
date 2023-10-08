@@ -14,6 +14,7 @@ import com.onna.onnaback.domain.apply.domain.MemberSparkMapping;
 import com.onna.onnaback.domain.member.application.port.in.MemberUseCase;
 import com.onna.onnaback.domain.member.domain.Member;
 import com.onna.onnaback.domain.spark.application.port.in.SparkUseCase;
+import com.onna.onnaback.domain.spark.domain.CapacityType;
 import com.onna.onnaback.domain.spark.domain.Spark;
 import com.onna.onnaback.global.exception.BaseException;
 import com.onna.onnaback.global.exception.ErrorCode;
@@ -38,7 +39,7 @@ public class ApplyService implements ApplyUseCase {
         if (loadApplyPort.isAlreadyApply(applicant.getMemberId(), sparkId)) {
             throw new BaseException(ErrorCode.APPLY_ALREADY);
         }
-        if (spark.getMemberCount() >= spark.getCapacity()) {
+        if (spark.getCapacityType() == CapacityType.LIMIT && spark.getMemberCount() >= spark.getCapacity()) {
             throw new BaseException(ErrorCode.OVER_MEMBERCOUNT);
         }
 
