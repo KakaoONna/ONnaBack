@@ -40,16 +40,9 @@ public class SparkController {
 
     @Operation(description = "장소별 동행컨텐츠 조회")
     @GetMapping("/place/{placeId}")
-    public ResponseEntity<List<SparkResponse>> getSparkContentList(@PathVariable("placeId") Long placeId,
-                                                                   @RequestParam(value = "page",
-                                                                           required = false,
-                                                                           defaultValue = "1") int page,
-                                                                   @RequestParam(value = "size",
-                                                                           required = false,
-                                                                           defaultValue = "5") int size
-    ) {
+    public ResponseEntity<List<SparkResponse>> getSparkContentList(@PathVariable("placeId") Long placeId) {
         return ResponseEntity.ok().body(
-                this.sparkUseCase.getSparkListByPlaceId(page, size, placeId)
+                this.sparkUseCase.getSparkListByPlaceId(placeId)
         );
     }
 

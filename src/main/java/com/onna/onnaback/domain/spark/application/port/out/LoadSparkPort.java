@@ -16,7 +16,7 @@ import com.onna.onnaback.domain.spark.domain.SparkType;
 public interface LoadSparkPort {
     Spark getById(Long sparkId);
 
-    List<SparkResponse> getSparkListByPlaceId(Pageable pageable, Long placeId);
+    List<SparkResponse> getSparkListByPlaceId(Long placeId);
 
     List<SparkListDto> getList(
             Pageable pageable, SparkType sparkType,

@@ -30,7 +30,7 @@ public interface SparkUseCase {
 
     List<SparkApplyListDto> getSparkApplyList(Long sparkId);
 
-    List<SparkResponse> getSparkListByPlaceId(int page, int size, Long placeId);
+    List<SparkResponse> getSparkListByPlaceId(Long placeId);
 
     SparkResponse getSparkInfo(Long id);
 

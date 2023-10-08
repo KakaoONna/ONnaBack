@@ -51,8 +51,8 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
     }
 
     @Override
-    public List<SparkResponse> getSparkListByPlaceId(Pageable pageable, Long placeId) {
-        return sparkRepository.findSparksByPlace(placeId, pageable).getContent()
+    public List<SparkResponse> getSparkListByPlaceId(Long placeId) {
+        return sparkRepository.findSparksByPlace(placeId)
                               .stream().map(spark -> SparkResponse.builder()
                                                                   .sparkId(spark.getSparkId())
                                                                   .img(spark.getImg())

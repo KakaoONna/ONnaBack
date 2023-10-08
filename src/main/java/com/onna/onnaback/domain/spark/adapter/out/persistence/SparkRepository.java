@@ -19,7 +19,7 @@ public interface SparkRepository extends JpaRepository<Spark, Long>, JpaSpecific
     Optional<Spark> findBySparkId(Long sparkId);
 
     @Query("select s from Spark s  where s.place.placeId = :placeId")
-    Page<Spark> findSparksByPlace(@Param("placeId") Long placeId, Pageable pageable);
+    List<Spark> findSparksByPlace(@Param("placeId") Long placeId);
 
     List<Spark> findAllByHostMemberId(Long hostId);
 
