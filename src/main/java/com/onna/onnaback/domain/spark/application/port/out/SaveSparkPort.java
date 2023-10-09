@@ -6,5 +6,5 @@ import com.onna.onnaback.domain.spark.adapter.in.web.request.HostDto;
 import com.onna.onnaback.domain.spark.domain.Spark;
 
 public interface SaveSparkPort {
-    Spark saveApply(Member host, Place place, HostDto hostDto);
+    Spark saveSpark(Member host, Place place, HostDto hostDto, String imgUrl);
 }
