@@ -19,6 +19,7 @@ import com.onna.onnaback.domain.spark.adapter.in.web.response.SparkResponse;
 import com.onna.onnaback.domain.spark.application.port.in.SparkUseCase;
 import com.onna.onnaback.domain.spark.application.port.out.LoadSparkPort;
 import com.onna.onnaback.domain.spark.application.port.out.SaveSparkPort;
+import com.onna.onnaback.domain.spark.application.port.out.UploadS3Port;
 import com.onna.onnaback.domain.spark.domain.DurationHour;
 import com.onna.onnaback.domain.spark.domain.SortType;
 import com.onna.onnaback.domain.spark.domain.Spark;
@@ -38,6 +39,7 @@ public class SparkService implements SparkUseCase {
     private final LoadSparkPort loadSparkPort;
     private final LoadApplyPort loadApplyPort;
     private final SaveSparkPort saveSparkPort;
+    private final UploadS3Port uploadS3Port;
 
     /**
      * 스파크 미팅/클래스 정보를 반환합니다.
@@ -48,7 +50,8 @@ public class SparkService implements SparkUseCase {
     @Transactional
     public Spark uploadSpark(Member host, HostDto hostDto) {
         Place place = placeUseCase.getById(hostDto.getPlaceId());
-        return saveSparkPort.saveApply(host, place, hostDto);
+        String imgUrl = uploadS3Port.uploadS3(hostDto.getImg());
+        return saveSparkPort.saveSpark(host, place, hostDto, imgUrl);
     }
 
     @Override
@@ -73,9 +76,9 @@ public class SparkService implements SparkUseCase {
     }
 
     @Override
-    public List<SparkResponse> getSparkListByPlaceId( Long placeId) {
+    public List<SparkResponse> getSparkListByPlaceId(Long placeId) {
 
-        return loadSparkPort.getSparkListByPlaceId( placeId);
+        return loadSparkPort.getSparkListByPlaceId(placeId);
     }
 
     @Override

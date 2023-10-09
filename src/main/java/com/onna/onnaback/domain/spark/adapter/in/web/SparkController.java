@@ -2,18 +2,16 @@ package com.onna.onnaback.domain.spark.adapter.in.web;
 
 import java.util.List;
 
-
-import com.onna.onnaback.domain.member.application.service.CustomUserDetails;
-import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceSearchDto;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.onna.onnaback.domain.member.application.service.CustomUserDetails;
 import com.onna.onnaback.domain.member.domain.Member;
@@ -24,6 +22,8 @@ import com.onna.onnaback.domain.spark.adapter.in.web.response.SparkHostResponse;
 import com.onna.onnaback.domain.spark.adapter.in.web.response.SparkListDto;
 import com.onna.onnaback.domain.spark.adapter.in.web.response.SparkResponse;
 import com.onna.onnaback.domain.spark.application.port.in.SparkUseCase;
+import com.onna.onnaback.domain.spark.domain.Always;
+import com.onna.onnaback.domain.spark.domain.CapacityType;
 import com.onna.onnaback.domain.spark.domain.DurationHour;
 import com.onna.onnaback.domain.spark.domain.SortType;
 import com.onna.onnaback.domain.spark.domain.SparkType;
@@ -53,9 +53,25 @@ public class SparkController {
     }
 
     @Operation(description = "주최하기")
-    @PostMapping("/host")
+    @PostMapping(value = "/host", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<SparkHostResponse> host(@AuthenticationPrincipal CustomUserDetails customUserDetails,
-                                                  @RequestBody HostDto hostDto) {
+                                                  @RequestParam("placeId") Long placeId,
+                                                  @RequestParam("title") String title,
+                                                  @RequestParam("description") String description,
+                                                  @RequestParam("type") SparkType type,
+                                                  @RequestParam("always") Always always,
+                                                  @RequestParam("sparkDate") String sparkDate,
+                                                  @RequestParam("price") Long price,
+                                                  @RequestParam("capacityType") CapacityType capacityType,
+                                                  @RequestParam("capacity") Long capacity,
+                                                  @RequestParam("durationHour") DurationHour durationHour,
+                                                  @RequestParam("hostDetail") String hostDetail,
+                                                  @RequestParam("img") MultipartFile img
+    ) {
+        HostDto hostDto = new HostDto(img, placeId, title, description, type, always, sparkDate, price,
+                                      capacityType,
+                                      capacity, durationHour, hostDetail);
+
         Member host = customUserDetails.getMember();
         return ResponseEntity.ok().body(
                 new SparkHostResponse(this.sparkUseCase.uploadSpark(host, hostDto).getSparkId())
@@ -101,7 +117,7 @@ public class SparkController {
 
     @Operation(description = "스파크 키워드 검색 API")
     @GetMapping("/search/{value}")
-    public ResponseEntity<List<SparkResponse>> searchSpark(@PathVariable("value")String value){
+    public ResponseEntity<List<SparkResponse>> searchSpark(@PathVariable("value") String value) {
         return ResponseEntity.ok().body(this.sparkUseCase.searchSpark(value));
     }
 

@@ -1,14 +1,20 @@
 package com.onna.onnaback.domain.spark.adapter.in.web.request;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.onna.onnaback.domain.spark.domain.Always;
 import com.onna.onnaback.domain.spark.domain.CapacityType;
 import com.onna.onnaback.domain.spark.domain.DurationHour;
 import com.onna.onnaback.domain.spark.domain.SparkType;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public class HostDto {
+    MultipartFile img;
+
     Long placeId;
 
     String title;
