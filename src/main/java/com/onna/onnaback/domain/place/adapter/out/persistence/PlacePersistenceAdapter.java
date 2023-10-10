@@ -19,6 +19,8 @@ import com.onna.onnaback.domain.place.application.port.out.LoadPlacePort;
 import com.onna.onnaback.domain.place.domain.Place;
 import com.onna.onnaback.domain.place.domain.PlaceType;
 import com.onna.onnaback.domain.spark.domain.DurationHour;
+import com.onna.onnaback.domain.spark.domain.RecruitType;
+import com.onna.onnaback.domain.spark.domain.SortType;
 import com.onna.onnaback.domain.spark.domain.Spark;
 import com.onna.onnaback.domain.spark.domain.SparkType;
 
@@ -32,6 +34,7 @@ public class PlacePersistenceAdapter implements LoadPlacePort {
 
     @Override
     public List<PlaceReloadDto> getMarkers(SparkType sparkType, DurationHour durationHour, PlaceType placeType,
+                                           SortType sortType,
                                            Double southwestLongitude, Double northeastLongitude,
                                            Double southwestLatitude, Double northeastLatitude) {
         Specification<Place> spec = Specification.where(null);
@@ -48,6 +51,11 @@ public class PlacePersistenceAdapter implements LoadPlacePort {
             spec = spec.and(hasPlaceType(placeType));
         }
 
+        // 모집중
+        if (sortType == SortType.RECRUITING) {
+            spec = spec.and(hasRecruiting());
+        }
+
         spec = spec.and(hasLocationBetween(southwestLongitude, northeastLongitude, southwestLatitude,
                                            northeastLatitude));
 
@@ -59,7 +67,7 @@ public class PlacePersistenceAdapter implements LoadPlacePort {
 
         for (Place place : places) {
             if (!uniquePlaceIds.contains(place.getPlaceId())) {
-                Long sparkCount = calculateSparkCount(place);
+                Long sparkCount = calculateSparkCount(place, sparkType, durationHour, sortType);
                 result.add(new PlaceReloadDto(place.getPlaceId(),
                                               place.getPlaceType(),
                                               place.getLongitude(),
@@ -72,8 +80,29 @@ public class PlacePersistenceAdapter implements LoadPlacePort {
         return result;
     }
 
-    private Long calculateSparkCount(Place place) {
-        return (long) place.getSparkList().size();
+    // 필터에 맞는 스파크 클래스/미팅 개수 구함
+    private Long calculateSparkCount(Place place, SparkType sparkType,
+                                     DurationHour durationHour,
+                                     SortType sortType) {
+        List<Spark> sparks = place.getSparkList();
+        Long sparkCnt = (long) place.getSparkList().size();
+
+        for (Spark spark : sparks) {
+            if (sparkType != null && spark.getType() != sparkType) {
+                sparkCnt--;
+                continue;
+            }
+            if (durationHour != null && spark.getDurationHour() != durationHour) {
+                sparkCnt--;
+                continue;
+            }
+            // 모집중
+            if (sortType == SortType.RECRUITING && spark.getRecruitType() != RecruitType.RECRUITING) {
+                sparkCnt--;
+            }
+        }
+
+        return sparkCnt;
     }
 
     @Override
@@ -122,6 +151,18 @@ public class PlacePersistenceAdapter implements LoadPlacePort {
 
     private Specification<Place> hasPlaceType(PlaceType placeType) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("placeType"), placeType);
+    }
+
+    private Specification<Place> hasRecruiting() {
+        return (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            Join<Place, Spark> sparkJoin = root.join("sparkList");
+
+            predicates.add(criteriaBuilder.equal(sparkJoin.get("recruitType"), RecruitType.RECRUITING));
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        };
     }
 
     private Specification<Place> hasLocationBetween(Double southwestLongitude, Double northeastLongitude,
