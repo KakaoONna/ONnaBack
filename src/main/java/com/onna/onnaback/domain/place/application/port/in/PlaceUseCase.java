@@ -4,17 +4,17 @@ import java.util.List;
 
 import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceDetailInfo;
 import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceReloadDto;
-import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceResponse;
 import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceSearchDto;
 import com.onna.onnaback.domain.place.domain.Place;
 import com.onna.onnaback.domain.place.domain.PlaceType;
 import com.onna.onnaback.domain.spark.domain.DurationHour;
+import com.onna.onnaback.domain.spark.domain.SortType;
 import com.onna.onnaback.domain.spark.domain.SparkType;
 
 public interface PlaceUseCase {
     List<PlaceReloadDto> reload(
             SparkType sparkType, DurationHour durationHour, PlaceType placeType,
-            Double southwestLongitude, Double northeastLongitude,
+            SortType sortType, Double southwestLongitude, Double northeastLongitude,
             Double southwestLatitude, Double northeastLatitude
     );
 
