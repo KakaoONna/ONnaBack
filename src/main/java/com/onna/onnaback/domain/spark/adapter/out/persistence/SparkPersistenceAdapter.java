@@ -61,8 +61,7 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
                         .sparkType(spark.getType())
                         .sparkDate(spark.getSparkDate())
                         .capacity(spark.getCapacity())
-                        .memberCount(
-                                (long) spark.getMemberSparkMappingList().size())
+                        .memberCount(spark.getMemberCount())
                         .price(spark.getPrice())
                         .hostName(spark.getHost().getName())
                         .hostDetail(spark.getHostDetail())
