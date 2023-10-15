@@ -1,5 +1,6 @@
 package com.onna.onnaback.domain.place.adapter.out.persistence;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -88,16 +89,16 @@ public class PlacePersistenceAdapter implements LoadPlacePort {
         Long sparkCnt = (long) place.getSparkList().size();
 
         for (Spark spark : sparks) {
-            if (sparkType != null && spark.getType() != sparkType) {
+            // 스파크 날짜가 이전이면 카운트 x
+            if (spark.getSparkDate().isBefore(LocalDateTime.now())) {
                 sparkCnt--;
-                continue;
-            }
-            if (durationHour != null && spark.getDurationHour() != durationHour) {
+            } else if (sparkType != null && spark.getType() != sparkType) {
                 sparkCnt--;
-                continue;
+            } else if (durationHour != null && spark.getDurationHour() != durationHour) {
+                sparkCnt--;
             }
-            // 모집중
-            if (sortType == SortType.RECRUITING && spark.getRecruitType() != RecruitType.RECRUITING) {
+            // 모집중 아닌 경우
+            else if (sortType == SortType.RECRUITING && spark.getRecruitType() != RecruitType.RECRUITING) {
                 sparkCnt--;
             }
         }
