@@ -83,6 +83,10 @@ public class Spark extends BaseEntity {
     @Lob
     private String hostDetail;
 
+    // 채팅방 링크
+    @Column(name = "chatUrl")
+    private String chatUrl;
+
     // 모집상태
     @Column(name = "recruitType")
     @Enumerated(value = EnumType.STRING)
@@ -102,7 +106,7 @@ public class Spark extends BaseEntity {
     @Builder
     public Spark(String title, String description, SparkType type, Always always, LocalDateTime sparkDate,
                  Long memberCount, Long price, CapacityType capacityType, Long capacity,
-                 DurationHour durationHour, String hostDetail,
+                 DurationHour durationHour, String hostDetail, String chatUrl,
                  RecruitType recruitType, Member host, Place place, String img
     ) {
         this.title = title;
@@ -116,6 +120,7 @@ public class Spark extends BaseEntity {
         this.capacity = capacity;
         this.durationHour = durationHour;
         this.hostDetail = hostDetail;
+        this.chatUrl = chatUrl;
         this.recruitType = recruitType;
         this.host = host;
         this.place = place;

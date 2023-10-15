@@ -47,6 +47,8 @@ public class SparkResponse {
 
     String hostDetail;
 
+    String chatUrl;
+
     String description;
 
     List<ParticipateMemberDto> participateMember;
