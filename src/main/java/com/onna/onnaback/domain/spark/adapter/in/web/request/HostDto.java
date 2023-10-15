@@ -36,4 +36,6 @@ public class HostDto {
     DurationHour durationHour;
 
     String hostDetail;
+
+    String chatUrl;
 }

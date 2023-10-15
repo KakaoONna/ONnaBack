@@ -66,12 +66,13 @@ public class SparkController {
                                                   @RequestParam("capacity") Long capacity,
                                                   @RequestParam("durationHour") DurationHour durationHour,
                                                   @RequestParam("hostDetail") String hostDetail,
+                                                  @RequestParam("chatUrl") String chatUrl,
                                                   @RequestParam(value = "img", required = false)
                                                           MultipartFile img
     ) {
         HostDto hostDto = new HostDto(img, placeId, title, description, type, always, sparkDate, price,
                                       capacityType,
-                                      capacity, durationHour, hostDetail);
+                                      capacity, durationHour, hostDetail, chatUrl);
 
         Member host = customUserDetails.getMember();
         return ResponseEntity.ok().body(
