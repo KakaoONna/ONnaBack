@@ -63,6 +63,7 @@ public class PlaceService implements PlaceUseCase {
                               .description(place.getDescription())
                               .name(place.getName())
                               .phoneNum(place.getPhoneNum())
+                              .placeType(place.getPlaceType())
                               .build();
     }
 

@@ -1,5 +1,7 @@
 package com.onna.onnaback.domain.place.adapter.in.web.response;
 
+import com.onna.onnaback.domain.place.domain.PlaceType;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -22,5 +24,7 @@ public class PlaceDetailInfo {
     private String description;
 
     private String detailInfo;
+
+    private PlaceType placeType;
 
 }

@@ -66,7 +66,8 @@ public class SparkController {
                                                   @RequestParam("capacity") Long capacity,
                                                   @RequestParam("durationHour") DurationHour durationHour,
                                                   @RequestParam("hostDetail") String hostDetail,
-                                                  @RequestParam("img") MultipartFile img
+                                                  @RequestParam(value = "img", required = false)
+                                                          MultipartFile img
     ) {
         HostDto hostDto = new HostDto(img, placeId, title, description, type, always, sparkDate, price,
                                       capacityType,

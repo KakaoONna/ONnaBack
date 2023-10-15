@@ -55,9 +55,10 @@ public class ApplyService implements ApplyUseCase {
     @Transactional
     public String applyProcess(Long sparkId, Long applicantId, AcceptStatus acceptStatus) {
         MemberSparkMapping memberSparkMapping = loadApplyPort.getApply(applicantId, sparkId);
-        // 인원 추가 검사
-        if (memberSparkMapping.getApplySpark().getMemberCount() >= memberSparkMapping.getApplySpark()
-                                                                                     .getCapacity()) {
+        // 인원 추가 검사(LIMIT 상태일때)
+        if (memberSparkMapping.getApplySpark().getCapacityType() == CapacityType.LIMIT
+            && memberSparkMapping.getApplySpark().getMemberCount() >= memberSparkMapping.getApplySpark()
+                                                                                        .getCapacity()) {
             throw new BaseException(ErrorCode.OVER_MEMBERCOUNT);
         }
         if (acceptStatus == AcceptStatus.ACCEPT) {
