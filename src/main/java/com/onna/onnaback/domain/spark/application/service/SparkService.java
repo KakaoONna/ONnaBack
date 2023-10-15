@@ -50,7 +50,9 @@ public class SparkService implements SparkUseCase {
     @Transactional
     public Spark uploadSpark(Member host, HostDto hostDto) {
         Place place = placeUseCase.getById(hostDto.getPlaceId());
-        String imgUrl = uploadS3Port.uploadS3(hostDto.getImg());
+        String imgUrl = hostDto.getImg() == null
+                        ? ""
+                        : uploadS3Port.uploadS3(hostDto.getImg());
         return saveSparkPort.saveSpark(host, place, hostDto, imgUrl);
     }
 
