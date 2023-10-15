@@ -54,7 +54,6 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
     public List<SparkResponse> getSparkListByPlaceId(Long placeId) {
         return sparkRepository.findSparksByPlace(placeId)
                               .stream().map(spark -> SparkResponse.builder().sparkId(spark.getSparkId())
-
                         .img(spark.getImg())
                         .title(spark.getTitle())
                         .durationHour(spark.getDurationHour())
