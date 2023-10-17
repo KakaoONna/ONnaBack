@@ -268,6 +268,7 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
                                       .placeId(spark.getPlace().getPlaceId())
                                       .placeName(spark.getPlace().getName())
                                       .img(spark.getImg())
+                                    .capacityType(spark.getCapacityType())
                                       .build()
         ).collect(Collectors.toList());
     }
