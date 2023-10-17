@@ -26,6 +26,7 @@ import com.onna.onnaback.domain.spark.domain.Always;
 import com.onna.onnaback.domain.spark.domain.CapacityType;
 import com.onna.onnaback.domain.spark.domain.DurationHour;
 import com.onna.onnaback.domain.spark.domain.SortType;
+import com.onna.onnaback.domain.spark.domain.Spark;
 import com.onna.onnaback.domain.spark.domain.SparkType;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -75,8 +76,10 @@ public class SparkController {
                                       capacity, durationHour, hostDetail, chatUrl);
 
         Member host = customUserDetails.getMember();
+        Spark spark = this.sparkUseCase.uploadSpark(host, hostDto);
         return ResponseEntity.ok().body(
-                new SparkHostResponse(this.sparkUseCase.uploadSpark(host, hostDto).getSparkId())
+                new SparkHostResponse(spark.getSparkId(),
+                                      img == null ? spark.getPlace().getImg() : spark.getImg())
         );
     }
 
