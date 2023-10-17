@@ -1,27 +1,19 @@
 package com.onna.onnaback.domain.spark.adapter.out.persistence;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import com.onna.onnaback.domain.member.domain.Member;
-import com.onna.onnaback.domain.spark.adapter.in.web.response.SparkResponse;
-import org.joda.time.LocalDate;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.onna.onnaback.domain.place.domain.Place;
 import com.onna.onnaback.domain.spark.domain.Spark;
 
 public interface SparkRepository extends JpaRepository<Spark, Long>, JpaSpecificationExecutor<Spark> {
     Optional<Spark> findBySparkId(Long sparkId);
 
-    @Query(value = "select s from Spark s  where s.place.placeId = :placeId and s.sparkDate >= CURRENT_TIMESTAMP")
+    @Query(value = "select s from Spark s where s.place.placeId = :placeId and (s.always = 'ALWAYS' or s.sparkDate >= CURRENT_TIMESTAMP)")
     List<Spark> findSparksByPlace(@Param("placeId") Long placeId);
 
     List<Spark> findAllByHostMemberId(Long hostId);

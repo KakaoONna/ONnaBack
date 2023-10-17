@@ -19,6 +19,7 @@ import com.onna.onnaback.domain.place.adapter.in.web.response.PlaceSearchDto;
 import com.onna.onnaback.domain.place.application.port.out.LoadPlacePort;
 import com.onna.onnaback.domain.place.domain.Place;
 import com.onna.onnaback.domain.place.domain.PlaceType;
+import com.onna.onnaback.domain.spark.domain.Always;
 import com.onna.onnaback.domain.spark.domain.DurationHour;
 import com.onna.onnaback.domain.spark.domain.RecruitType;
 import com.onna.onnaback.domain.spark.domain.SortType;
@@ -90,7 +91,7 @@ public class PlacePersistenceAdapter implements LoadPlacePort {
 
         for (Spark spark : sparks) {
             // 스파크 날짜가 이전이면 카운트 x
-            if (spark.getSparkDate().isBefore(LocalDateTime.now())) {
+            if (spark.getAlways() == Always.NOT_ALWAYS && spark.getSparkDate().isBefore(LocalDateTime.now())) {
                 sparkCnt--;
             } else if (sparkType != null && spark.getType() != sparkType) {
                 sparkCnt--;
