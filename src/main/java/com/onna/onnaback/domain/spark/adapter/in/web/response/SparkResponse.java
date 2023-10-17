@@ -3,6 +3,7 @@ package com.onna.onnaback.domain.spark.adapter.in.web.response;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.onna.onnaback.domain.spark.domain.Always;
 import com.onna.onnaback.domain.spark.domain.CapacityType;
 import com.onna.onnaback.domain.spark.domain.DurationHour;
 import com.onna.onnaback.domain.spark.domain.RecruitType;
@@ -26,6 +27,8 @@ public class SparkResponse {
     String img;
 
     SparkType sparkType;
+
+    Always always;
 
     LocalDateTime sparkDate;
 

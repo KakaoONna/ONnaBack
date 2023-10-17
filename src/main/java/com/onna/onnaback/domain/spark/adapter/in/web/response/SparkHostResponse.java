@@ -6,7 +6,10 @@ import lombok.Getter;
 public class SparkHostResponse {
     Long sparkId;
 
-    public SparkHostResponse(Long sparkId) {
+    String img;
+
+    public SparkHostResponse(Long sparkId, String img) {
         this.sparkId = sparkId;
+        this.img = img;
     }
 }

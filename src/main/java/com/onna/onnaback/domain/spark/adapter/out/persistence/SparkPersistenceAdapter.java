@@ -58,6 +58,7 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
                                                                   .title(spark.getTitle())
                                                                   .durationHour(spark.getDurationHour())
                                                                   .sparkType(spark.getType())
+                                                                  .always(spark.getAlways())
                                                                   .sparkDate(spark.getSparkDate())
                                                                   .capacity(spark.getCapacity())
                                                                   .memberCount(spark.getMemberCount())
@@ -125,6 +126,7 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
                         spark.getPlace().getPlaceId(),
                         spark.getTitle(),
                         spark.getType(),
+                        spark.getAlways(),
                         spark.getSparkDate(),
                         spark.getDurationHour(),
                         spark.getCapacity(),
@@ -192,6 +194,7 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
                             .title(spark.getTitle())
                             .img(spark.getImg())
                             .sparkType(spark.getType())
+                            .always(spark.getAlways())
                             .sparkDate(spark.getSparkDate())
                             .description(spark.getDescription())
                             .price(spark.getPrice())
@@ -232,6 +235,7 @@ public class SparkPersistenceAdapter implements LoadSparkPort, SaveSparkPort {
         return sparkRepository.findByTitleContaining(value).stream().map(
                 spark -> SparkResponse.builder()
                                       .sparkId(spark.getSparkId())
+                                      .always(spark.getAlways())
                                       .sparkDate(spark.getSparkDate())
                                       .sparkType(spark.getType())
                                       .memberCount(spark.getMemberCount())
