@@ -3,6 +3,7 @@ package com.onna.onnaback.domain.spark.adapter.in.web.response;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.onna.onnaback.domain.place.domain.PlaceType;
 import com.onna.onnaback.domain.spark.domain.Always;
 import com.onna.onnaback.domain.spark.domain.CapacityType;
 import com.onna.onnaback.domain.spark.domain.DurationHour;
@@ -65,5 +66,7 @@ public class SparkResponse {
     Double lng;
 
     Double lat;
+
+    PlaceType placeType;
 
 }
