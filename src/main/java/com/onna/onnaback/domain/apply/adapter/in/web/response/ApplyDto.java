@@ -3,6 +3,7 @@ package com.onna.onnaback.domain.apply.adapter.in.web.response;
 import java.time.LocalDateTime;
 
 import com.onna.onnaback.domain.apply.domain.AcceptStatus;
+import com.onna.onnaback.domain.place.domain.PlaceType;
 import com.onna.onnaback.domain.spark.domain.Always;
 import com.onna.onnaback.domain.spark.domain.CapacityType;
 import com.onna.onnaback.domain.spark.domain.DurationHour;
@@ -15,6 +16,8 @@ import lombok.Getter;
 public class ApplyDto {
 
     private Long sparkId;
+
+    private PlaceType placeType;
 
     private String placeName;
 

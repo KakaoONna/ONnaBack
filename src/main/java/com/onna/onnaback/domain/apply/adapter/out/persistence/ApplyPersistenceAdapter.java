@@ -50,6 +50,7 @@ public class ApplyPersistenceAdapter implements SaveApplyPort, LoadApplyPort {
 
         for (MemberSparkMapping memberSparkMapping : memberSparkMappings) {
             applyDtos.add(new ApplyDto(memberSparkMapping.getApplySpark().getSparkId(),
+                                       memberSparkMapping.getApplySpark().getPlace().getPlaceType(),
                                        memberSparkMapping.getApplySpark().getPlace().getName(),
                                        memberSparkMapping.getApplySpark().getAlways(),
                                        memberSparkMapping.getApplySpark().getSparkDate(),
