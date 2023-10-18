@@ -42,6 +42,7 @@ public class Spark extends BaseEntity {
     private String title;
 
     @Column(name = "description")
+    @Lob
     private String description;
 
     @Column(name = "img")
