@@ -78,8 +78,7 @@ public class SparkController {
         Member host = customUserDetails.getMember();
         Spark spark = this.sparkUseCase.uploadSpark(host, hostDto);
         return ResponseEntity.ok().body(
-                new SparkHostResponse(spark.getSparkId(),
-                                      img == null ? spark.getPlace().getImg() : spark.getImg())
+                new SparkHostResponse(spark.getSparkId(), spark.getImg())
         );
     }
 
